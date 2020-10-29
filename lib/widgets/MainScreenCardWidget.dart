@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class MainScreenCardWidget extends StatelessWidget {
-  final String arWord , enWord;
+  final String imageName;
 
-  MainScreenCardWidget(this.arWord ,  this.enWord);
+  MainScreenCardWidget(this.imageName);
 
 
   @override
@@ -11,27 +11,13 @@ class MainScreenCardWidget extends StatelessWidget {
     Size size =  MediaQuery.of(context).size;
     return Container(
 
-      margin: EdgeInsets.only(top: 20),
+      margin: EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(width: 3.0, color: Color(0xFFB99659)),
-        color: Colors.blue,
+        image: DecorationImage(image: Image.asset(imageName).image),
       ),
-      height: size.height / 5.5,
-      width: size.width / 1.322,
+      height: size.height / 5,
+      width: size.width / 1.24,
 
-      child: Container(
-        margin: EdgeInsets.only(top: 70 , left: 10 , right: 10),
-
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween ,
-          children: [
-            Text(arWord , style: TextStyle(color: Colors.white , fontWeight: FontWeight.w900 )),
-            Text(enWord , style: TextStyle(color: Colors.white , fontWeight: FontWeight.w900),),
-
-          ],
-        ),
-      ),
     );
   }
 }

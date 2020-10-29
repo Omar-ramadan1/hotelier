@@ -10,9 +10,8 @@ class SplashScreenWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SplashScreen(
       seconds:7,
-      backgroundColor: Colors.white,
-      loadingText: Text("Splash Screeeeeen" ,style: TextStyle(fontSize: 30),),
-      photoSize: 150,
+      imageBackground: Image.asset("./assets/SplashScreenImage.jpg").image,
+      loaderColor: Colors.transparent,
       navigateAfterSeconds: MainScreen(),
 
     );

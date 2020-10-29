@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:hotelier/widgets/AppBarWidget.dart';
+import 'package:hotelier/widgets/AppDrawerWidget.dart';
 import 'package:hotelier/widgets/MainScreenCardWidget.dart';
 import 'package:hotelier/widgets/bottomBarWidget.dart';
 
@@ -10,16 +11,17 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      drawerScrimColor: Colors.black,
+      drawerScrimColor: Colors.transparent,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(90.0),
         child: AppBar(
-          bottomOpacity: 0.0,
-          elevation: 0.0,
-          flexibleSpace: AppBarWidget(),
+          backgroundColor: Colors.white,
+          shadowColor: Colors.transparent,
+          flexibleSpace: AppBarWidget("assets/hotel-bell.jpg"),
         ),
       ),
-      drawer: Container(),
+      drawerEdgeDragWidth: 200,
+      drawer: AppDrawerWidget(),
       body: Container(
         padding: EdgeInsets.only(top: 30),
         color: Colors.white,
@@ -27,9 +29,9 @@ class MainScreen extends StatelessWidget {
         height: double.infinity,
         child: Column(
           children: [
-            MainScreenCardWidget("CARD" , "البطاقة"),
-            MainScreenCardWidget("SPECIAL OFFERS" , "العروض المميزة"),
-            MainScreenCardWidget("" , ""),
+            MainScreenCardWidget("assets/card.jpg"),
+            MainScreenCardWidget("assets/specialOffers.jpg"),
+            MainScreenCardWidget("assets/Group 1.jpg"),
           ],
         ),
       ),
