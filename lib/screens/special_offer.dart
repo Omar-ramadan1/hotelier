@@ -185,18 +185,18 @@ YoutubePlayerController _controller =YoutubePlayerController(
 
                             SizedBox(height: 75),
                             
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
+                            // Padding(
+                            //   padding: const EdgeInsets.all(8.0),
+                            //   child: Container(
                                 
                                 
-                                child:   YoutubePlayer(
-                                 controller: _controller,
-                               showVideoProgressIndicator: false,
-                                 progressIndicatorColor: Colors.blueAccent,
-                               )
-                              ),
-                            )
+                            //     child:   YoutubePlayer(
+                            //      controller: _controller,
+                            //    showVideoProgressIndicator: false,
+                            //      progressIndicatorColor: Colors.blueAccent,
+                            //    )
+                            //   ),
+                            // )
                            
                        ],
                      ),

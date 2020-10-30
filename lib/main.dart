@@ -8,6 +8,7 @@ import 'package:hotelier/screens/RegistrationScreen.dart';
 import 'package:hotelier/screens/Send_Successfully.dart';
 import 'package:hotelier/screens/SplashScreenWidget.dart';
 import 'package:hotelier/screens/PaymentScreen.dart';
+import 'package:hotelier/screens/offer_details.dart';
 import 'package:hotelier/screens/special_offer.dart';
 
 void main() {
@@ -21,7 +22,7 @@ class Hotelier extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // home: PaymentScreen(),
-      home: Special_Offer(),
+      home: Offer_Details(),
       routes: {
         MainScreen.routeName: (ctx) => MainScreen(),
       },
