@@ -56,7 +56,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       });
                     },
                     value: checkBoxValue,
-                    activeColor: Color(0xFF6200EE),
+                    activeColor: Color(0xFFF7BB85),
                   ),
                   Text(
                     'تذكرنى',
@@ -64,7 +64,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   ),
                 ],),
               SizedBox(height: 40,),
-              ButtonChildWidget("تسجيل دخول"  , Color(0xFFF7BB85) , 25)
+              ButtonChildWidget("تسجيل دخول"  , Color(0xFFF7BB85) , 25 , 150),
             ],
           ),
         ),

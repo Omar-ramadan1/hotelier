@@ -33,6 +33,11 @@ dependencies:
   font_awesome_flutter: ^8.10.0
   carousel_slider: ^1.3.1
   youtube_player_flutter: ^6.1.0+7
+  smooth_star_rating: ^1.1.1
+  google_maps_flutter: ^1.0.5
+  geolocator: ^6.1.0
+  geocoder: ^0.2.1
+  flutter_google_places: ^0.2.6
 
 
 dev_dependencies:

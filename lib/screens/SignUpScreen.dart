@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hotelier/widgets/SignUpButtonWidget.dart';
 import 'package:hotelier/widgets/SignUpHotel.dart';
+import 'package:hotelier/widgets/SignUpUser.dart';
 
 enum Registration {
   hotel,
@@ -55,7 +56,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ],
             ),
-            registration == Registration.hotel ? SignUpHotel() : Container(),
+            registration == Registration.hotel ? SignUpHotel() : SignUpUser(),
           ],
         ));
   }
