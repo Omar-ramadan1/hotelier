@@ -13,6 +13,7 @@ enum Registration {
 }
 
 class RegistrationScreen extends StatefulWidget {
+  static const routeName = '/RegistrationScreen';
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
 }
@@ -48,7 +49,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         registration == Registration.signIn
                             ? Color(0xFFF7BB85)
                             : Colors.white,
-                        18),
+                        18 , 150),
                     onTap: () {
                       setState(() {
                         registration = Registration.signIn;
@@ -66,7 +67,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         registration == Registration.signUp
                             ? Color(0xFFF7BB85)
                             : Colors.white,
-                        18),
+                        18 , 150),
                   ),
                 ],
               ),
@@ -76,7 +77,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomBarWidget(),
     );
   }
 }

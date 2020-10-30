@@ -4,6 +4,7 @@ import 'package:hotelier/widgets/bottomBarWidget.dart';
 
 
 class Contact extends StatelessWidget {
+  static const routeName = '/Contact';
   @override
   Widget build(BuildContext context) {
     return Scaffold(

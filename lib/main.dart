@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:hotelier/screens/Complaining.dart';
 import 'package:hotelier/screens/Contact.dart';
-
+import 'package:hotelier/screens/GetLocationScreen.dart';
 import 'package:hotelier/screens/MainScreen.dart';
 import 'package:hotelier/screens/RegistrationScreen.dart';
 import 'package:hotelier/screens/SplashScreenWidget.dart';
@@ -18,9 +19,13 @@ class Hotelier extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // home: PaymentScreen(),
-      home: Complaining(),
+      home: GetLocationScreen(),
       routes: {
         MainScreen.routeName: (ctx) => MainScreen(),
+        RegistrationScreen.routeName: (ctx) => RegistrationScreen(),
+        Complaining.routeName: (ctx) => Complaining(),
+        Contact.routeName: (ctx) => Contact(),
+        PaymentScreen.routeName: (ctx) => PaymentScreen(),
       },
     );
   }

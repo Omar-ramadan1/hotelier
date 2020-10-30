@@ -6,6 +6,7 @@ import 'package:hotelier/widgets/TextFieldWidget.dart';
 import 'package:hotelier/widgets/bottomBarWidget.dart';
 
 class PaymentScreen extends StatelessWidget {
+  static const routeName = '/PaymentScreen';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +41,7 @@ class PaymentScreen extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              ButtonChildWidget("تاكيد" , Color(0xFFF7BB85) , 25),
+              ButtonChildWidget("تاكيد" , Color(0xFFF7BB85) , 25 , 150),
             ],
           ),
         ),
