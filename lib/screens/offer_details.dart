@@ -81,7 +81,7 @@ class Offer_Details extends StatelessWidget {
             //  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             //  )
             
-                         ButtonChildWidget("المزيد من التفاصيل",Color(0xFFF7BB85),14),
+                         ButtonChildWidget("المزيد من التفاصيل",Color(0xFFF7BB85),15,120),
                          Spacer()
 
   
