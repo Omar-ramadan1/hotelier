@@ -168,12 +168,12 @@ YoutubePlayerController _controller =YoutubePlayerController(
                             Text("___________________________________________"),
                             Row(
                               children:[
-                                                                  Text(" pmجميع الاوقات        8:30")
+                                Text(" pmجميع الاوقات        8:30")
 
                                 ,
                                 //Text("         |"),
                                 Spacer(),
-                                    Text(" متاح اليوم        8:30")
+                                Text(" متاح اليوم        8:30")
 
 
 
@@ -229,108 +229,108 @@ YoutubePlayerController _controller =YoutubePlayerController(
     SizedBox(height:25),
     Column(
       children:<Widget>[
-              Row(
-                children: [
-                  Container(
-                    height: 100,
-                    child: CircleAvatar(  
-                      child: Container(
-                        height: 150,
-                        color: Colors.white,
-                        child: CircleAvatar(
-                                                  child: IconButton(
-                            onPressed: null,
-                            icon:Icon(
-                              Icons.wifi
-                            )
-                          ),
-                        ),
-                        
-                        ),
-                    ),
-                    ),
-                                        Spacer(),
-
-                       Container(
-                    height: 100,
-                    child: CircleAvatar(  
-                      child: Container(
-                        height: 150,
-                        color: Colors.white,
-                        child: CircleAvatar(
-                                                  child: IconButton(
-                            onPressed: null,
-                            icon:Icon(
-                              Icons.wifi
-                            ),
-                            color: Colors.blue,
-                          ),
-                        ),
-                        
-                        ),
-                    ),
-                    ),
-                                        Spacer(),
-
-                       Container(
-                    height: 100,
-                    child: CircleAvatar(  
-                      child: Container(
-                        height: 150,
-                        color: Colors.white,
-                        child: CircleAvatar(
-                                                  child: IconButton(
-                            onPressed: null,
-                            icon:Icon(
-                              Icons.wifi
-                            )
-                          ),
-                        ),
-                        
-                        ),
-                    ),
-                    ),  
-                                        Spacer(),
-
-                     Container(
-                    height: 100,
-                    child: CircleAvatar(  
-                      child: Container(
-                        height: 150,
-                        color: Colors.white,
-                        child: CircleAvatar(
-                                                  child: IconButton(
-                            onPressed: null,
-                            icon:Icon(
-                              Icons.wifi
-                            )
-                          ),
-                        ),
-                        
-                        ),
-                    ),
-                    ),
-                    Spacer(),
-                       Container(
-                    height: 100,
-                    child: CircleAvatar(  
-                      child: Container(
-                        height: 150,
-                        color: Colors.white,
-                        child: CircleAvatar(
-                                                  child: IconButton(
-                            onPressed: null,
-                            icon:Icon(
-                              Icons.wifi
-                            )
-                          ),
-                        ),
-                        
-                        ),
-                    ),
-                    ),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Container(
+              //       height: 100,
+              //       child: CircleAvatar(
+              //         child: Container(
+              //           height: 150,
+              //           color: Colors.white,
+              //           child: CircleAvatar(
+              //             child: IconButton(
+              //               onPressed: null,
+              //               icon:Icon(
+              //                 Icons.wifi
+              //               )
+              //             ),
+              //           ),
+              //
+              //           ),
+              //       ),
+              //       ),
+              //                           Spacer(),
+              //
+              //          Container(
+              //       height: 100,
+              //       child: CircleAvatar(
+              //         child: Container(
+              //           height: 150,
+              //           color: Colors.white,
+              //           child: CircleAvatar(
+              //             child: IconButton(
+              //               onPressed: null,
+              //               icon:Icon(
+              //                 Icons.wifi
+              //               ),
+              //               color: Colors.blue,
+              //             ),
+              //           ),
+              //
+              //           ),
+              //       ),
+              //       ),
+              //                           Spacer(),
+              //
+              //          Container(
+              //       height: 100,
+              //       child: CircleAvatar(
+              //         child: Container(
+              //           height: 150,
+              //           color: Colors.white,
+              //           child: CircleAvatar(
+              //                                     child: IconButton(
+              //               onPressed: null,
+              //               icon:Icon(
+              //                 Icons.wifi
+              //               )
+              //             ),
+              //           ),
+              //
+              //           ),
+              //       ),
+              //       ),
+              //                           Spacer(),
+              //
+              //        Container(
+              //       height: 100,
+              //       child: CircleAvatar(
+              //         child: Container(
+              //           height: 150,
+              //           color: Colors.white,
+              //           child: CircleAvatar(
+              //                                     child: IconButton(
+              //               onPressed: null,
+              //               icon:Icon(
+              //                 Icons.wifi
+              //               )
+              //             ),
+              //           ),
+              //
+              //           ),
+              //       ),
+              //       ),
+              //       Spacer(),
+              //          Container(
+              //       height: 100,
+              //       child: CircleAvatar(
+              //         child: Container(
+              //           height: 150,
+              //           color: Colors.white,
+              //           child: CircleAvatar(
+              //                                     child: IconButton(
+              //               onPressed: null,
+              //               icon:Icon(
+              //                 Icons.wifi
+              //               )
+              //             ),
+              //           ),
+              //
+              //           ),
+              //       ),
+              //       ),
+              //   ],
+              // ),
                 
 
       ]
