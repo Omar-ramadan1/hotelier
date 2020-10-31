@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-// import 'package:google_maps_webservice/places.dart';
+
 class GetLocationScreen extends StatefulWidget {
   @override
   _GetLocationScreenState createState() => _GetLocationScreenState();
@@ -12,6 +13,8 @@ class GetLocationScreen extends StatefulWidget {
 
 class _GetLocationScreenState extends State<GetLocationScreen> {
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{}; // CLASS MEMBER
+  String locationString = "";
+  bool isGettingLocation = false;
   static final CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
     zoom: 14.4746,
@@ -28,34 +31,77 @@ class _GetLocationScreenState extends State<GetLocationScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Positioned(
-          top: 0 ,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          child: Container(
-            child: GoogleMap(
-              mapType: MapType.normal,
-              // myLocationButtonEnabled: true,
-              initialCameraPosition: _kGooglePlex,
-              // myLocationEnabled: true,
-              onMapCreated: (GoogleMapController controller) {
-                _controller.complete(controller);
-              },
-              onTap: (latLang){
-                print(latLang);
-                _addMarker(latLang);
-              },
-              markers: Set<Marker>.of(markers.values),
+    return Scaffold(
+      body: Stack(
+        children: [
+          Positioned(
+            top: 0 ,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: Container(
+              child: GoogleMap(
+                mapType: MapType.normal,
+                // myLocationButtonEnabled: true,
+                initialCameraPosition: _kGooglePlex,
+                // myLocationEnabled: true,
+                onMapCreated: (GoogleMapController controller) {
+                  _controller.complete(controller);
+                },
+                onTap: (latLang){
+                  print(latLang);
+                  _addMarker(latLang);
+                },
+                markers: Set<Marker>.of(markers.values),
+              ),
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
             ),
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-          ),
 
-        ),
-      ],
+          ),
+          Positioned(
+
+            top: 40,
+            left: 16,
+            child: ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              child: Container(
+                padding: EdgeInsets.all(16),
+                constraints: BoxConstraints(minHeight:MediaQuery.of(context).size.width/10 ),
+                width: MediaQuery.of(context).size.width/2,
+                color: Color(0x44000000),
+                child: Row(
+                  children: <Widget>[
+
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                        constraints: BoxConstraints(minHeight:MediaQuery.of(context).size.width/10 ),
+                        width: MediaQuery.of(context).size.width/2,
+                        child:isGettingLocation ? Center(child:CircularProgressIndicator()): Text(locationString),
+                      ),
+
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        child: Align(alignment: Alignment.topRight,
+                          child: IconButton(icon: Icon(Icons.search, color: Colors.white,), onPressed: () async{
+                            var p = await PlacesAutocomplete.show(
+                              context: context, apiKey: "AIzaSyCeaBTry2YnTPFGYdD6IJqtT4HjFtOr8As" ,
+                              mode: Mode.overlay,
+                            );
+                           print(p);
+                          }),),),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+          ),
+        ],
+      ),
     );
   }
 
@@ -65,7 +111,7 @@ class _GetLocationScreenState extends State<GetLocationScreen> {
     print("permission");
     print("permission================================================>");
     print(permission);
-    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.lowest , timeLimit: Duration(hours: 1));
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best );
 
     print("position");
     print("position================================================>");
@@ -107,14 +153,14 @@ class _GetLocationScreenState extends State<GetLocationScreen> {
       // adding a new marker to map
       markers[markerId] = marker;
     });
-    // setState(() {
-    //   this.isGettingLocation = true ;
-    // });
+    setState(() {
+      this.isGettingLocation = true ;
+    });
     var address = await Geocoder.local.findAddressesFromCoordinates(new Coordinates(latLang.latitude, latLang.longitude)) ;
 
-    // setState(() {
-    //   this.locationString = address.first.addressLine ;
-    //   this.isGettingLocation = false ;
-    // });
+    setState(() {
+      this.locationString = address.first.addressLine ;
+      this.isGettingLocation = false ;
+    });
   }
 }
