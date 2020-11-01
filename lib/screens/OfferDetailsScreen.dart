@@ -6,16 +6,16 @@ import '../widgets/AppDrawerWidget.dart';
 import '../widgets/bottomBarWidget.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class SpecialOffer extends StatefulWidget {
-  SpecialOffer() : super();
+class OfferDetailsScreen extends StatefulWidget {
+  OfferDetailsScreen() : super();
 
   final String title = "Carousel Demo";
 
   @override
-  SpecialOfferState createState() => SpecialOfferState();
+  OfferDetailsScreenState createState() => OfferDetailsScreenState();
 }
 
-class SpecialOfferState extends State<SpecialOffer> {
+class OfferDetailsScreenState extends State<OfferDetailsScreen> {
   //
   CarouselSlider carouselSlider;
   int _current = 0;

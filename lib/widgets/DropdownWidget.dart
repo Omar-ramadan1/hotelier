@@ -4,32 +4,37 @@ class DropdownWidget extends StatelessWidget {
   final String value;
   final Function onChange;
   final List<String> values;
-
-  const DropdownWidget(this.value , this.values ,this.onChange);
+  final double width , iconSize;
+  const DropdownWidget(this.value , this.values ,this.width ,this.iconSize  ,this.onChange);
   @override
   Widget build(BuildContext context) {
-    return    DropdownButton<String>(
-      iconEnabledColor: Colors.transparent,
-      style: TextStyle(fontSize: 15),
+    return  Container(
+      width: width,
+      child: DropdownButton<String>(
+        isExpanded: true,
+        iconSize: iconSize,
+        iconEnabledColor: Colors.black,
+        style: TextStyle(fontSize: 15 , ),
 
-      value: value,
-      hint:  Text("Select item"),
-      onChanged: (value) {
-        onChange(value);
+        value: value,
+        hint:  Text("Select item"),
+        onChanged: (value) {
+          onChange(value);
 
-      },
-      items: values.map(( user) {
-        return  DropdownMenuItem<String>(
-          value: user,
-          child: Container(
-            child: Text(
-              user,
-              textAlign: TextAlign.center,
-              style:  TextStyle(color: Colors.black),
+        },
+        items: values.map(( user) {
+          return  DropdownMenuItem<String>(
+            value: user,
+            child: Container(
+              child: Text(
+                user,
+                textAlign: TextAlign.center,
+                style:  TextStyle(color: Colors.black),
+              ),
             ),
-          ),
-        );
-      }).toList(),
+          );
+        }).toList(),
+      ),
     );
   }
 }

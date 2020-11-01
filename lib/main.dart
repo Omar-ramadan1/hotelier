@@ -6,12 +6,12 @@ import 'package:hotelier/screens/Error_404.dart';
 import 'package:hotelier/screens/MainScreen.dart';
 import 'package:hotelier/screens/RegistrationScreen.dart';
 import 'package:hotelier/screens/Send_Successfully.dart';
-import 'package:hotelier/screens/SpecialOffer.dart';
+import 'package:hotelier/screens/OfferDetailsScreen.dart';
 import 'package:hotelier/screens/SplashScreenWidget.dart';
 import 'package:hotelier/screens/PaymentScreen.dart';
 import 'package:hotelier/screens/Edit_person.dart';
 import 'package:hotelier/screens/Edit_screen.dart';
-import 'package:hotelier/screens/OfferDetails.dart';
+import 'package:hotelier/screens/SpecialOfferScreen.dart';
 
 void main() {
   runApp(Hotelier());
@@ -25,7 +25,7 @@ class Hotelier extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // home: PaymentScreen(),
 
-      home: OfferDetails(),
+      home: SpecialOfferScreen(),
 
       routes: {
         MainScreen.routeName: (ctx) => MainScreen(),

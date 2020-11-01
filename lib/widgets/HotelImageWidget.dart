@@ -10,11 +10,10 @@ class HotelImageWidget extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            margin: EdgeInsets.only(top: 2),
-            width: size.width / 2.59,
-            height: size.height / 3.26,
+            width: size.width / 2.65,
+            height: size.height / 3.2,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(topRight: Radius.circular(20) , bottomRight: Radius.circular(20)),
+                borderRadius: BorderRadius.only(topRight: Radius.circular(17) , bottomRight: Radius.circular(17)),
                 //  image: DecorationImage(image:NetworkImage("https://image.freepik.com/free-photo/image-human-brain_99433-298.jpg")),
                 color: Colors.red
             ),
@@ -43,7 +42,7 @@ class HotelImageWidget extends StatelessWidget {
                 Text("Discount" , style: TextStyle(fontWeight: FontWeight.w800),),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
