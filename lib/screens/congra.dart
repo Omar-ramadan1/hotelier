@@ -25,7 +25,23 @@ class Congratulation extends StatelessWidget {
       body:SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height:130),
+            Container(
+              height: 190,
+              width: 250,
+             // child:Text("jhjk") ,
+                decoration: BoxDecoration(
+        image: DecorationImage(image: 
+         NetworkImage(
+      //     "https://previews.123rf.com/images/rawpixel/rawpixel1901/rawpixel190103913/115929028-green-right-tick-icon-isolated.jpg"
+"https://e7.pngegg.com/pngimages/7/748/png-clipart-facebook-like-button-chemical-reaction-computer-icons-facebook-blue-text-thumbnail.png" 
+        ),
+        fit: BoxFit.cover
+        
+        ),
+        
+      ),
+            ),
+            SizedBox(height:30),
             Center(child: Padding(
               padding: const EdgeInsets.fromLTRB(45,8,8,8),
               child: Text("تهانينا",style: TextStyle(fontSize:65,color:Color(0xFFF7BB85),fontWeight: FontWeight.bold),),
