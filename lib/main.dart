@@ -12,6 +12,7 @@ import 'package:hotelier/screens/PaymentScreen.dart';
 import 'package:hotelier/screens/Edit_person.dart';
 import 'package:hotelier/screens/Edit_screen.dart';
 import 'package:hotelier/screens/SpecialOfferScreen.dart';
+import 'package:hotelier/screens/congra.dart';
 
 void main() {
   runApp(Hotelier());
@@ -25,7 +26,7 @@ class Hotelier extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // home: PaymentScreen(),
 
-      home: SpecialOfferScreen(),
+      home: Congratulation(),
 
       routes: {
         MainScreen.routeName: (ctx) => MainScreen(),
