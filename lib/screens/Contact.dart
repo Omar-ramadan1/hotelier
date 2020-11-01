@@ -26,6 +26,26 @@ class Contact extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
                children: <Widget>[
+                 Row(
+                   children: [
+                     IconButton(icon: Icon(Icons.email), onPressed: null),
+                     Text("info@Hotliercard@gmail.com",style:TextStyle(color: Color(0xFFF7BB85)))
+                   ],
+                 ),
+                  Row(
+                    children: [
+                      IconButton(icon: Icon(Icons.phone), onPressed: null),
+                      Text("012748534585",style:TextStyle(color: Color(0xFFF7BB85)))
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      IconButton(icon: Icon(Icons.location_history), onPressed: null),
+                      Text("المملكه العربيه السعوديه/جده",style:TextStyle(color: Color(0xFFF7BB85)))
+                    ],
+                  ),
+
+
                          
 
                  SizedBox(height:20),
