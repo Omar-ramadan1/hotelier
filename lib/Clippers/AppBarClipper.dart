@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-class MyClipper extends CustomClipper<Path> {
+class AppBarClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     var path = Path();

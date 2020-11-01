@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'MyClipper.dart';
+import '../Clippers/AppBarClipper.dart';
 
 class AppBarWidget extends StatelessWidget {
 final String imageName;
@@ -10,7 +10,7 @@ final String imageName;
   @override
   Widget build(BuildContext context) {
     return  ClipPath(
-      clipper: MyClipper(),
+      clipper: AppBarClipper(),
         child: Container(
           height: 160,
           decoration: BoxDecoration(

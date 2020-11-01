@@ -3,20 +3,19 @@ import 'package:carousel_slider/carousel_slider.dart';
 
 import '../widgets/AppBarWidget.dart';
 import '../widgets/AppDrawerWidget.dart';
-import '../widgets/MainScreenCardWidget.dart';
 import '../widgets/bottomBarWidget.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class Special_Offer extends StatefulWidget {
-  Special_Offer() : super();
+class SpecialOffer extends StatefulWidget {
+  SpecialOffer() : super();
 
   final String title = "Carousel Demo";
 
   @override
-  Special_OfferState createState() => Special_OfferState();
+  SpecialOfferState createState() => SpecialOfferState();
 }
 
-class Special_OfferState extends State<Special_Offer> {
+class SpecialOfferState extends State<SpecialOffer> {
   //
   CarouselSlider carouselSlider;
   int _current = 0;

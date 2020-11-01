@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'DrawerTabsWidget.dart';
-import 'MyClipper.dart';
+import '../Clippers/AppBarClipper.dart';
 class LogedInDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class LogedInDrawer extends StatelessWidget {
             Stack(
               children: [
                 ClipPath(
-                  clipper: MyClipper(),
+                  clipper: AppBarClipper(),
                   child: Container(
                     height: sizes.height / 3.5,
                     width: double.maxFinite,

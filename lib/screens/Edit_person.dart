@@ -205,8 +205,6 @@ class Edit_person extends StatelessWidget {
                 children: [
                   Text("تعديل الحساب",style: TextStyle(fontSize:35),),
                                     Text(" محمد فؤاد",style: TextStyle(fontSize:35),),
-
-
                   SizedBox(height:90),
                   Container(
           
