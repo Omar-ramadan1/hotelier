@@ -8,7 +8,6 @@ import 'package:hotelier/widgets/bottomBarWidget.dart';
 class SpecialOfferScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
 
     return Scaffold(
       drawerScrimColor: Colors.transparent,

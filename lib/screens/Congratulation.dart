@@ -32,7 +32,6 @@ class Congratulation extends StatelessWidget {
                 decoration: BoxDecoration(
         image: DecorationImage(image: 
          NetworkImage(
-      //     "https://previews.123rf.com/images/rawpixel/rawpixel1901/rawpixel190103913/115929028-green-right-tick-icon-isolated.jpg"
 "https://e7.pngegg.com/pngimages/7/748/png-clipart-facebook-like-button-chemical-reaction-computer-icons-facebook-blue-text-thumbnail.png" 
         ),
         fit: BoxFit.cover

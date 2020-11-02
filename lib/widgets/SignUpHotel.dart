@@ -138,7 +138,7 @@ bool checkBoxValue = false;
               textDirection: TextDirection.rtl,
               children: [
                 Text("نسبة الخصم المقدمة" , style: TextStyle(fontWeight: FontWeight.w900),),
-                DropdownWidget(discountValue , ['10' , '20' , '30', '40' ,'50' , '60' , '70', '80' ,'90', '100'], 60 , 0 ,(value){
+                DropdownWidget(discountValue , ['10' , '20' , '30', '40' ,'50' , '60' , '70', '80' ,'90', '100'], 80 , 0 ,(value){
                   setState(() {
                     discountValue = value;
                   });

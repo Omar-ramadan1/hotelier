@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:hotelier/widgets/AppBarWidget.dart';
@@ -22,6 +21,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
     setState(() {
       cardValue = cardValueParamater;
     });
+    return null;
   }
   @override
   Widget build(BuildContext context) {
