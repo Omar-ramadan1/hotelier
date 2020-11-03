@@ -6,6 +6,8 @@ import 'package:hotelier/widgets/DropdownWidget.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class EditHotelData extends StatefulWidget {
+    static const routeName = '/EditHotel';
+
   @override
   _EditHotelDataState createState() => _EditHotelDataState();
 }

@@ -7,6 +7,8 @@ import 'package:hotelier/widgets/SignUpButtonWidget.dart';
 
 
 class EditUserData extends StatefulWidget {
+    static const routeName = '/EditUserData';
+
   @override
   _EditUserDataState createState() => _EditUserDataState();
 }

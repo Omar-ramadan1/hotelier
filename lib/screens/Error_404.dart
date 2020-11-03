@@ -7,6 +7,8 @@ import '../widgets/bottomBarWidget.dart';
 
 
 class Error_404 extends StatelessWidget {
+    static const routeName = '/error';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

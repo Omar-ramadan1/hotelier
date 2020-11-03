@@ -8,6 +8,8 @@ import 'package:hotelier/widgets/bottomBarWidget.dart';
 
 
 class Congratulation extends StatelessWidget {
+    static const routeName = '/Congrautlation';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

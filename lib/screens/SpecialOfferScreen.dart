@@ -6,6 +6,8 @@ import 'package:hotelier/widgets/HotelContainerWidget.dart';
 import 'package:hotelier/widgets/bottomBarWidget.dart';
 
 class SpecialOfferScreen extends StatelessWidget {
+    static const routeName = '/special';
+
   @override
   Widget build(BuildContext context) {
 

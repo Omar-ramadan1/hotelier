@@ -8,6 +8,8 @@ import '../widgets/bottomBarWidget.dart';
 
 
 class Send_Successfully extends StatelessWidget {
+    static const routeName = '/SendSucee';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +41,8 @@ class Send_Successfully extends StatelessWidget {
      //   AssetImage("assets/card.jpg"),
          NetworkImage(
       // "https://scontent.faly2-2.fna.fbcdn.net/v/t1.0-9/51877485_2277687155623321_6076822903532290048_o.jpg?_nc_cat=101&ccb=2&_nc_sid=8bfeb9&_nc_ohc=nQSqrNrPxlEAX-CjvzZ&_nc_ht=scontent.faly2-2.fna&oh=88bcdaa010846c64b8acf24de81be3ec&oe=5FC075F7"
-              "https://previews.123rf.com/images/rawpixel/rawpixel1901/rawpixel190103913/115929028-green-right-tick-icon-isolated.jpg"
+          //    "https://previews.123rf.com/images/rawpixel/rawpixel1901/rawpixel190103913/115929028-green-right-tick-icon-isolated.jpg"
+          ""
          ),
         fit: BoxFit.cover
         

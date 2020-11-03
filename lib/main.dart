@@ -24,9 +24,8 @@ class Hotelier extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      // home: PaymentScreen(),
 
-      home: Congratulation(),
+      home: Send_Successfully(),
 
 
       routes: {
@@ -35,6 +34,13 @@ class Hotelier extends StatelessWidget {
         Complaining.routeName: (ctx) => Complaining(),
         Contact.routeName: (ctx) => Contact(),
         PaymentScreen.routeName: (ctx) => PaymentScreen(),
+        Congratulation.routeName:(ctx)=>Congratulation(),
+        Send_Successfully.routeName:(ctx)=>Send_Successfully(),
+        OfferDetailsScreen.routeName:(ctx)=>OfferDetailsScreen(),
+        Error_404.routeName:(ctx)=>Error_404(),
+        EditUserData.routeName:(ctx)=>EditUserData(),
+        EditHotelData.routeName:(ctx)=>EditHotelData(),
+
       },
     );
   }

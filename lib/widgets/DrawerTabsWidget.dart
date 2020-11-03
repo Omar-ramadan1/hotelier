@@ -11,20 +11,22 @@ class DrawerTabsWidget extends StatelessWidget {
 
     return Column(
       children: [
-        Container(
-          width: double.infinity,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            textDirection: TextDirection.rtl,
-            children: [
-              Icon(icon),
-              Text(text , style: TextStyle(fontSize: 20 , fontWeight: FontWeight.w700) , ),
-              Icon(Icons.arrow_back_ios_rounded),
+        
+                   Container(
+            width: double.infinity,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              textDirection: TextDirection.rtl,
+              children: [
+                Icon(icon),
+                Text(text , style: TextStyle(fontSize: 20 , fontWeight: FontWeight.w700) , ),
+                Icon(Icons.arrow_back_ios_rounded),
 
-            ],
+              ],
+            ),
+
           ),
-
-        ),
+        
         Divider(thickness: 0.5 , endIndent: 20, indent: 20, color: Colors.black,)
       ],
     );

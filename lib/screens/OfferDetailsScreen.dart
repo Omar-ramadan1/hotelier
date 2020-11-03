@@ -8,6 +8,8 @@ import '../widgets/AppDrawerWidget.dart';
 import '../widgets/bottomBarWidget.dart';
 
 class OfferDetailsScreen extends StatefulWidget {
+    static const routeName = '/OfferDetails';
+
   OfferDetailsScreen() : super();
 
   final String title = "Carousel Demo";
