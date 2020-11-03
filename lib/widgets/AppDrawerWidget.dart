@@ -13,6 +13,7 @@ class _AppDrawerWidgetState extends State<AppDrawerWidget> {
   Widget build(BuildContext context) {
     Size sizes = MediaQuery.of(context).size;
     return Container(
+      //height: 500,
       color: Color(0xFFFFFFFF),
       width: sizes.width / 1.555,
       child: LogedInDrawer(),

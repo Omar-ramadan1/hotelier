@@ -6,7 +6,7 @@ import 'package:hotelier/widgets/HotelContainerWidget.dart';
 import 'package:hotelier/widgets/bottomBarWidget.dart';
 
 class SpecialOfferScreen extends StatelessWidget {
-    static const routeName = '/special';
+    static const routeName = '/specia';
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +14,11 @@ class SpecialOfferScreen extends StatelessWidget {
     return Scaffold(
       drawerScrimColor: Colors.transparent,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(90.0),
+        preferredSize: Size.fromHeight(150.0),
         child: AppBar(
           backgroundColor: Colors.white,
           shadowColor: Colors.transparent,
-          flexibleSpace: AppBarWidget("assets/hotel-bell.jpg"),
+          flexibleSpace: AppBarWidget("assets/hotel-bell.jpg","العروض المميزه\n special offer"),
         ),
       ),
       drawerEdgeDragWidth: 200,

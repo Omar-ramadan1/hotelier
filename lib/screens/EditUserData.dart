@@ -23,11 +23,11 @@ class _EditUserDataState extends State<EditUserData> {
     return Scaffold(
       drawerScrimColor: Colors.transparent,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(90.0),
+        preferredSize: Size.fromHeight(150.0),
         child: AppBar(
           backgroundColor: Colors.white,
           shadowColor: Colors.transparent,
-          flexibleSpace: AppBarWidget("assets/hotel-bell.jpg"),
+          flexibleSpace: AppBarWidget("assets/hotel-bell.jpg",""),
         ),
       ),
       drawerEdgeDragWidth: 200,

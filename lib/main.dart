@@ -26,7 +26,7 @@ class Hotelier extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
 
-      home: SpecialOfferScreen(),
+      home: TermsOfService(),
 
 
       routes: {
@@ -41,7 +41,9 @@ class Hotelier extends StatelessWidget {
         Error_404.routeName:(ctx)=>Error_404(),
         EditUserData.routeName:(ctx)=>EditUserData(),
         EditHotelData.routeName:(ctx)=>EditHotelData(),
-        TermsOfService.routeName:(ctx)=>TermsOfService()
+        SpecialOfferScreen.routeName:(ctx)=>SpecialOfferScreen(),
+        TermsOfService.routeName:(ctx)=>TermsOfService(),
+        
         
 
       },
