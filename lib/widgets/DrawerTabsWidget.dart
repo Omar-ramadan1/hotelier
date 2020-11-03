@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class DrawerTabsWidget extends StatelessWidget {
   final IconData icon;
   final String text;
+  final GestureTapCallback onTap;
 
-  const DrawerTabsWidget(this.icon , this.text);
+  const DrawerTabsWidget(this.icon , this.text,this.onTap);
   // Icons.person
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,8 @@ class DrawerTabsWidget extends StatelessWidget {
     return Column(
       children: [
         
-                   Container(
+                   InkWell(
+                                        child: Container(
             width: double.infinity,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -26,6 +28,8 @@ class DrawerTabsWidget extends StatelessWidget {
             ),
 
           ),
+          onTap:onTap ,
+                   ),
         
         Divider(thickness: 0.5 , endIndent: 20, indent: 20, color: Colors.black,)
       ],

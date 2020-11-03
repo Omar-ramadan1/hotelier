@@ -13,6 +13,7 @@ import 'package:hotelier/screens/EditUserData.dart';
 import 'package:hotelier/screens/EditHotelData.dart';
 import 'package:hotelier/screens/SpecialOfferScreen.dart';
 import 'package:hotelier/screens/Congratulation.dart';
+import 'package:hotelier/screens/termsOfservice.dart';
 
 void main() {
   runApp(Hotelier());
@@ -25,7 +26,7 @@ class Hotelier extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
 
-      home: Send_Successfully(),
+      home: SpecialOfferScreen(),
 
 
       routes: {
@@ -40,6 +41,8 @@ class Hotelier extends StatelessWidget {
         Error_404.routeName:(ctx)=>Error_404(),
         EditUserData.routeName:(ctx)=>EditUserData(),
         EditHotelData.routeName:(ctx)=>EditHotelData(),
+        TermsOfService.routeName:(ctx)=>TermsOfService()
+        
 
       },
     );

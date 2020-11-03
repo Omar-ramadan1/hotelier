@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hotelier/screens/Complaining.dart';
+import 'package:hotelier/screens/EditUserData.dart';
+import 'package:hotelier/screens/PaymentScreen.dart';
+import 'package:hotelier/screens/termsOfservice.dart';
 
 import 'DrawerTabsWidget.dart';
 import '../Clippers/AppBarClipper.dart';
@@ -49,27 +53,27 @@ class LogedInDrawer extends StatelessWidget {
               ],
             ),
             InkWell(
-              child: DrawerTabsWidget(Icons.person , "حسابى"),
+              child: DrawerTabsWidget(Icons.person , "حسابى",(){Navigator.of(context).popAndPushNamed (EditUserData.routeName);}),
             ),
             SizedBox(height: 20,),
             InkWell(
-              child: DrawerTabsWidget(Icons.settings , "الاعدادات"),
+              child: DrawerTabsWidget(Icons.settings , "الاعدادات",(){Navigator.of(context).popAndPushNamed(Complaining.routeName);}),
             ),
             SizedBox(height: 20,),
             InkWell(
-              child: DrawerTabsWidget(Icons.phone , "للشكاوى و المقترحات"),
+              child: DrawerTabsWidget(Icons.phone , "للشكاوى و المقترحات",(){Navigator.of(context).popAndPushNamed(Complaining.routeName);}),
             ),
             SizedBox(height: 20,),
             InkWell(
-              child: DrawerTabsWidget(Icons.star_rate_sharp , "عن التطبيق"),
+              child: DrawerTabsWidget(Icons.star_rate_sharp , "عن التطبيق",(){Navigator.of(context).popAndPushNamed(TermsOfService.routeName);}),
             ),
             SizedBox(height: 20,),
             InkWell(
-              child: DrawerTabsWidget(CupertinoIcons.money_dollar , "المدفوعات"),
+              child: DrawerTabsWidget(CupertinoIcons.money_dollar , "المدفوعات",(){Navigator.of(context).popAndPushNamed(PaymentScreen.routeName);}),
             ),
             SizedBox(height: 20,),
             InkWell(
-              child: DrawerTabsWidget(Icons.loop  , "تجديد الاشتراك"),
+              child: DrawerTabsWidget(Icons.loop  , "تجديد الاشتراك",(){Navigator.of(context).popAndPushNamed(EditUserData.routeName);}),
             ),
             SizedBox(height: 20,),
             Image.asset('assets/appDrawerLogo.jpeg', width: 80,),
