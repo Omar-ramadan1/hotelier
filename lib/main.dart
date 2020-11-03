@@ -10,7 +10,7 @@ import 'package:hotelier/screens/OfferDetailsScreen.dart';
 import 'package:hotelier/screens/SplashScreenWidget.dart';
 import 'package:hotelier/screens/PaymentScreen.dart';
 import 'package:hotelier/screens/EditUserData.dart';
-import 'package:hotelier/screens/Edit_screen.dart';
+import 'package:hotelier/screens/EditHotelData.dart';
 import 'package:hotelier/screens/SpecialOfferScreen.dart';
 import 'package:hotelier/screens/Congratulation.dart';
 
@@ -26,7 +26,7 @@ class Hotelier extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // home: PaymentScreen(),
 
-      home: OfferDetailsScreen(),
+      home: RegistrationScreen(),
 
       routes: {
         MainScreen.routeName: (ctx) => MainScreen(),

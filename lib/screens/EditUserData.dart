@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hotelier/widgets/AppBarWidget.dart';
 import 'package:hotelier/widgets/AppDrawerWidget.dart';
 import 'package:hotelier/widgets/ButtonWidget.dart';
-import 'package:hotelier/widgets/DropdownWidget.dart';
 import 'package:hotelier/widgets/SignUpButtonWidget.dart';
-import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 
 class EditUserData extends StatefulWidget {

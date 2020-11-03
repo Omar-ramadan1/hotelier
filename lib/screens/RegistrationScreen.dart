@@ -43,6 +43,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 textDirection: TextDirection.rtl,
                 children: [
                   InkWell(
+                    // ButtonChildWidget take parameters
+                    // text , Color , text font and widget width
                     child: ButtonChildWidget(
                         "تسجيل الدخول",
                         registration == Registration.signIn
@@ -61,6 +63,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         registration = Registration.signUp;
                       });
                     },
+                    // ButtonChildWidget take parameters
+                    // text , Color , text font and widget width
                     child: ButtonChildWidget(
                         "تسجيل حساب",
                         registration == Registration.signUp
