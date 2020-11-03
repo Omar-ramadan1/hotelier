@@ -66,8 +66,29 @@ class Congratulation extends StatelessWidget {
              crossAxisAlignment: CrossAxisAlignment.start,
              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
              children: [
-               IconButton(icon: Icon(Icons.picture_as_pdf,size: 50,), onPressed: null),
-                IconButton(icon: Icon(Icons.copy,size: 50,), onPressed: null)
+              
+                Column(
+                  children: [
+                    IconButton(icon: Icon(Icons.copy,size: 50,), onPressed: null),
+                      SizedBox(height:15),
+                   Row(
+                     children: [
+                       Text("انسخ الرقم ",style: TextStyle(fontSize:20,fontWeight:FontWeight.bold),),
+                     ],
+                   )
+                  ],
+                ),
+                 Column(
+                 children: [
+                   IconButton(icon: Icon(Icons.picture_as_pdf,size: 50,), onPressed: null),
+                   SizedBox(height:15),
+                   Row(
+                     children: [
+                       Text("احفظ الفاتوره",style: TextStyle(fontSize:20,fontWeight:FontWeight.bold),),
+                     ],
+                   )
+                 ],
+               ),
 
              ],
            ),

@@ -40,7 +40,8 @@ class _EditUserDataState extends State<EditUserData> {
               SignUpButtonWidget(
                   "محمد فؤاد",
                   Icons.person_add_alt_1_sharp,
-                  Color(0xFFF7BB85)),
+                  Color(0xFFF7BB85)
+                  ),
 
               Row(
               textDirection: TextDirection.rtl,

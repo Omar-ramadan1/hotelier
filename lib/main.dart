@@ -26,7 +26,8 @@ class Hotelier extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // home: PaymentScreen(),
 
-      home: RegistrationScreen(),
+      home: Congratulation(),
+
 
       routes: {
         MainScreen.routeName: (ctx) => MainScreen(),

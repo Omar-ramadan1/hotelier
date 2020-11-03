@@ -82,10 +82,14 @@ class HotelDetailsInfoWidget extends StatelessWidget {
           Row(
               textDirection: TextDirection.rtl,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              
               children: [
             Text("متاح اليوم" ,style: TextStyle(color: Colors.green),),
+
             Text("10 AM"),
+
             Text("8 PM"),
+
             Text("جميع الاوقلات" ,style: TextStyle(color: Colors.blue),),
           ]),
           Divider(
