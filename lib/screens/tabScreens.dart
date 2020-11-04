@@ -49,7 +49,7 @@ setState(() {
         child: BottomNavigationBar(
           
           onTap: _selectPage,
-          backgroundColor: Color(0xFFF7BB85),
+          backgroundColor: Color(0xFFBD954F),
           unselectedItemColor: Colors.black,
           selectedItemColor: Colors.white54,
           currentIndex: _selectPageIndex,

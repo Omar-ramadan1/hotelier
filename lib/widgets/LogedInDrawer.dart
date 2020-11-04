@@ -66,7 +66,11 @@ class LogedInDrawer extends StatelessWidget {
             ),
             SizedBox(height: 20,),
             InkWell(
-              child: DrawerTabsWidget(Icons.settings , "الاعدادات",(){Navigator.of(context).popAndPushNamed(Complaining.routeName);}),
+              child: DrawerTabsWidget(Icons.settings , "الاعدادات",(){Navigator.of(context).popAndPushNamed(EditUserData.routeName);}),
+            ),
+            SizedBox(height: 20,),
+             InkWell(
+              child: DrawerTabsWidget(Icons.settings , "الاعدادات",(){Navigator.of(context).popAndPushNamed(EditHotelData.routeName);}),
             ),
             SizedBox(height: 20,),
             InkWell(
