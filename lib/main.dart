@@ -13,6 +13,7 @@ import 'package:hotelier/screens/EditUserData.dart';
 import 'package:hotelier/screens/EditHotelData.dart';
 import 'package:hotelier/screens/SpecialOfferScreen.dart';
 import 'package:hotelier/screens/Congratulation.dart';
+import 'package:hotelier/screens/tabScreens.dart';
 import 'package:hotelier/screens/termsOfservice.dart';
 
 void main() {
@@ -26,7 +27,7 @@ class Hotelier extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
 
-      home: TermsOfService(),
+      home: TapScreen(),
 
 
       routes: {

@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hotelier/screens/Complaining.dart';
+import 'package:hotelier/screens/EditHotelData.dart';
 import 'package:hotelier/screens/EditUserData.dart';
 import 'package:hotelier/screens/PaymentScreen.dart';
+import 'package:hotelier/screens/RegistrationScreen.dart';
 import 'package:hotelier/screens/termsOfservice.dart';
 
 import 'DrawerTabsWidget.dart';
@@ -54,6 +56,13 @@ class LogedInDrawer extends StatelessWidget {
             ),
             InkWell(
               child: DrawerTabsWidget(Icons.person , "حسابى",(){Navigator.of(context).popAndPushNamed (EditUserData.routeName);}),
+              
+            ),
+                        SizedBox(height: 20,),
+
+                   InkWell(
+              child: DrawerTabsWidget(Icons.person , "حسابى",(){Navigator.of(context).popAndPushNamed (EditHotelData.routeName);}),
+              
             ),
             SizedBox(height: 20,),
             InkWell(
@@ -74,6 +83,11 @@ class LogedInDrawer extends StatelessWidget {
             SizedBox(height: 20,),
             InkWell(
               child: DrawerTabsWidget(Icons.loop  , "تجديد الاشتراك",(){Navigator.of(context).popAndPushNamed(EditUserData.routeName);}),
+            ),
+                        SizedBox(height: 20,),
+
+             InkWell(
+              child: DrawerTabsWidget(Icons.logout  , " تسجيل الخروج",(){Navigator.of(context).popAndPushNamed(RegistrationScreen.routeName);}),
             ),
             SizedBox(height: 20,),
             Image.asset('assets/appDrawerLogo.jpeg', width: 80,),

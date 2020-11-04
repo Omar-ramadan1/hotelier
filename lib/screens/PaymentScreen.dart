@@ -32,7 +32,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         child: AppBar(
           backgroundColor: Colors.white,
           shadowColor: Colors.transparent,
-          flexibleSpace: AppBarWidget("assets/hotel-bell.jpg","kjklj"),
+          flexibleSpace: AppBarWidget("assets/hotel-bell.jpg",""),
         ),
       ),
       drawerEdgeDragWidth: 200,
@@ -43,7 +43,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              MainScreenCardWidget("assets/paymentContainer.jpg"),
+              MainScreenCardWidget("assets/paymentContainer.jpg",null),
               SizedBox(height: 20),
               CreditCardChoiceWidget(cardValue , changeCardValueFunction),
               SizedBox(height: 20),
@@ -90,7 +90,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomBarWidget(),
+    //  bottomNavigationBar: BottomBarWidget(),
     );
   }
 }

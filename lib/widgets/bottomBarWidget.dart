@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hotelier/screens/EditUserData.dart';
+import 'package:hotelier/screens/PaymentScreen.dart';
+import 'package:hotelier/screens/SpecialOfferScreen.dart';
 
 class BottomBarWidget extends StatelessWidget {
   @override
@@ -24,7 +27,10 @@ class BottomBarWidget extends StatelessWidget {
                 child: Column(
                   children: [
                     Icon(Icons.monetization_on_outlined),
-                    Text("المدفوعات" , style: TextStyle(fontWeight: FontWeight.w900),)
+                    InkWell(child: Text("المدفوعات" , style: TextStyle(fontWeight: FontWeight.w900),
+                    ),
+                    onTap: (){Navigator.of(context).popAndPushNamed (PaymentScreen.routeName);},
+                    )
 
                   ],
                 ),
@@ -38,7 +44,10 @@ class BottomBarWidget extends StatelessWidget {
                 child: Column(
                   children: [
                     Icon(Icons.person),
-                    Text("حسابى" , style: TextStyle(fontWeight: FontWeight.w900),)
+                    InkWell(child: Text("حسابى" , style: TextStyle(fontWeight: FontWeight.w900),
+                    ),
+                    onTap: (){Navigator.of(context).popAndPushNamed (EditUserData.routeName);},
+                    )
 
                   ],
                 ),
@@ -52,7 +61,10 @@ class BottomBarWidget extends StatelessWidget {
                 child: Column(
                   children: [
                     Icon(Icons.card_giftcard_rounded),
-                    Text("العروض" , style: TextStyle(fontWeight: FontWeight.w900),)
+                    InkWell(child: Text("العروض" , style: TextStyle(fontWeight: FontWeight.w900),
+                    ),
+                    onTap: (){Navigator.of(context).popAndPushNamed (SpecialOfferScreen.routeName);},
+                    )
 
                   ],
                 ),

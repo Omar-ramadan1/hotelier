@@ -87,7 +87,7 @@ class SpecialOfferScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: BottomBarWidget(),
+    //  bottomNavigationBar: BottomBarWidget(),
     );
   }
 }
