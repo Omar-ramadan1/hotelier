@@ -40,42 +40,55 @@ setState(() {
       body: _page[_selectPageIndex],
      
       bottomNavigationBar : Container(
-        height: 65,
-        decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(25) , topRight: Radius.circular(25)),
-     //   border: Border.all(width: 2.0, color: Color(0xFFB99659)),
-       // color: Color(0xFFF7BB85),
-      ),
-        child: BottomNavigationBar(
-          
-          onTap: _selectPage,
-          backgroundColor: Color(0xFFBD954F),
-          unselectedItemColor: Colors.black,
-          selectedItemColor: Colors.white54,
-          currentIndex: _selectPageIndex,
-     //   type: BottomNavigationBarType.shifting,
-         items: [
-           BottomNavigationBarItem(
-             icon: Icon(
-               Icons.person,
-           //    color:Colors.black,
-               ),
-               title: Text("حسابي",style: TextStyle(color:Colors.black),),
-               ),
-BottomNavigationBarItem(
-             icon: Icon(
-               Icons.monetization_on_outlined,
-             //  color:Colors.black
-               ),title: Text("المدفوعات",style: TextStyle(color:Colors.black),),
-               ),
-               BottomNavigationBarItem(
-             icon: Icon(
-               Icons.card_giftcard_rounded,
-               //color:Colors.black
-               ),title: Text("العروض",style: TextStyle(color:Colors.black),),
-               ),
+                margin: EdgeInsets.only(left: 5 , right: 5),
+                
 
-         ], 
+        height: 70,
+        decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(50) , topRight: Radius.circular(50)),
+        border: Border.all(
+          width: 4.0,
+           color: Color(0xFFBD954F),
+           ),
+        color: Color(0xFFBD954F),
+      ),
+        child: Container(
+          color:Color(0xFFBD954F) ,
+         
+                          margin: EdgeInsets.only(left: 23 , right: 23),
+
+          child: BottomNavigationBar(
+            
+            
+            onTap: _selectPage,
+            backgroundColor:Color(0xFFBD954F),
+            unselectedItemColor: Colors.black,
+            selectedItemColor: Colors.white54,
+            currentIndex: _selectPageIndex,
+     //   type: BottomNavigationBarType.shifting,
+           items: [
+             BottomNavigationBarItem(
+               icon: Icon(
+                 Icons.person,
+             //    color:Colors.black,
+                 ),
+                 title: Text("حسابي",style: TextStyle(color:Colors.black),),
+                 ),
+BottomNavigationBarItem(
+               icon: Icon(
+                 Icons.monetization_on_outlined,
+               //  color:Colors.black
+                 ),title: Text("المدفوعات",style: TextStyle(color:Colors.black),),
+                 ),
+                 BottomNavigationBarItem(
+               icon: Icon(
+                 Icons.card_giftcard_rounded,
+                 //color:Colors.black
+                 ),title: Text("العروض",style: TextStyle(color:Colors.black),),
+                 ),
+
+           ], 
+          ),
         ),
       ),
     );
