@@ -5,8 +5,10 @@ import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hotelier/widgets/ButtonWidget.dart';
 
 class GetLocationScreen extends StatefulWidget {
+  static const routeName = '/GetLocationScreen';
   @override
   _GetLocationScreenState createState() => _GetLocationScreenState();
 }
@@ -31,6 +33,7 @@ class _GetLocationScreenState extends State<GetLocationScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Stack(
         children: [
@@ -60,7 +63,6 @@ class _GetLocationScreenState extends State<GetLocationScreen> {
 
           ),
           Positioned(
-
             top: 40,
             left: 16,
             child: ClipRRect(
@@ -100,6 +102,18 @@ class _GetLocationScreenState extends State<GetLocationScreen> {
             ),
 
           ),
+
+          Positioned(
+            top: size.height - 80,
+            left: 16,
+            child: InkWell(
+              onTap: (){ Navigator.of(context).pop(positions);},
+              child: ButtonChildWidget("اختر المكان", Color(0xFFF7BB85) , 18 , 130),
+            )
+
+          ),
+
+
         ],
       ),
     );

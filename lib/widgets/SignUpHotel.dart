@@ -1,5 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoder/geocoder.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hotelier/Constant/Constant.dart';
+import 'package:hotelier/screens/GetLocationScreen.dart';
 import 'package:hotelier/widgets/ButtonWidget.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
@@ -11,9 +16,40 @@ class SignUpHotel extends StatefulWidget {
 }
 
 class _SignUpHotelState extends State<SignUpHotel> {
-  String discountValue = '0', cityName = 'الرياض';
-  double starRating = 0;
+  Map data = {
+    'discountValue': '0',
+    'starRating': 0,
+    'cityName': 'الرياض',
+    'hotelName': null,
+    'commercialRegistrationNo': null,
+    'district': null,
+    'phone1': null,
+    'phone2': null,
+    'email': null,
+    'imageURL': null,
+    'videoURL': null,
+    'password': null,
+    'address': null,
+    'confirmPassword': null,
+    'latitude': null,
+    'longitude': null
+  };
+
+  Map dataErrorMessage = {
+    'hotelName': null,
+    'commercialRegistrationNo': null,
+    'district': null,
+    'phone1': null,
+    'phone2': null,
+    'email': null,
+    'imageURL': null,
+    'videoURL': null,
+    'password': null,
+    'address': null,
+    'confirmPassword': null,
+  };
   bool checkBoxValue = false;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -24,9 +60,12 @@ class _SignUpHotelState extends State<SignUpHotel> {
           Directionality(
             textDirection: TextDirection.rtl,
             child: TextField(
+              onChanged: (value) {
+                onChangeFunction(value, 'hotelName');
+              },
               decoration: InputDecoration(
                 labelText: 'اسم الفندق',
-                errorText: null,
+                errorText: dataErrorMessage['hotelName'],
               ),
             ),
           ),
@@ -36,9 +75,12 @@ class _SignUpHotelState extends State<SignUpHotel> {
           Directionality(
             textDirection: TextDirection.rtl,
             child: TextField(
+              onChanged: (value) {
+                onChangeFunction(value, 'commercialRegistrationNo');
+              },
               decoration: InputDecoration(
                 labelText: 'رقم السجل التجارى',
-                errorText: null,
+                errorText: dataErrorMessage['commercialRegistrationNo'],
               ),
             ),
           ),
@@ -54,9 +96,10 @@ class _SignUpHotelState extends State<SignUpHotel> {
               children: [
                 Container(
                   width: 100,
-                  child:  DropdownWidget(cityName , ['الرياض' , 'مكة' ], 80 , 0 ,(value){
+                  child: DropdownWidget(
+                      data['cityName'], ['الرياض', 'مكة'], 80, 0, (value) {
                     setState(() {
-                      cityName = value;
+                      data['cityName'] = value;
                     });
                   }),
                 ),
@@ -65,9 +108,12 @@ class _SignUpHotelState extends State<SignUpHotel> {
                   child: Directionality(
                     textDirection: TextDirection.rtl,
                     child: TextField(
+                      onChanged: (value) {
+                        onChangeFunction(value, 'district');
+                      },
                       decoration: InputDecoration(
                         labelText: 'الحى',
-                        errorText: null,
+                        errorText: dataErrorMessage['district'],
                       ),
                     ),
                   ),
@@ -75,17 +121,34 @@ class _SignUpHotelState extends State<SignUpHotel> {
               ],
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(top: 25),
-            child: Row(
-              textDirection: TextDirection.rtl,
-              children: [
-                Text(
-                  "العنوان على الخريطة",
-                  style: TextStyle(fontWeight: FontWeight.w900),
-                ),
-                Icon(CupertinoIcons.map_pin_ellipse)
-              ],
+          InkWell(
+            onTap: () async {
+              // GetLocationScreen
+              Position position = await Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => GetLocationScreen()));
+              var address = await Geocoder.local.findAddressesFromCoordinates(
+                  new Coordinates(position.latitude, position.longitude));
+              print(address.first.addressLine);
+              setState(() {
+                data['latitude'] = position.latitude;
+                data['longitude'] = position.longitude;
+                data['address'] = address.first.addressLine;
+                dataErrorMessage['address'] = null;
+              });
+            },
+            child: Container(
+              margin: EdgeInsets.only(top: 25),
+              child: Row(
+                textDirection: TextDirection.rtl,
+                children: [
+                  Text(
+                    "العنوان على الخريطة",
+                    style: TextStyle(fontWeight: FontWeight.w900),
+                  ),
+                  Icon(CupertinoIcons.map_pin_ellipse),
+                  locationTextHandler(),
+                ],
+              ),
             ),
           ),
           SizedBox(
@@ -103,9 +166,12 @@ class _SignUpHotelState extends State<SignUpHotel> {
                   child: Directionality(
                     textDirection: TextDirection.rtl,
                     child: TextField(
+                      onChanged: (value) {
+                        onChangeFunction(value, 'phone1');
+                      },
                       decoration: InputDecoration(
                         labelText: 'رقم الجوال',
-                        errorText: null,
+                        errorText: dataErrorMessage['phone1'],
                       ),
                     ),
                   ),
@@ -115,9 +181,12 @@ class _SignUpHotelState extends State<SignUpHotel> {
                   child: Directionality(
                     textDirection: TextDirection.rtl,
                     child: TextField(
+                      onChanged: (value) {
+                        onChangeFunction(value, 'phone2');
+                      },
                       decoration: InputDecoration(
                         labelText: 'رقم الجوال',
-                        errorText: null,
+                        errorText: dataErrorMessage['phone2'],
                       ),
                     ),
                   ),
@@ -131,9 +200,12 @@ class _SignUpHotelState extends State<SignUpHotel> {
           Directionality(
             textDirection: TextDirection.rtl,
             child: TextField(
+              onChanged: (value) {
+                onChangeFunction(value, 'email');
+              },
               decoration: InputDecoration(
                 labelText: 'الايميل',
-                errorText: null,
+                errorText: dataErrorMessage['email'],
               ),
             ),
           ),
@@ -147,8 +219,9 @@ class _SignUpHotelState extends State<SignUpHotel> {
                   style: TextStyle(fontWeight: FontWeight.w900),
                 ),
                 DropdownWidget(
-                    discountValue,
-                    [ '0',
+                    data['discountValue'],
+                    [
+                      '0',
                       '10',
                       '20',
                       '30',
@@ -163,7 +236,7 @@ class _SignUpHotelState extends State<SignUpHotel> {
                     80,
                     0, (value) {
                   setState(() {
-                    discountValue = value;
+                    data['discountValue'] = value;
                   });
                 }),
               ],
@@ -189,13 +262,13 @@ class _SignUpHotelState extends State<SignUpHotel> {
                       onRated: (v) {
                         print(v);
                         setState(() {
-                          starRating = v;
+                          data['starRating'] = v;
                         });
                       },
                       starCount: 5,
                       filledIconData: Icons.star,
                       halfFilledIconData: Icons.star_half,
-                      rating: starRating,
+                      rating: data['starRating'].toDouble(),
                       size: 30.0,
                       color: Colors.amberAccent,
                       borderColor: Colors.amberAccent,
@@ -209,8 +282,8 @@ class _SignUpHotelState extends State<SignUpHotel> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              ButtonChildWidget("رفع صورة", Color(0xFFF7BB85), 15, 100),
-              ButtonChildWidget("رفع فديو", Color(0xFFF7BB85), 15, 100),
+              ButtonChildWidget("رفع صورة", mainAppColor, 15, 100),
+              ButtonChildWidget("رفع فديو", mainAppColor, 15, 100),
             ],
           ),
           SizedBox(
@@ -219,9 +292,12 @@ class _SignUpHotelState extends State<SignUpHotel> {
           Directionality(
             textDirection: TextDirection.rtl,
             child: TextField(
+              onChanged: (value) {
+                onChangeFunction(value, 'password');
+              },
               decoration: InputDecoration(
                 labelText: 'كلمة المرور',
-                errorText: null,
+                errorText: dataErrorMessage['password'],
               ),
             ),
           ),
@@ -231,9 +307,12 @@ class _SignUpHotelState extends State<SignUpHotel> {
           Directionality(
             textDirection: TextDirection.rtl,
             child: TextField(
+              onChanged: (value) {
+                onChangeFunction(value, 'confirmPassword');
+              },
               decoration: InputDecoration(
                 labelText: 'تاكيد كلمة المرور',
-                errorText: null,
+                errorText: dataErrorMessage['confirmPassword'],
               ),
             ),
           ),
@@ -251,7 +330,7 @@ class _SignUpHotelState extends State<SignUpHotel> {
                   });
                 },
                 value: checkBoxValue,
-                activeColor: Color(0xFFF7BB85),
+                activeColor: mainAppColor,
               ),
               Text(
                 'اوافق على الشروط و الاحكام',
@@ -262,12 +341,61 @@ class _SignUpHotelState extends State<SignUpHotel> {
           SizedBox(
             height: 35,
           ),
-          ButtonChildWidget("تسجيل حساب", Color(0xFFF7BB85), 18, 150),
+          InkWell(
+              onTap: () {
+                print(check());
+              },
+              child: ButtonChildWidget("تسجيل حساب", mainAppColor, 18, 150)),
           SizedBox(
             height: 35,
           ),
         ],
       ),
     );
+  }
+
+  onChangeFunction(value, String variableName) {
+    setState(() {
+      data[variableName] = value;
+      dataErrorMessage[variableName] = null;
+    });
+  }
+
+  check() {
+    bool check = true;
+    data.forEach((key, value) {
+      if (value == null) {
+        print('$key   $value');
+        setState(() {
+          dataErrorMessage[key] = "من فضلك اكمل هذه الخانة";
+        });
+        check = false;
+      }
+    });
+
+    return check;
+  }
+
+  locationTextHandler() {
+    if (data['address'] != null) {
+      return Container(
+          width: 150,
+          margin: EdgeInsets.only(right: 5),
+          padding: EdgeInsets.all(5),
+          decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+          child: Text(
+            data['address'],
+            style: TextStyle(fontSize: 13, color: mainAppColor),
+          ));
+    } else if (dataErrorMessage['address'] != null) {
+      return Container(
+        width: 150,
+        margin: EdgeInsets.only(right: 5),
+        padding: EdgeInsets.all(5),
+          child: Text("من فضلك اختر مكان على الخريطة" , style: TextStyle(fontSize: 12, color: Colors.red)),
+      );
+    } else {
+      return Container();
+    }
   }
 }

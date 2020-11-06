@@ -10,7 +10,7 @@ class HotelDetailsWidget extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return  Container(
       width: size.width / 1.9,
-      margin: EdgeInsets.only(top: 20),
+      margin: EdgeInsets.only(top: 10),
       child: Column(
           textDirection: TextDirection.rtl,
 
@@ -29,6 +29,7 @@ class HotelDetailsWidget extends StatelessWidget {
             ),
             SmoothStarRating(
                 allowHalfRating: false,
+                isReadOnly: true,
                 starCount: 5,
                 filledIconData: Icons.star,
                 halfFilledIconData: Icons.star_half,

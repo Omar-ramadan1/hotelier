@@ -11,7 +11,7 @@ class HotelImageWidget extends StatelessWidget {
         children: [
           Container(
             width: size.width / 2.65,
-            height: size.height / 3.2,
+            height: size.height / 3.1,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(topRight: Radius.circular(17) , bottomRight: Radius.circular(17)),
                  image: DecorationImage(image:NetworkImage("https://image.freepik.com/free-photo/image-human-brain_99433-298.jpg"),
