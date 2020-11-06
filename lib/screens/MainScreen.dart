@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hotelier/screens/PaymentScreen.dart';
 
 import 'package:hotelier/widgets/AppBarWidget.dart';
 import 'package:hotelier/widgets/AppDrawerWidget.dart';
@@ -33,7 +34,7 @@ class MainScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-               MainScreenCardWidget("assets/card.jpg",null),
+               MainScreenCardWidget("assets/card.jpg",(){Navigator.of(context).popAndPushNamed (PaymentScreen.routeName);}),
                  MainScreenCardWidget("assets/specialOffers.jpg",(){Navigator.of(context).popAndPushNamed (SpecialOfferScreen.routeName);}),
                  MainScreenCardWidget("assets/Group 1.jpg",(){Navigator.of(context).popAndPushNamed (OfferDetailsScreen.routeName);}),
             ],

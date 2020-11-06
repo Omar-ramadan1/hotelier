@@ -14,7 +14,8 @@ class HotelImageWidget extends StatelessWidget {
             height: size.height / 3.2,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(topRight: Radius.circular(17) , bottomRight: Radius.circular(17)),
-                //  image: DecorationImage(image:NetworkImage("https://image.freepik.com/free-photo/image-human-brain_99433-298.jpg")),
+                 image: DecorationImage(image:NetworkImage("https://image.freepik.com/free-photo/image-human-brain_99433-298.jpg"),
+                 fit: BoxFit.cover),
                 color: Colors.red
             ),
           ),
@@ -24,8 +25,11 @@ class HotelImageWidget extends StatelessWidget {
             width: 70,
             height: 50,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(topLeft: Radius.elliptical(400, 400) , topRight: Radius.elliptical(400, 400)),
-              color: Colors.lightGreen,
+              borderRadius: BorderRadius.only(topLeft: Radius.elliptical(400, 400) , topRight: Radius.elliptical(400, 400),
+              
+              ),
+             // image: NetworkImage(""),
+              color: Colors.yellow,
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.7),
@@ -33,6 +37,7 @@ class HotelImageWidget extends StatelessWidget {
                   blurRadius: 6,
                   offset: Offset(0, 3), // changes position of shadow
                 ),
+                
               ],
             ),
             child: Column(

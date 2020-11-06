@@ -11,10 +11,12 @@ class DropdownWidget extends StatelessWidget {
     return  Container(
       width: width,
       child: DropdownButton<String>(
+        
         isExpanded: true,
         iconSize: iconSize,
         iconEnabledColor: Colors.black,
         style: TextStyle(fontSize: 15 , ),
+        
 
         value: value,
         hint:  Text("Select item"),
@@ -22,6 +24,7 @@ class DropdownWidget extends StatelessWidget {
           onChange(value);
 
         },
+        
         items: values.map(( user) {
           return  DropdownMenuItem<String>(
             value: user,

@@ -1,11 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:hotelier/widgets/AppBarWidget.dart';
+import 'package:hotelier/widgets/DropdownWidget.dart';
 import 'package:hotelier/widgets/bottomBarWidget.dart';
 
 
-class Complaining extends StatelessWidget {
+
+class Complaining extends StatefulWidget {
   static const routeName = '/Complaining';
+
   @override
+  _ComplainingState createState() => _ComplainingState();
+}
+
+
+class _ComplainingState extends State<Complaining> {
+  
+
+String user;
+String discountValue;
+  
+
+
+    
+  @override
+
+  
+ 
   Widget build(BuildContext context) {
     
     return Scaffold(
@@ -57,7 +77,7 @@ class Complaining extends StatelessWidget {
                                 
                                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(45)),
                                 hintText: "                  "
-                              )
+                              ),
                             ),
                             Row(
                             children: [
@@ -65,13 +85,45 @@ class Complaining extends StatelessWidget {
                               Text("الموضوع",style: TextStyle(fontSize: 25,),textAlign: TextAlign.left,),
                             ],
                           ),
-                            TextField(
-                              decoration:InputDecoration(
+                         
+               
+                Directionality(
+                          textDirection: TextDirection.rtl,
+
+                                  child: DropdownButtonFormField(
+                    decoration: InputDecoration(
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(45)),
+                    labelText: "شكاوي/مقترحات",
+                   labelStyle: TextStyle(fontSize:25)
+                    
+                    
+
+
+
+                    ) ,
+                    value: user,
+                    
+                    items:
+                    [DropdownMenuItem<String>(child:SingleChildScrollView(
+                                          child: Column(children: [
+                                            SizedBox(height:20),
+                      Text("شكاوي",style: TextStyle(fontSize:30),),
+                      Text("مقترحات",style: TextStyle(fontSize:30),)],),
+                    ))],
+                     onChanged: (value){
+                       
+                     },
+                     ),
+                ),
+                  
+                            // TextField(
+                            //   decoration:InputDecoration(
                                 
-                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(45)),
-                                hintText: "                  "
-                              )
-                            ),
+                            //     border: OutlineInputBorder(borderRadius: BorderRadius.circular(45)),
+                            //     hintText: "            "
+                            //   )
+                            // ),
+                           
                             
                             
                             

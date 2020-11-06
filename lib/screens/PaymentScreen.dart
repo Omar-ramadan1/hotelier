@@ -44,7 +44,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               MainScreenCardWidget("assets/paymentContainer.jpg",null),
-              SizedBox(height: 20),
+              Text("سعر البطاقه 150 ريال شامل التوصيل",style: TextStyle(fontWeight:FontWeight.bold,),),
+                           SizedBox(height: 20),
               CreditCardChoiceWidget(cardValue , changeCardValueFunction),
               SizedBox(height: 20),
               Text(
@@ -64,6 +65,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 TextDirection.rtl,
                 "0000    0000    0000   0000",
               ),
+
               SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -37,7 +37,8 @@ dependencies:
   google_maps_flutter: ^1.0.5
   geolocator: ^6.1.0
   geocoder: ^0.2.1
-  flutter_google_places: ^0.2.6
+  flutter_google_places: ^0.2.6,
+  dropdownfield: ^1.0.3
 
 
 dev_dependencies:
