@@ -37,7 +37,7 @@ dependencies:
   google_maps_flutter: ^1.0.5
   geolocator: ^6.1.0
   geocoder: ^0.2.1
-  flutter_google_places: ^0.2.6,
+  flutter_google_places: ^0.2.6
   dropdownfield: ^1.0.3
 
 
@@ -79,4 +79,10 @@ flutter:
     - assets/mada_logo.png
     - assets/appDrawerLogo.jpeg
     - assets/SplashScreenImage.jpg
-    
+    - assets/settingAppBarImage.jpg
+    - assets/hotelAppBarImage.jpg
+    - assets/compainAppBarImage.jpg
+    - assets/paymentAppBarImage.jpg
+    - assets/rightIconImage.jpg
+    - assets/likePhoto.jpg
+    - assets/ContactAppBarImage.jpg

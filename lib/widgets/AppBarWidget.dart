@@ -16,15 +16,12 @@ final String text;
         child: Container(
           height: 160,
           child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                // padding:
-                //           EdgeInsets.symmetric(vertical: 8.0, horizontal: 94.0),
-                //       transform: Matrix4.rotationZ(-8 * pi / 180)
-                //         ..translate(-10.0),
-                child: Text(text,style: TextStyle(fontSize:30,color:Colors.white,fontWeight: FontWeight.bold),)),
+                padding: EdgeInsets.only(top: 0),
+                child: Text(text,style: TextStyle(fontSize:30,color:Colors.white,fontWeight: FontWeight.w800),),),
             ],
           ),
           decoration: BoxDecoration(

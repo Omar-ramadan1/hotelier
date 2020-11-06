@@ -9,6 +9,7 @@ import 'package:hotelier/screens/termsOfservice.dart';
 
 import 'DrawerTabsWidget.dart';
 import '../Clippers/AppBarClipper.dart';
+
 class LogedInDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class LogedInDrawer extends StatelessWidget {
                 ),
                 Center(
                   child: Container(
-                    margin: EdgeInsets.only(top:40),
+                    margin: EdgeInsets.only(top: 40),
                     decoration: BoxDecoration(
                       color: Color(0xFFBD954F),
                       borderRadius: BorderRadius.all(Radius.circular(60)),
@@ -54,47 +55,72 @@ class LogedInDrawer extends StatelessWidget {
                 )
               ],
             ),
+            DrawerTabsWidget(Icons.person, "حسابى", () {
+              Navigator.of(context).pushNamed(EditUserData.routeName);
+            }),
+            SizedBox(
+              height: 20,
+            ),
             InkWell(
-              child: DrawerTabsWidget(Icons.person , "حسابى",(){Navigator.of(context).popAndPushNamed (EditUserData.routeName);}),
-              
+              child: DrawerTabsWidget(Icons.settings, "1الاعدادات", () {
+                Navigator.of(context).popAndPushNamed(EditUserData.routeName);
+              }),
             ),
-                        SizedBox(height: 20,),
-
-                   InkWell(
-              child: DrawerTabsWidget(Icons.person , "حسابى",(){Navigator.of(context).popAndPushNamed (EditHotelData.routeName);}),
-              
+            SizedBox(
+              height: 20,
             ),
-            SizedBox(height: 20,),
             InkWell(
-              child: DrawerTabsWidget(Icons.settings , "الاعدادات",(){Navigator.of(context).popAndPushNamed(EditUserData.routeName);}),
+              child: DrawerTabsWidget(Icons.settings, "الاعدادات2", () {
+                Navigator.of(context).popAndPushNamed(EditHotelData.routeName);
+              }),
             ),
-            SizedBox(height: 20,),
-             InkWell(
-              child: DrawerTabsWidget(Icons.settings , "الاعدادات",(){Navigator.of(context).popAndPushNamed(EditHotelData.routeName);}),
+            SizedBox(
+              height: 20,
             ),
-            SizedBox(height: 20,),
             InkWell(
-              child: DrawerTabsWidget(Icons.phone , "للشكاوى و المقترحات",(){Navigator.of(context).popAndPushNamed(Complaining.routeName);}),
+              child: DrawerTabsWidget(Icons.phone, "للشكاوى و المقترحات", () {
+                Navigator.of(context).popAndPushNamed(Complaining.routeName);
+              }),
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             InkWell(
-              child: DrawerTabsWidget(Icons.star_rate_sharp , "عن التطبيق",(){Navigator.of(context).popAndPushNamed(TermsOfService.routeName);}),
+              child: DrawerTabsWidget(Icons.star_rate_sharp, "عن التطبيق", () {
+                Navigator.of(context).popAndPushNamed(TermsOfService.routeName);
+              }),
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             InkWell(
-              child: DrawerTabsWidget(CupertinoIcons.money_dollar , "المدفوعات",(){Navigator.of(context).popAndPushNamed(PaymentScreen.routeName);}),
+              child: DrawerTabsWidget(CupertinoIcons.money_dollar, "المدفوعات",
+                  () {
+                Navigator.of(context).popAndPushNamed(PaymentScreen.routeName);
+              }),
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             InkWell(
-              child: DrawerTabsWidget(Icons.loop  , "تجديد الاشتراك",(){Navigator.of(context).popAndPushNamed(EditUserData.routeName);}),
+              child: DrawerTabsWidget(Icons.loop, "تجديد الاشتراك", () {
+                Navigator.of(context).popAndPushNamed(EditUserData.routeName);
+              }),
             ),
-                        SizedBox(height: 20,),
-
-             InkWell(
-              child: DrawerTabsWidget(Icons.logout  , " تسجيل الخروج",(){Navigator.of(context).popAndPushNamed(RegistrationScreen.routeName);}),
+            SizedBox(
+              height: 20,
             ),
-            SizedBox(height: 20,),
-            Image.asset('assets/appDrawerLogo.jpeg', width: 80,),
+            DrawerTabsWidget(Icons.logout, "تسجيل", () {
+              Navigator.of(context)
+                  .popAndPushNamed(RegistrationScreen.routeName);
+            }),
+            SizedBox(
+              height: 20,
+            ),
+            Image.asset(
+              'assets/appDrawerLogo.jpeg',
+              width: 80,
+            ),
           ],
         ),
       ),

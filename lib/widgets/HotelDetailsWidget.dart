@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hotelier/screens/OfferDetailsScreen.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 import 'ButtonWidget.dart';
@@ -37,8 +38,11 @@ class HotelDetailsWidget extends StatelessWidget {
                 borderColor: Colors.amberAccent,
                 spacing:0.0
             ),
-            ButtonChildWidget(
-                "المزيد من التفاصيل", Colors.transparent, 15, 120),
+            InkWell(
+              onTap: (){Navigator.of(context).pushNamed(OfferDetailsScreen.routeName);},
+              child: ButtonChildWidget(
+                  "المزيد من التفاصيل", Colors.transparent, 15, 120),
+            ),
           ]),
     );
   }

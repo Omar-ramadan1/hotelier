@@ -11,9 +11,9 @@ class SignUpHotel extends StatefulWidget {
 }
 
 class _SignUpHotelState extends State<SignUpHotel> {
-String discountValue ;
-double starRating = 0;
-bool checkBoxValue = false;
+  String discountValue = '0', cityName = 'الرياض';
+  double starRating = 0;
+  bool checkBoxValue = false;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -30,7 +30,9 @@ bool checkBoxValue = false;
               ),
             ),
           ),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           Directionality(
             textDirection: TextDirection.rtl,
             child: TextField(
@@ -40,25 +42,23 @@ bool checkBoxValue = false;
               ),
             ),
           ),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           Container(
             width: size.width,
             child: Row(
               textDirection: TextDirection.rtl,
               mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
                   width: 100,
-                  child: Directionality(
-                    textDirection: TextDirection.rtl,
-                    child: TextField(
-                      decoration: InputDecoration(
-                        labelText: 'المدينة',
-                        errorText: null,
-                      ),
-                    ),
-                  ),
+                  child:  DropdownWidget(cityName , ['الرياض' , 'مكة' ], 80 , 0 ,(value){
+                    setState(() {
+                      cityName = value;
+                    });
+                  }),
                 ),
                 Container(
                   width: 100,
@@ -80,12 +80,17 @@ bool checkBoxValue = false;
             child: Row(
               textDirection: TextDirection.rtl,
               children: [
-                Text("العنوان على الخريطة" , style: TextStyle(fontWeight: FontWeight.w900),),
+                Text(
+                  "العنوان على الخريطة",
+                  style: TextStyle(fontWeight: FontWeight.w900),
+                ),
                 Icon(CupertinoIcons.map_pin_ellipse)
               ],
             ),
           ),
-          SizedBox(height: 25,),
+          SizedBox(
+            height: 25,
+          ),
           Container(
             width: size.width,
             child: Row(
@@ -120,7 +125,9 @@ bool checkBoxValue = false;
               ],
             ),
           ),
-          SizedBox(height: 25,),
+          SizedBox(
+            height: 25,
+          ),
           Directionality(
             textDirection: TextDirection.rtl,
             child: TextField(
@@ -130,15 +137,31 @@ bool checkBoxValue = false;
               ),
             ),
           ),
-
-
           Container(
             margin: EdgeInsets.only(top: 25),
             child: Row(
               textDirection: TextDirection.rtl,
               children: [
-                Text("نسبة الخصم المقدمة" , style: TextStyle(fontWeight: FontWeight.w900),),
-                DropdownWidget(discountValue , ['10' , '20' , '30', '40' ,'50' , '60' , '70', '80' ,'90', '100'], 80 , 0 ,(value){
+                Text(
+                  "نسبة الخصم المقدمة",
+                  style: TextStyle(fontWeight: FontWeight.w900),
+                ),
+                DropdownWidget(
+                    discountValue,
+                    [ '0',
+                      '10',
+                      '20',
+                      '30',
+                      '40',
+                      '50',
+                      '60',
+                      '70',
+                      '80',
+                      '90',
+                      '100'
+                    ],
+                    80,
+                    0, (value) {
                   setState(() {
                     discountValue = value;
                   });
@@ -146,16 +169,21 @@ bool checkBoxValue = false;
               ],
             ),
           ),
-          SizedBox(height: 25,),
+          SizedBox(
+            height: 25,
+          ),
           Row(
             textDirection: TextDirection.rtl,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Column(
-                crossAxisAlignment:  CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 textDirection: TextDirection.rtl,
                 children: [
-                  Text("عدد النجوم" , style: TextStyle(fontSize: 18 , fontWeight: FontWeight.w800),),
+                  Text(
+                    "عدد النجوم",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
+                  ),
                   SmoothStarRating(
                       allowHalfRating: true,
                       onRated: (v) {
@@ -171,10 +199,7 @@ bool checkBoxValue = false;
                       size: 30.0,
                       color: Colors.amberAccent,
                       borderColor: Colors.amberAccent,
-                      spacing:0.0
-                  ),
-
-
+                      spacing: 0.0),
                 ],
               ),
             ],
@@ -184,11 +209,13 @@ bool checkBoxValue = false;
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              ButtonChildWidget("رفع صورة" , Color(0xFFF7BB85) , 15 , 100),
-              ButtonChildWidget("رفع فديو" , Color(0xFFF7BB85) , 15 , 100),
+              ButtonChildWidget("رفع صورة", Color(0xFFF7BB85), 15, 100),
+              ButtonChildWidget("رفع فديو", Color(0xFFF7BB85), 15, 100),
             ],
           ),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           Directionality(
             textDirection: TextDirection.rtl,
             child: TextField(
@@ -198,7 +225,9 @@ bool checkBoxValue = false;
               ),
             ),
           ),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           Directionality(
             textDirection: TextDirection.rtl,
             child: TextField(
@@ -208,12 +237,14 @@ bool checkBoxValue = false;
               ),
             ),
           ),
-          SizedBox(height: 25,),
+          SizedBox(
+            height: 25,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Checkbox(
-                onChanged: (value){
+                onChanged: (value) {
                   print(value);
                   setState(() {
                     checkBoxValue = value;
@@ -228,9 +259,13 @@ bool checkBoxValue = false;
               ),
             ],
           ),
-          SizedBox(height: 35,),
-          ButtonChildWidget("تسجيل حساب" , Color(0xFFF7BB85) , 18 , 150),
-          SizedBox(height: 35,),
+          SizedBox(
+            height: 35,
+          ),
+          ButtonChildWidget("تسجيل حساب", Color(0xFFF7BB85), 18, 150),
+          SizedBox(
+            height: 35,
+          ),
         ],
       ),
     );

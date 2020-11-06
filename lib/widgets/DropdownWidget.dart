@@ -9,34 +9,34 @@ class DropdownWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Container(
+   padding: EdgeInsets.only(top: 10),
       width: width,
-      child: DropdownButton<String>(
-        
-        isExpanded: true,
-        iconSize: iconSize,
-        iconEnabledColor: Colors.black,
-        style: TextStyle(fontSize: 15 , ),
-        
 
-        value: value,
-        hint:  Text("Select item"),
-        onChanged: (value) {
-          onChange(value);
-
-        },
-        
-        items: values.map(( user) {
-          return  DropdownMenuItem<String>(
-            value: user,
-            child: Container(
-              child: Text(
-                user,
-                textAlign: TextAlign.center,
-                style:  TextStyle(color: Colors.black),
+      child: Directionality(
+        textDirection: TextDirection.rtl,
+        child: DropdownButton<String>(
+          isExpanded: true,
+          iconSize: iconSize,
+          iconEnabledColor: Colors.black,
+          style: TextStyle(fontSize: 15 , ),
+          value: value,
+          hint:  Text("Select item"),
+          onChanged: (value) {
+            onChange(value);
+          },
+          items: values.map(( user) {
+            return  DropdownMenuItem<String>(
+              value: user,
+              child: Container(
+                child: Text(
+                  user,
+                  textAlign: TextAlign.center,
+                  style:  TextStyle(color: Colors.black),
+                ),
               ),
-            ),
-          );
-        }).toList(),
+            );
+          }).toList(),
+        ),
       ),
     );
   }

@@ -5,8 +5,6 @@ import 'package:hotelier/widgets/AppBarWidget.dart';
 import 'package:hotelier/widgets/AppDrawerWidget.dart';
 import 'package:hotelier/widgets/MainScreenCardWidget.dart';
 import 'package:hotelier/widgets/bottomBarWidget.dart';
-
-import 'OfferDetailsScreen.dart';
 import 'SpecialOfferScreen.dart';
 
 class MainScreen extends StatelessWidget {
@@ -34,14 +32,14 @@ class MainScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-               MainScreenCardWidget("assets/card.jpg",(){Navigator.of(context).popAndPushNamed (PaymentScreen.routeName);}),
-                 MainScreenCardWidget("assets/specialOffers.jpg",(){Navigator.of(context).popAndPushNamed (SpecialOfferScreen.routeName);}),
-                 MainScreenCardWidget("assets/Group 1.jpg",(){Navigator.of(context).popAndPushNamed (OfferDetailsScreen.routeName);}),
+               MainScreenCardWidget("assets/card.jpg",null),
+                 MainScreenCardWidget("assets/specialOffers.jpg",(){Navigator.of(context).pushNamed(SpecialOfferScreen.routeName);}),
+                 MainScreenCardWidget("assets/Group 1.jpg",(){Navigator.of(context).pushNamed(SpecialOfferScreen.routeName);}),
             ],
           ),
         ),
       ),
-   //   bottomNavigationBar : BottomBarWidget(),
+      bottomNavigationBar : BottomBarWidget(),
     );
   }
 }

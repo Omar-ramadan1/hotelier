@@ -10,13 +10,22 @@ class TermsOfService extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       drawerScrimColor: Colors.transparent,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(150.0),
+        preferredSize: Size.fromHeight(125.0),
         child: AppBar(
+          automaticallyImplyLeading: true,
+          actions: [
+            IconButton(
+              icon: Icon(Icons.arrow_forward_rounded, color: Colors.white),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ],
           backgroundColor: Colors.white,
           shadowColor: Colors.transparent,
-          flexibleSpace: AppBarWidget("assets/hotel-bell.jpg","الشروط والاحكام"),
+          flexibleSpace:
+          AppBarWidget("assets/hotelAppBarImage.jpg", "الشروط و الاحكام"),
         ),
       ),
       drawerEdgeDragWidth: 200,

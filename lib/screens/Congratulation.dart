@@ -13,13 +13,22 @@ class Congratulation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
            drawerScrimColor: Colors.transparent,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(150.0),
+        preferredSize: Size.fromHeight(125.0),
         child: AppBar(
+          automaticallyImplyLeading: true,
+          actions: [
+            IconButton(
+              icon: Icon(Icons.arrow_forward_rounded, color: Colors.white),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ],
           backgroundColor: Colors.white,
           shadowColor: Colors.transparent,
-          flexibleSpace: AppBarWidget("assets/hotel-bell.jpg",""),
+          flexibleSpace:
+          AppBarWidget("assets/hotelAppBarImage.jpg", ""),
         ),
       ),
       drawerEdgeDragWidth: 200,
@@ -32,10 +41,7 @@ class Congratulation extends StatelessWidget {
               width: 250,
              // child:Text("jhjk") ,
                 decoration: BoxDecoration(
-        image: DecorationImage(image: 
-         NetworkImage(
-"https://e7.pngegg.com/pngimages/7/748/png-clipart-facebook-like-button-chemical-reaction-computer-icons-facebook-blue-text-thumbnail.png" 
-        ),
+        image: DecorationImage(image: Image.asset("assets/likePhoto.jpg").image,
         fit: BoxFit.cover
         
         ),

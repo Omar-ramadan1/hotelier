@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hotelier/widgets/AppBarWidget.dart';
+import 'package:hotelier/widgets/AppDrawerWidget.dart';
 import 'package:hotelier/widgets/ButtonWidget.dart';
 import 'package:hotelier/widgets/DropdownWidget.dart';
+import 'package:hotelier/widgets/SignUpButtonWidget.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class EditHotelData extends StatefulWidget {
@@ -13,7 +15,7 @@ class EditHotelData extends StatefulWidget {
 }
 
 class _EditHotelDataState extends State<EditHotelData> {
-  String discountValue ;
+  String discountValue = '0' , cityName = 'الرياض';
   double starRating = 0;
   bool checkBoxValue = false;
   @override
@@ -23,18 +25,33 @@ class _EditHotelDataState extends State<EditHotelData> {
       backgroundColor: Color(0xFFFFFFFF),
       drawerScrimColor: Colors.transparent,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(150.0),
+        preferredSize: Size.fromHeight(125.0),
         child: AppBar(
+          automaticallyImplyLeading: true,
+          actions: [
+            IconButton(
+              icon: Icon(Icons.arrow_forward_rounded, color: Colors.white),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ],
           backgroundColor: Colors.white,
           shadowColor: Colors.transparent,
-          flexibleSpace: AppBarWidget("assets/hotel-bell.jpg",""),
+          flexibleSpace: AppBarWidget("assets/settingAppBarImage.jpg","الاعدادات"),
         ),
       ),
+      drawerEdgeDragWidth: 200,
+      drawer: AppDrawerWidget(),
       body: SingleChildScrollView(
         child: Container(
          padding: EdgeInsets.all(15),
           child: Column(
             children: [
+              Text("تعديل حساب"  , style: TextStyle(fontSize: 30 , fontWeight: FontWeight.w800),),
+              SignUpButtonWidget(
+                  "فندق المعمرين",
+                  Icons.home_work_outlined,
+                  Color(0xFFF7BB85)
+              ),
               Row(
                 textDirection: TextDirection.rtl,
                 children: [
@@ -83,18 +100,11 @@ class _EditHotelDataState extends State<EditHotelData> {
                     Row(
                       textDirection: TextDirection.rtl,
                       children: [
-                        Container(
-                          width: 100,
-                          child: Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: TextField(
-                              decoration: InputDecoration(
-                                labelText: 'المدينة',
-                                errorText: null,
-                              ),
-                            ),
-                          ),
-                        ),
+                        DropdownWidget(cityName , ['الرياض' , 'مكة' ], 80 , 0 ,(value){
+                          setState(() {
+                            cityName = value;
+                          });
+                        }),
                         Icon(Icons.edit),
                       ],
                     ),
@@ -137,41 +147,64 @@ class _EditHotelDataState extends State<EditHotelData> {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Container(
-                      width: 100,
-                      child: Directionality(
-                        textDirection: TextDirection.rtl,
-                        child: TextField(
-                          decoration: InputDecoration(
-                            labelText: 'رقم الجوال',
-                            errorText: null,
+                    Row(
+                      textDirection: TextDirection.rtl,
+                      children: [
+                        Container(
+                          width: 100,
+                          child: Directionality(
+                            textDirection: TextDirection.rtl,
+                            child: TextField(
+                              decoration: InputDecoration(
+                                labelText: 'رقم الجوال',
+                                errorText: null,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                        Icon(Icons.edit),
+                      ],
                     ),
-                    Container(
-                      width: 100,
-                      child: Directionality(
-                        textDirection: TextDirection.rtl,
-                        child: TextField(
-                          decoration: InputDecoration(
-                            labelText: 'رقم الجوال',
-                            errorText: null,
+                    Row(
+                      textDirection: TextDirection.rtl,
+                      children: [
+                        Container(
+                          width: 100,
+                          child: Directionality(
+                            textDirection: TextDirection.rtl,
+                            child: TextField(
+                              decoration: InputDecoration(
+                                labelText: 'رقم الجوال',
+                                errorText: null,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                        Icon(Icons.edit),
+                      ],
                     ),
                   ],
                 ),
               ),
               SizedBox(height: 25,),
-              Directionality(
-                textDirection: TextDirection.rtl,
-                child: TextField(
-                  decoration: InputDecoration(
-                    labelText: 'الايميل',
-                    errorText: null,
-                  ),
+              Container(
+                child: Row(
+                  textDirection: TextDirection.rtl,
+                  children: [
+                    Container(
+                      width: size.width /1.233,
+                      child: Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: TextField(
+                          decoration: InputDecoration(
+                            labelText: "الايميل",
+                            errorText: null,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Icon(Icons.edit),
+                  ],
                 ),
               ),
 
@@ -181,8 +214,11 @@ class _EditHotelDataState extends State<EditHotelData> {
                 child: Row(
                   textDirection: TextDirection.rtl,
                   children: [
-                    Text("نسبة الخصم المقدمة" , style: TextStyle(fontWeight: FontWeight.w900),),
-                    DropdownWidget(discountValue , ['10' , '20' , '30', '40' ,'50' , '60' , '70', '80' ,'90', '100'], 80 , 0 ,(value){
+                    Container(
+                      margin:EdgeInsets.only(left: 30),
+                        child: Text("نسبة الخصم المقدمة" , style: TextStyle(fontWeight: FontWeight.w900),),
+                    ),
+                    DropdownWidget(discountValue , ['0' ,'10' , '20' , '30', '40' ,'50' , '60' , '70', '80' ,'90', '100'], 30 , 0 ,(value){
                       setState(() {
                         discountValue = value;
                       });
@@ -252,28 +288,8 @@ class _EditHotelDataState extends State<EditHotelData> {
                   ),
                 ),
               ),
-              SizedBox(height: 25,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Checkbox(
-                    onChanged: (value){
-                      print(value);
-                      setState(() {
-                        checkBoxValue = value;
-                      });
-                    },
-                    value: checkBoxValue,
-                    activeColor: Color(0xFFF7BB85),
-                  ),
-                  Text(
-                    'اوافق على الشروط و الاحكام',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ],
-              ),
               SizedBox(height: 35,),
-              ButtonChildWidget("تسجيل حساب" , Color(0xFFF7BB85) , 18 , 150),
+              ButtonChildWidget("تعديل حساب" , Color(0xFFF7BB85) , 18 , 150),
               SizedBox(height: 35,),
             ],
           ),

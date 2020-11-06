@@ -1,22 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:hotelier/widgets/AppBarWidget.dart';
+import 'package:hotelier/widgets/AppDrawerWidget.dart';
 import 'package:hotelier/widgets/ButtonWidget.dart';
 import 'package:hotelier/widgets/bottomBarWidget.dart';
 
 class Contact extends StatelessWidget {
   static const routeName = '/Contact';
   @override
+  //  flexibleSpace: AppBarWidget("assets/ContactAppBarImage.jpg","اتصل بنا"),
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       drawerScrimColor: Colors.transparent,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(150.0),
+        preferredSize: Size.fromHeight(125.0),
         child: AppBar(
+          automaticallyImplyLeading: true,
+          actions: [
+            IconButton(
+              icon: Icon(Icons.arrow_forward_rounded, color: Colors.white),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ],
           backgroundColor: Colors.white,
           shadowColor: Colors.transparent,
-          flexibleSpace: AppBarWidget("assets/hotel-bell.jpg","       اتصل بنا\n CONTACT US"),
+          flexibleSpace: AppBarWidget("assets/ContactAppBarImage.jpg","اتصل بنا"),
         ),
       ),
+      drawerEdgeDragWidth: 200,
+      drawer: AppDrawerWidget(),
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.all(20),

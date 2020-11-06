@@ -22,7 +22,7 @@ class BottomBarWidget extends StatelessWidget {
           children: [
             GestureDetector(
 
-              onTap: (){},
+              onTap: (){Navigator.of(context).pushNamed (PaymentScreen.routeName);},
               child: Container(
                 margin: EdgeInsets.only(top: 5),
                 child: Column(
@@ -30,7 +30,7 @@ class BottomBarWidget extends StatelessWidget {
                     Icon(Icons.monetization_on_outlined),
                     InkWell(child: Text("المدفوعات" , style: TextStyle(fontWeight: FontWeight.w900),
                     ),
-                    onTap: (){Navigator.of(context).popAndPushNamed (PaymentScreen.routeName);},
+                    onTap: (){Navigator.of(context).pushNamed (PaymentScreen.routeName);},
                     )
 
                   ],
@@ -39,7 +39,7 @@ class BottomBarWidget extends StatelessWidget {
             ),
             GestureDetector(
 
-              onTap: (){},
+              onTap: (){Navigator.of(context).pushNamed(EditUserData.routeName);},
               child: Container(
                 margin: EdgeInsets.only(top: 5),
                 child: Column(
@@ -47,7 +47,7 @@ class BottomBarWidget extends StatelessWidget {
                     Icon(Icons.person),
                     InkWell(child: Text("حسابى" , style: TextStyle(fontWeight: FontWeight.w900),
                     ),
-                    onTap: (){Navigator.of(context).popAndPushNamed (EditUserData.routeName);},
+                    onTap: (){Navigator.of(context).pushNamed(EditUserData.routeName);},
                     )
 
                   ],
@@ -56,7 +56,7 @@ class BottomBarWidget extends StatelessWidget {
             ),
             GestureDetector(
 
-              onTap: (){},
+              onTap: (){Navigator.of(context).pushNamed(SpecialOfferScreen.routeName);},
               child: Container(
                 margin: EdgeInsets.only(top: 5),
                 child: Column(
@@ -64,7 +64,7 @@ class BottomBarWidget extends StatelessWidget {
                     Icon(Icons.card_giftcard_rounded),
                     InkWell(child: Text("العروض" , style: TextStyle(fontWeight: FontWeight.w900),
                     ),
-                    onTap: (){Navigator.of(context).popAndPushNamed (SpecialOfferScreen.routeName);},
+                    onTap: (){Navigator.of(context).pushNamed(SpecialOfferScreen.routeName);},
                     )
 
                   ],

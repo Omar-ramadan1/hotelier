@@ -57,12 +57,19 @@ List<DropdownMenuItem<Category>> _dropdownItems;
   }
 @override
   Widget build(BuildContext context) {
-
     return Scaffold(
+      backgroundColor: Colors.white,
       drawerScrimColor: Colors.transparent,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(150.0),
+        preferredSize: Size.fromHeight(125.0),
         child: AppBar(
+          automaticallyImplyLeading: true,
+          actions: [
+            IconButton(
+              icon: Icon(Icons.arrow_forward_rounded, color: Colors.white),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ],
           backgroundColor: Colors.white,
           shadowColor: Colors.transparent,
           flexibleSpace: AppBarWidget("assets/hotel-bell.jpg"," ${_selectedCategory.name}"),
@@ -79,31 +86,35 @@ List<DropdownMenuItem<Category>> _dropdownItems;
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Column(
-
                   children: [
                     Text(
                       "الفندق",
-                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                     ),
-                    DropdownWidget( عابدين" , ["عابدين" ,"اخر"] , 60 , 20,(value){print(value); }),
+
+                    DropdownWidget( 'عابدين' , ["عابدين" ,"اخر"] , 60 , 20,(value){print(value); }),
                   ],
                 ),
-
                 Column(
-
                   children: [
-                    Text("نسبه الخصم",
-                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    Text(
+                      "نسبه الخصم",
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                     ),
-                    DropdownWidget("10%" , ["10%" , "20%" , "30%" ] , 60 , 20,(value){print(value); }),
+                    DropdownWidget("10%", ["10%", "20%", "30%"], 60, 20,
+                        (value) {
+                      print(value);
+                    }),
                   ],
                 ),
-
                 Column(
-
                   children: [
-                    Text("التصنيف",
-                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    Text(
+                      "التصنيف",
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                     ),
                     //DropdownWidget("10%" , ["10%" , "20%" , "30%" ] , 60 , 20,(value){print(value); }),
                   DropdownButton(
@@ -117,15 +128,18 @@ List<DropdownMenuItem<Category>> _dropdownItems;
                   ],
                 ),
                 Column(
-
                   children: [
-                    Text("عدد النجوم",
-                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    Text(
+                      "عدد النجوم",
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                     ),
-                    DropdownWidget('1' , ['1','2','3','4','5'] , 40 , 20,(value){print(value); }),
+                    DropdownWidget('1', ['1', '2', '3', '4', '5'], 40, 20,
+                        (value) {
+                      print(value);
+                    }),
                   ],
                 ),
-
               ],
             ),
               
@@ -143,7 +157,7 @@ List<DropdownMenuItem<Category>> _dropdownItems;
           ],
         ),
       ),
-    //  bottomNavigationBar: BottomBarWidget(),
+      //  bottomNavigationBar: BottomBarWidget(),
     );
   }
 }
