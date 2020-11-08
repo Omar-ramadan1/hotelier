@@ -2,11 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hotelier/Constant/Constant.dart';
+import 'package:hotelier/Functions/UploadAssetImages.dart';
 import 'package:hotelier/screens/GetLocationScreen.dart';
 import 'package:hotelier/widgets/ButtonWidget.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 
 import 'DropdownWidget.dart';
 
@@ -26,13 +28,14 @@ class _SignUpHotelState extends State<SignUpHotel> {
     'phone1': null,
     'phone2': null,
     'email': null,
-    'imageURL': null,
+    'imageURL': [],
     'videoURL': null,
     'password': null,
     'address': null,
     'confirmPassword': null,
     'latitude': null,
-    'longitude': null
+    'longitude': null,
+    'isHotel' : true,
   };
 
   Map dataErrorMessage = {
@@ -282,7 +285,26 @@ class _SignUpHotelState extends State<SignUpHotel> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              ButtonChildWidget("رفع صورة", mainAppColor, 15, 100),
+              InkWell(
+                onTap: () async {
+                  List<Asset> resultList = List<Asset>();
+                  resultList = await MultiImagePicker.pickImages(
+                    maxImages: 10,
+                    enableCamera: false,
+                    cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
+                    materialOptions: MaterialOptions(
+                      actionBarColor: "#abcdef",
+                      actionBarTitle: "Hotelier",
+                      allViewTitle: "All Photos",
+                      selectCircleStrokeColor: "#000000",
+                    ),
+                  );
+                  resultList.forEach((element) async {
+                    var response =  uploadAssetImages(element);
+                  });
+                },
+                child: ButtonChildWidget("رفع صورة", mainAppColor, 15, 100),
+              ),
               ButtonChildWidget("رفع فديو", mainAppColor, 15, 100),
             ],
           ),
@@ -364,7 +386,7 @@ class _SignUpHotelState extends State<SignUpHotel> {
   check() {
     bool check = true;
     data.forEach((key, value) {
-      if (value == null) {
+      if (value == null || value == '') {
         print('$key   $value');
         setState(() {
           dataErrorMessage[key] = "من فضلك اكمل هذه الخانة";
@@ -392,7 +414,8 @@ class _SignUpHotelState extends State<SignUpHotel> {
         width: 150,
         margin: EdgeInsets.only(right: 5),
         padding: EdgeInsets.all(5),
-          child: Text("من فضلك اختر مكان على الخريطة" , style: TextStyle(fontSize: 12, color: Colors.red)),
+        child: Text("من فضلك اختر مكان على الخريطة",
+            style: TextStyle(fontSize: 12, color: Colors.red)),
       );
     } else {
       return Container();

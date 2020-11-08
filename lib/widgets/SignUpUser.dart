@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoder/geocoder.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:hotelier/Constant/Constant.dart';
+import 'package:hotelier/screens/GetLocationScreen.dart';
 import 'package:hotelier/widgets/ButtonWidget.dart';
-
+import 'package:hotelier/widgets/DropdownWidget.dart';
 
 class SignUpUser extends StatefulWidget {
   @override
@@ -9,9 +13,43 @@ class SignUpUser extends StatefulWidget {
 }
 
 class _SignUpUserState extends State<SignUpUser> {
-  String discountValue;
-  double starRating = 0;
   bool checkBoxValue = false;
+  Map data = {
+    'cityName': 'الرياض',
+    'name': null,
+    'idNumber': null,
+    'district': null,
+    'phone': null,
+    'email': null,
+    'password': null,
+    'address': null,
+    'confirmPassword': null,
+    'latitude': null,
+    'longitude': null,
+    'isHotel' : false,
+  };
+
+
+  Map dataErrorMessage = {
+    'name': null,
+    'idNumber': null,
+    'district': null,
+    'phone': null,
+    'email': null,
+    'password': null,
+    'address': null,
+    'confirmPassword': null,
+    'latitude': null,
+    'longitude': null
+  };
+
+  onChangeFunction(value, String variableName) {
+    setState(() {
+      data[variableName] = value;
+      dataErrorMessage[variableName] = null;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -22,9 +60,12 @@ class _SignUpUserState extends State<SignUpUser> {
           Directionality(
             textDirection: TextDirection.rtl,
             child: TextField(
+              onChanged: (value) {
+                onChangeFunction(value, 'name');
+              },
               decoration: InputDecoration(
                 labelText: 'الاسم',
-                errorText: null,
+                errorText: dataErrorMessage['name'],
               ),
             ),
           ),
@@ -34,9 +75,12 @@ class _SignUpUserState extends State<SignUpUser> {
           Directionality(
             textDirection: TextDirection.rtl,
             child: TextField(
+              onChanged: (value) {
+                onChangeFunction(value, 'idNumber');
+              },
               decoration: InputDecoration(
                 labelText: 'رقم الهوية/رقم الاقامة',
-                errorText: null,
+                errorText: dataErrorMessage['idNumber'],
               ),
             ),
           ),
@@ -52,24 +96,24 @@ class _SignUpUserState extends State<SignUpUser> {
               children: [
                 Container(
                   width: 100,
-                  child: Directionality(
-                    textDirection: TextDirection.rtl,
-                    child: TextField(
-                      decoration: InputDecoration(
-                        labelText: 'المدينة',
-                        errorText: null,
-                      ),
-                    ),
-                  ),
+                  child: DropdownWidget(
+                      data['cityName'], ['الرياض', 'مكة'], 80, 0, (value) {
+                    setState(() {
+                      data['cityName'] = value;
+                    });
+                  }),
                 ),
                 Container(
                   width: 100,
                   child: Directionality(
                     textDirection: TextDirection.rtl,
                     child: TextField(
+                      onChanged: (value) {
+                        onChangeFunction(value, 'district');
+                      },
                       decoration: InputDecoration(
                         labelText: 'الحى',
-                        errorText: null,
+                        errorText: dataErrorMessage['district'],
                       ),
                     ),
                   ),
@@ -77,17 +121,34 @@ class _SignUpUserState extends State<SignUpUser> {
               ],
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(top: 25),
-            child: Row(
-              textDirection: TextDirection.rtl,
-              children: [
-                Text(
-                  "العنوان على الخريطة",
-                  style: TextStyle(fontWeight: FontWeight.w900),
-                ),
-                Icon(CupertinoIcons.map_pin_ellipse)
-              ],
+          InkWell(
+            onTap: () async {
+              // GetLocationScreen
+              Position position = await Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => GetLocationScreen()));
+              var address = await Geocoder.local.findAddressesFromCoordinates(
+                  new Coordinates(position.latitude, position.longitude));
+              print(address.first.addressLine);
+              setState(() {
+                data['latitude'] = position.latitude;
+                data['longitude'] = position.longitude;
+                data['address'] = address.first.addressLine;
+                dataErrorMessage['address'] = null;
+              });
+            },
+            child: Container(
+              margin: EdgeInsets.only(top: 25),
+              child: Row(
+                textDirection: TextDirection.rtl,
+                children: [
+                  Text(
+                    "العنوان على الخريطة",
+                    style: TextStyle(fontWeight: FontWeight.w900),
+                  ),
+                  Icon(CupertinoIcons.map_pin_ellipse),
+                  locationTextHandler(),
+                ],
+              ),
             ),
           ),
           SizedBox(
@@ -97,9 +158,12 @@ class _SignUpUserState extends State<SignUpUser> {
             child: Directionality(
               textDirection: TextDirection.rtl,
               child: TextField(
+                onChanged: (value) {
+                  onChangeFunction(value, 'phone');
+                },
                 decoration: InputDecoration(
                   labelText: 'رقم الجوال',
-                  errorText: null,
+                  errorText: dataErrorMessage['phone'],
                 ),
               ),
             ),
@@ -110,9 +174,12 @@ class _SignUpUserState extends State<SignUpUser> {
           Directionality(
             textDirection: TextDirection.rtl,
             child: TextField(
+              onChanged: (value) {
+                onChangeFunction(value, 'email');
+              },
               decoration: InputDecoration(
                 labelText: 'الايميل',
-                errorText: null,
+                errorText: dataErrorMessage['email'],
               ),
             ),
           ),
@@ -122,9 +189,12 @@ class _SignUpUserState extends State<SignUpUser> {
           Directionality(
             textDirection: TextDirection.rtl,
             child: TextField(
+              onChanged: (value) {
+                onChangeFunction(value, 'password');
+              },
               decoration: InputDecoration(
                 labelText: 'كلمة المرور',
-                errorText: null,
+                errorText: dataErrorMessage['password'],
               ),
             ),
           ),
@@ -134,9 +204,12 @@ class _SignUpUserState extends State<SignUpUser> {
           Directionality(
             textDirection: TextDirection.rtl,
             child: TextField(
+              onChanged: (value) {
+                onChangeFunction(value, 'confirmPassword');
+              },
               decoration: InputDecoration(
                 labelText: 'تاكيد كلمة المرور',
-                errorText: null,
+                errorText: dataErrorMessage['confirmPassword'],
               ),
             ),
           ),
@@ -147,11 +220,11 @@ class _SignUpUserState extends State<SignUpUser> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'برجاء اختيار طريقة الدفع',
+                'اوافق على الشروط و الاحكام',
                 style: TextStyle(fontSize: 20),
               ),
               Checkbox(
-                onChanged: (value){
+                onChanged: (value) {
                   print(value);
                   setState(() {
                     checkBoxValue = value;
@@ -160,21 +233,61 @@ class _SignUpUserState extends State<SignUpUser> {
                 value: checkBoxValue,
                 activeColor: Color(0xFFF7BB85),
               ),
-              Text(
-                'اوافق على الشروط و الاحكام',
-                style: TextStyle(fontSize: 20),
-              ),
             ],
           ),
           SizedBox(
             height: 35,
           ),
-          ButtonChildWidget("تسجيل حساب", Color(0xFFF7BB85), 18, 150),
+          InkWell(
+              onTap: () {
+                check();
+              },
+              child:
+                  ButtonChildWidget("تسجيل حساب", Color(0xFFF7BB85), 18, 150)),
           SizedBox(
             height: 35,
           ),
         ],
       ),
     );
+  }
+
+  check() {
+    bool check = true;
+    data.forEach((key, value) {
+      if (value == null || value == '') {
+        print('$key   $value');
+        setState(() {
+          dataErrorMessage[key] = "من فضلك اكمل هذه الخانة";
+        });
+        check = false;
+      }
+    });
+
+    return check;
+  }
+
+  locationTextHandler() {
+    if (data['address'] != null) {
+      return Container(
+          width: 150,
+          margin: EdgeInsets.only(right: 5),
+          padding: EdgeInsets.all(5),
+          decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+          child: Text(
+            data['address'],
+            style: TextStyle(fontSize: 13, color: mainAppColor),
+          ));
+    } else if (dataErrorMessage['address'] != null) {
+      return Container(
+        width: 150,
+        margin: EdgeInsets.only(right: 5),
+        padding: EdgeInsets.all(5),
+        child: Text("من فضلك اختر مكان على الخريطة",
+            style: TextStyle(fontSize: 12, color: Colors.red)),
+      );
+    } else {
+      return Container();
+    }
   }
 }

@@ -2,10 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:hotelier/widgets/AppBarWidget.dart';
 import 'package:hotelier/widgets/AppDrawerWidget.dart';
 import 'package:hotelier/widgets/ButtonWidget.dart';
+import 'package:hotelier/widgets/DropdownWidget.dart';
 import 'package:hotelier/widgets/bottomBarWidget.dart';
 
-class Contact extends StatelessWidget {
+class Contact extends StatefulWidget {
   static const routeName = '/Contact';
+  @override
+  _ContactState createState() => _ContactState();
+}
+
+class _ContactState extends State<Contact> {
+  Map data = {
+    'name': null,
+    'email': null,
+    'subject': 'شكوى',
+    'message': null,
+  };
+
+  Map dataErrorMessage = {
+    'name': null,
+    'email': null,
+    'message': null,
+  };
+
   @override
   //  flexibleSpace: AppBarWidget("assets/ContactAppBarImage.jpg","اتصل بنا"),
   Widget build(BuildContext context) {
@@ -68,14 +87,20 @@ class Contact extends StatelessWidget {
               ],
             ),
             TextField(
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(45)),
-                    hintText: " ")),
+              onChanged: (value) {
+                onChangeFunction(value, 'name');
+              },
+              decoration: InputDecoration(
+                errorText: dataErrorMessage['name'],
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(45),
+                ),
+              ),
+            ),
             SizedBox(height: 10),
             Row(
+              textDirection: TextDirection.rtl,
               children: [
-                Spacer(),
                 Text(
                   "الايميل",
                   style: TextStyle(
@@ -86,29 +111,46 @@ class Contact extends StatelessWidget {
               ],
             ),
             TextField(
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(45)),
-                    hintText: "                  ")),
-            Row(
-              children: [
-                Spacer(),
-                Text(
-                  "الموضوع",
-                  style: TextStyle(
-                    fontSize: 25,
-                  ),
-                  textAlign: TextAlign.left,
+              onChanged: (value) {
+                onChangeFunction(value, 'email');
+              },
+              decoration: InputDecoration(
+                errorText: dataErrorMessage['email'],
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(45),
                 ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              textDirection: TextDirection.rtl,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(left: 20),
+                  child: Text(
+                    "الموضوع",
+                    style: TextStyle(
+                      fontSize: 25,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+                DropdownWidget(data['subject'], ["شكوى", 'اقتراح'], 40, 0,
+                        (value) {
+                      setState(() {
+                        data['subject'] = value;
+                      });
+                    }),
               ],
             ),
-            TextField(
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(45),),), ),
+            SizedBox(
+              height: 20,
+            ),
             Row(
+              textDirection: TextDirection.rtl,
               children: [
-                Spacer(),
                 Text(
                   "اكتب وصف الرساله",
                   style: TextStyle(
@@ -119,17 +161,52 @@ class Contact extends StatelessWidget {
               ],
             ),
             TextField(
-                maxLines: 7,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30)),
-                )),
+              maxLines: 7,
+              onChanged: (value) {
+                onChangeFunction(value, 'message');
+              },
+              decoration: InputDecoration(
+                errorText: dataErrorMessage['message'],
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+            ),
             SizedBox(height: 20),
-            ButtonChildWidget("ارسال", Color(0xFFF7BB85), 19, 150),
+            InkWell(
+              onTap: (){
+                check();
+              },
+              child: ButtonChildWidget("ارسال", Color(0xFFF7BB85), 18, 130),
+            ),
           ]),
         ),
       ),
       bottomNavigationBar: BottomBarWidget(),
     );
   }
+
+  check() {
+    bool check = true;
+    data.forEach((key, value) {
+      if (value == null || value == '') {
+        print('$key   $value');
+        setState(() {
+          dataErrorMessage[key] = "من فضلك اكمل هذه الخانة";
+        });
+        check = false;
+      }
+    });
+
+    return check;
+  }
+
+  onChangeFunction(value, String variableName) {
+    setState(() {
+      data[variableName] = value;
+      dataErrorMessage[variableName] = null;
+    });
+  }
+
 }
+
