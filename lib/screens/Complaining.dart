@@ -38,7 +38,7 @@ class _ComplainingState extends State<Complaining> {
           backgroundColor: Colors.white,
           shadowColor: Colors.transparent,
           flexibleSpace:
-              AppBarWidget("assets/hotel-bell.jpg", "شكاوى و مقترحات"),
+              AppBarWidget("assets/complainAppBarImage.jpg", "شكاوى و مقترحات"),
           actions: [
             IconButton(
               icon: Icon(Icons.arrow_forward_rounded, color: Colors.white),

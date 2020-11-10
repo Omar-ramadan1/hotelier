@@ -1,7 +1,11 @@
+import 'dart:convert';
+import 'package:hotelier/Model/UserData.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:hotelier/widgets/ButtonWidget.dart';
 import 'package:hotelier/widgets/RememberMeWidgetCheckBox.dart';
 import 'package:hotelier/widgets/TextFieldRegistrationWidget.dart';
+import 'package:provider/provider.dart';
 
 class SignInScreen extends StatefulWidget {
   @override
@@ -10,9 +14,25 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   bool checkBoxValue = false;
+  Map data = {
+    // 'grant_type': 'password',
+    'email': null,
+    'password': null,
+  };
+
+  Map dataErrorMessage = {'email': null, 'password': null, 'serverError': null};
+
+  onChangeFunction(value, String variableName) {
+    setState(() {
+      data[variableName] = value;
+      dataErrorMessage[variableName] = null;
+      dataErrorMessage['serverError'] = null;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    UserData userData = Provider.of<UserData>(context);
     Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       padding: EdgeInsets.only(top: 20),
@@ -23,17 +43,32 @@ class _SignInScreenState extends State<SignInScreen> {
             //TextFieldRegistrationWidget takes text String that will appear as hint  and Icon
             TextFieldRegistrationWidget(
               'بريد الكترونى/رقم عضوية',
+              false ,
+              dataErrorMessage['email'],
               Icons.person_outline_sharp,
+              (value) {
+                onChangeFunction(value, 'email');
+              },
             ),
             //TextFieldRegistrationWidget takes text String that will appear as hint  and Icon
             TextFieldRegistrationWidget(
               'كلمة المرور',
+              true ,
+              dataErrorMessage['password'],
               Icons.lock_open,
+              (value) {
+                onChangeFunction(value, 'password');
+              },
             ),
             SizedBox(
               height: 40,
             ),
-            // RememberMeWidgetCheckBox take bool value as a initial value
+            dataErrorMessage['serverError'] == null
+                ? Container()
+                : Text(
+                    dataErrorMessage['serverError'],
+                    style: TextStyle(color: Colors.red),
+                  ), // RememberMeWidgetCheckBox take bool value as a initial value
             // and onchange funtion to handle the change happen
             RememberMeWidgetCheckBox(checkBoxValue, (value) {
               setState(() {
@@ -42,10 +77,58 @@ class _SignInScreenState extends State<SignInScreen> {
             }),
 
             // ButtonChildWidget takes text to show , Color , fontsize and width as parameters
-            ButtonChildWidget("تسجيل دخول", Color(0xFFF7BB85), 25, 150),
+            InkWell(
+              onTap: () async {
+                if (check()) {
+                  print(jsonEncode(data));
+                  var response = await http.post(
+                    'http://api.hoteliercard.com/api/Account/CustomToken',
+                    headers: <String, String>{
+                      "Accept": "application/json",
+                      "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: data,
+                  );
+                  print(response.statusCode);
+                  print(response.body);
+                  Map body = jsonDecode(response.body);
+                  if (response.statusCode == 200) {
+                    if(checkBoxValue){
+                      userData.updateUserInfo(body);
+                       Navigator.of(context).pop();
+                    }else{
+                      userData.userData =  body;
+                     Navigator.of(context).pop();
+                    }
+                  } else if(response.statusCode == 400) {
+                    print(response.body);
+                    setState(() {
+                      dataErrorMessage['serverError'] = body["Message"];
+                    });
+                  }
+                }
+              },
+              child:
+                  ButtonChildWidget("تسجيل دخول", Color(0xFFF7BB85), 25, 150),
+            ),
           ],
         ),
       ),
     );
+  }
+
+  check() {
+    bool check = true;
+    data.forEach((key, value) {
+      if (value == null || value == '') {
+        print('$key   $value');
+        setState(() {
+          dataErrorMessage[key] = "من فضلك ادخل هذه الخانة";
+        });
+        check = false;
+      }
+    });
+
+    return check;
   }
 }

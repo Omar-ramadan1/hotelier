@@ -40,6 +40,8 @@ dependencies:
   dropdownfield: ^1.0.3
   multi_image_picker: ^4.7.14
   image_picker: ^0.6.7+12
+  crossplat_objectid: ^2.1.4
+  shared_preferences: ^0.5.12+4
 
 
 dev_dependencies:
@@ -82,8 +84,10 @@ flutter:
     - assets/SplashScreenImage.jpg
     - assets/settingAppBarImage.jpg
     - assets/hotelAppBarImage.jpg
-    - assets/compainAppBarImage.jpg
+    - assets/complainAppBarImage.jpg
     - assets/paymentAppBarImage.jpg
     - assets/rightIconImage.jpg
     - assets/likePhoto.jpg
     - assets/ContactAppBarImage.jpg
+    - assets/HotelProfileImage.jpg
+    - assets/UserProfileImage.jpg

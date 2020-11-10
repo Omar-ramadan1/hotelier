@@ -21,7 +21,7 @@ class DrawerTabsWidget extends StatelessWidget {
                 Icon(icon),
                 Text(
                   text,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
                 ),
                 Icon(Icons.arrow_back_ios_rounded),
               ],

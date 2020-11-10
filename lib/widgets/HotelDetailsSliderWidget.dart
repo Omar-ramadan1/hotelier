@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:hotelier/screens/FullScreenPhotoViewer.dart';
 
 class HotelDetailsSliderWidget extends StatelessWidget {
   final List imgList;
@@ -42,24 +43,32 @@ List<T> map<T>(List list, Function handler) {
           items: imgList.map((imgUrl) {
             return Builder(
               builder: (BuildContext context) {
-                return Container(
-                  width: 400,
-                  margin: EdgeInsets.symmetric(
-                      horizontal: 25.0, vertical: 2),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(40),
-                      color: Colors.green,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black,
-                          spreadRadius: 0.3,
-                          blurRadius: 5,
-                          offset: Offset(0, 0), // changes position of shadow
-                        ),
-                      ],
-                      image: DecorationImage(fit: BoxFit.fill , image: Image.network(
-                        imgUrl,
-                      ).image)
+                return InkWell(
+                  onTap: (){
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => FullScreenPhotoViewer(imgUrl)));
+                  },
+                  child: Hero(
+                    tag: imgUrl,
+                    child: Container(
+                      width: 400,
+                      margin: EdgeInsets.symmetric(
+                          horizontal: 25.0, vertical: 2),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(40),
+                          color: Colors.green,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black,
+                              spreadRadius: 0.3,
+                              blurRadius: 5,
+                              offset: Offset(0, 0), // changes position of shadow
+                            ),
+                          ],
+                          image: DecorationImage(fit: BoxFit.fill , image: Image.network(
+                            imgUrl,
+                          ).image)
+                      ),
+                    ),
                   ),
                 );
               },

@@ -21,10 +21,13 @@ class HotelDetailsWidget extends StatelessWidget {
             ),
 
             Container(
-              width: size.width / 2.3,
-              child: Text(
-                "شارع اجياد 23 الرياض المملكه العربيه السعوديه",
-                style: TextStyle(fontSize: 16 ),
+              width: size.width / 2.0,
+              child: Directionality(
+                textDirection: TextDirection.rtl,
+                child: Text(
+                  "شارع اجياد 23 الرياض المملكه العربيه السعوديه",
+                  style: TextStyle(fontSize: 16 ),
+                ),
               ),
             ),
             SmoothStarRating(

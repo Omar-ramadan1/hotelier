@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hotelier/Model/DataList.dart';
+import 'package:hotelier/Model/UserData.dart';
 import 'package:hotelier/screens/Complaining.dart';
 import 'package:hotelier/screens/Contact.dart';
 import 'package:hotelier/screens/Error_404.dart';
@@ -14,9 +16,20 @@ import 'package:hotelier/screens/EditHotelData.dart';
 import 'package:hotelier/screens/SpecialOfferScreen.dart';
 import 'package:hotelier/screens/Congratulation.dart';
 import 'package:hotelier/screens/termsOfservice.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(Hotelier());
+  runApp(
+    /// Providers are above [MyApp] instead of inside it, so that tests
+    /// can use [MyApp] while mocking the providers
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => DataList(),),
+        ChangeNotifierProvider(create: (_) => UserData(),),
+      ],
+      child: Hotelier(),
+    ),
+  );
 }
 
 class Hotelier extends StatelessWidget {
@@ -26,8 +39,7 @@ class Hotelier extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
 
-      home: RegistrationScreen(),
-
+      home: SplashScreenWidget(),
 
       routes: {
         MainScreen.routeName: (ctx) => MainScreen(),
@@ -45,7 +57,6 @@ class Hotelier extends StatelessWidget {
         TermsOfService.routeName:(ctx)=>TermsOfService(),
         GetLocationScreen.routeName:(ctx)=>GetLocationScreen(),
 
-        
 
       },
     );

@@ -107,7 +107,7 @@ class _GetLocationScreenState extends State<GetLocationScreen> {
             top: size.height - 80,
             left: 16,
             child: InkWell(
-              onTap: (){ Navigator.of(context).pop(positions);},
+              onTap: (){ Navigator.of(context).pop(selectedPosition);},
               child: ButtonChildWidget("اختر المكان", Color(0xFFF7BB85) , 18 , 130),
             )
 

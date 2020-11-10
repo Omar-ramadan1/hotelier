@@ -1,11 +1,15 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hotelier/Constant/Constant.dart';
+import 'package:hotelier/Model/DataList.dart';
 import 'package:hotelier/screens/GetLocationScreen.dart';
 import 'package:hotelier/widgets/ButtonWidget.dart';
 import 'package:hotelier/widgets/DropdownWidget.dart';
+import 'package:provider/provider.dart';
 
 class SignUpUser extends StatefulWidget {
   @override
@@ -14,6 +18,7 @@ class SignUpUser extends StatefulWidget {
 
 class _SignUpUserState extends State<SignUpUser> {
   bool checkBoxValue = false;
+  String cityName;
   Map data = {
     'cityName': 'الرياض',
     'name': null,
@@ -43,6 +48,13 @@ class _SignUpUserState extends State<SignUpUser> {
     'longitude': null
   };
 
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    DataList dataList = Provider.of<DataList>(context);
+    cityName = dataList.citiesNames[0];
+  }
+
   onChangeFunction(value, String variableName) {
     setState(() {
       data[variableName] = value;
@@ -52,6 +64,7 @@ class _SignUpUserState extends State<SignUpUser> {
 
   @override
   Widget build(BuildContext context) {
+    DataList dataList = Provider.of<DataList>(context);
     Size size = MediaQuery.of(context).size;
     return Container(
       width: size.width * 80 / 100,
@@ -97,9 +110,9 @@ class _SignUpUserState extends State<SignUpUser> {
                 Container(
                   width: 100,
                   child: DropdownWidget(
-                      data['cityName'], ['الرياض', 'مكة'], 80, 0, (value) {
+                      cityName , dataList.citiesNames, 80, 0, (value) {
                     setState(() {
-                      data['cityName'] = value;
+                      cityName = value;
                     });
                   }),
                 ),
@@ -189,6 +202,7 @@ class _SignUpUserState extends State<SignUpUser> {
           Directionality(
             textDirection: TextDirection.rtl,
             child: TextField(
+              obscureText: true,
               onChanged: (value) {
                 onChangeFunction(value, 'password');
               },
@@ -204,6 +218,7 @@ class _SignUpUserState extends State<SignUpUser> {
           Directionality(
             textDirection: TextDirection.rtl,
             child: TextField(
+              obscureText: true,
               onChanged: (value) {
                 onChangeFunction(value, 'confirmPassword');
               },
@@ -239,8 +254,27 @@ class _SignUpUserState extends State<SignUpUser> {
             height: 35,
           ),
           InkWell(
-              onTap: () {
-                check();
+              onTap: () async{
+                var citiesListClone = dataList.citiesList;
+                print(dataList.citiesList);
+                citiesListClone.forEach((e) => {
+                  if( e["Name"] == cityName){
+                    data["cityName"] = e["id"],
+                  }
+                });
+                if(check()){
+                  print(jsonEncode(data));
+                  var response = await http.post(
+                    'http://api.hoteliercard.com/api/User/Register',
+                    headers: <String, String>{
+                      'Content-Type': 'application/json; charset=UTF-8',
+                    },
+                    body: jsonEncode(data),
+                  );
+                  if(response.statusCode == 200){
+                    Navigator.of(context).pop();
+                  }
+                }
               },
               child:
                   ButtonChildWidget("تسجيل حساب", Color(0xFFF7BB85), 18, 150)),

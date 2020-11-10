@@ -1,0 +1,403 @@
+{
+	"info": {
+		"_postman_id": "ad35771f-6392-4a13-8e1b-cf9522d617e3",
+		"name": "HotelerAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"email\":\"04ll@gmail.com\",\r\n   \"password\":\"51614Aa*\",\r\n   \"phone1\":\"1\",\r\n   \"phone2\":\"2\",\r\n   \"latitude\":3,\r\n   \"longitude\":\"4\",\r\n   \"address\":\"5\",\r\n   \"Name\":\"6\",\r\n   \"district\":\"7\",\r\n    \"CityId\":1\r\n    \r\n\r\n  \r\n\r\n \r\n\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://jafaralex2000-001-site1.btempurl.com/api/User/Register",
+					"protocol": "http",
+					"host": [
+						"jafaralex2000-001-site1",
+						"btempurl",
+						"com"
+					],
+					"path": [
+						"api",
+						"User",
+						"Register"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "phone1",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "phone2",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "latitude",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "longitude",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "address",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "Name",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "district",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "IsHotel",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "commercialRegistrationNo",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "discountValue",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "TypeId",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "starRating",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "imageURL",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "username",
+						"value": "User",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "password",
+						"value": "123456",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "grant_type",
+						"value": "password",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "password",
+							"value": "51614Aa*",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "0ll@gmail.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://jafaralex2000-001-site1.btempurl.com/Token",
+					"protocol": "http",
+					"host": [
+						"jafaralex2000-001-site1",
+						"btempurl",
+						"com"
+					],
+					"path": [
+						"Token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RegisterHotel",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"email\":\"xdddd@gmail.com\",\r\n   \"password\":\"51614Aa*\",\r\n   \"phone1\":\"1\",\r\n   \"phone2\":\"2\",\r\n   \"latitude\":3,\r\n   \"longitude\":\"4\",\r\n   \"address\":\"5\",\r\n   \"Name\":\"6\",\r\n   \"district\":\"7\",\r\n   \"IsHotel\":8,\r\n   \"starRating\":910,\r\n   \"discountValue\":10,\r\n   \"commercialRegistrationNo\":12,\r\n   \"TypeId\":1,\r\n   \"CityId\":1,\r\n\r\n  \r\n\r\n\r\n \"imageURL\":[ \"0000000\",\"111111111\"]\r\n     \r\n  \r\n\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://jafaralex2000-001-site1.btempurl.com/api/User/RegisterHotel",
+					"protocol": "http",
+					"host": [
+						"jafaralex2000-001-site1",
+						"btempurl",
+						"com"
+					],
+					"path": [
+						"api",
+						"User",
+						"RegisterHotel"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "phone1",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "phone2",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "latitude",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "longitude",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "address",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "Name",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "district",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "IsHotel",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "commercialRegistrationNo",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "discountValue",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "TypeId",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "starRating",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "imageURL",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload/Post",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "File",
+							"type": "file",
+							"src": [],
+							"disabled": true
+						},
+						{
+							"key": "File",
+							"type": "file",
+							"src": "/C:/Users/Islam/Pictures/Capt,,ure.PNG"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://jafaralex2000-001-site1.btempurl.com/api/Upload/Post",
+					"protocol": "http",
+					"host": [
+						"jafaralex2000-001-site1",
+						"btempurl",
+						"com"
+					],
+					"path": [
+						"api",
+						"Upload",
+						"Post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Types/List",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "File",
+							"type": "file",
+							"src": "/C:/Users/Islam/Pictures/Capt,,ure.PNG",
+							"disabled": true
+						},
+						{
+							"key": "File",
+							"type": "file",
+							"src": [
+								"/C:/Users/Islam/Pictures/Capt,,ure.PNG",
+								"/C:/Users/Islam/Pictures/Capture.PNG"
+							],
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://islam86868-001-site1.itempurl.com/api/Types/List",
+					"protocol": "http",
+					"host": [
+						"islam86868-001-site1",
+						"itempurl",
+						"com"
+					],
+					"path": [
+						"api",
+						"Types",
+						"List"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "City/List",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "File",
+							"type": "file",
+							"src": "/C:/Users/Islam/Pictures/Capt,,ure.PNG",
+							"disabled": true
+						},
+						{
+							"key": "File",
+							"type": "file",
+							"src": [
+								"/C:/Users/Islam/Pictures/Capt,,ure.PNG",
+								"/C:/Users/Islam/Pictures/Capture.PNG"
+							],
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://islam86868-001-site1.itempurl.com/api/City/List",
+					"protocol": "http",
+					"host": [
+						"islam86868-001-site1",
+						"itempurl",
+						"com"
+					],
+					"path": [
+						"api",
+						"City",
+						"List"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -41,7 +41,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           backgroundColor: Colors.white,
           shadowColor: Colors.transparent,
           flexibleSpace:
-          AppBarWidget("assets/paymentAppBarImage.jpg", "العروض المميزة"),
+          AppBarWidget("assets/paymentAppBarImage.jpg", ""),
         ),
       ),
       drawerEdgeDragWidth: 200,

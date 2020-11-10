@@ -1,11 +1,16 @@
+import 'dart:convert';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:hotelier/Constant/Constant.dart';
 import 'package:hotelier/Functions/UploadAssetImages.dart';
+import 'package:hotelier/Functions/UploadVideo.dart';
+import 'package:hotelier/Model/DataList.dart';
 import 'package:hotelier/screens/GetLocationScreen.dart';
 import 'package:hotelier/widgets/ButtonWidget.dart';
+import 'package:provider/provider.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
@@ -18,10 +23,11 @@ class SignUpHotel extends StatefulWidget {
 }
 
 class _SignUpHotelState extends State<SignUpHotel> {
+String cityName;
   Map data = {
     'discountValue': '0',
     'starRating': 0,
-    'cityName': 'الرياض',
+    'cityName': 'cityName',
     'hotelName': null,
     'commercialRegistrationNo': null,
     'district': null,
@@ -52,9 +58,18 @@ class _SignUpHotelState extends State<SignUpHotel> {
     'confirmPassword': null,
   };
   bool checkBoxValue = false;
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    DataList dataList = Provider.of<DataList>(context);
+    cityName = dataList.citiesNames[0];
 
+  }
   @override
   Widget build(BuildContext context) {
+
+    DataList dataList = Provider.of<DataList>(context);
     Size size = MediaQuery.of(context).size;
     return Container(
       width: size.width * 80 / 100,
@@ -100,9 +115,9 @@ class _SignUpHotelState extends State<SignUpHotel> {
                 Container(
                   width: 100,
                   child: DropdownWidget(
-                      data['cityName'], ['الرياض', 'مكة'], 80, 0, (value) {
+                      cityName, dataList.citiesNames, 80, 0, (value) {
                     setState(() {
-                      data['cityName'] = value;
+                      cityName = value;
                     });
                   }),
                 ),
@@ -127,7 +142,7 @@ class _SignUpHotelState extends State<SignUpHotel> {
           InkWell(
             onTap: () async {
               // GetLocationScreen
-              Position position = await Navigator.of(context).push(
+              LatLng position = await Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => GetLocationScreen()));
               var address = await Geocoder.local.findAddressesFromCoordinates(
                   new Coordinates(position.latitude, position.longitude));
@@ -261,11 +276,11 @@ class _SignUpHotelState extends State<SignUpHotel> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
                   ),
                   SmoothStarRating(
-                      allowHalfRating: true,
+                      allowHalfRating: false,
                       onRated: (v) {
                         print(v);
                         setState(() {
-                          data['starRating'] = v;
+                          data['starRating'] = v.ceil();
                         });
                       },
                       starCount: 5,
@@ -286,26 +301,17 @@ class _SignUpHotelState extends State<SignUpHotel> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               InkWell(
-                onTap: () async {
-                  List<Asset> resultList = List<Asset>();
-                  resultList = await MultiImagePicker.pickImages(
-                    maxImages: 10,
-                    enableCamera: false,
-                    cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
-                    materialOptions: MaterialOptions(
-                      actionBarColor: "#abcdef",
-                      actionBarTitle: "Hotelier",
-                      allViewTitle: "All Photos",
-                      selectCircleStrokeColor: "#000000",
-                    ),
-                  );
-                  resultList.forEach((element) async {
-                    var response =  uploadAssetImages(element);
-                  });
+                onTap: () {
+                  uploadImages();
                 },
                 child: ButtonChildWidget("رفع صورة", mainAppColor, 15, 100),
               ),
-              ButtonChildWidget("رفع فديو", mainAppColor, 15, 100),
+              InkWell(
+                onTap: ()async{
+                  uploadVideo();
+                },
+                  child: ButtonChildWidget("رفع فديو", mainAppColor, 15, 100)
+              ),
             ],
           ),
           SizedBox(
@@ -314,6 +320,7 @@ class _SignUpHotelState extends State<SignUpHotel> {
           Directionality(
             textDirection: TextDirection.rtl,
             child: TextField(
+              obscureText: true,
               onChanged: (value) {
                 onChangeFunction(value, 'password');
               },
@@ -329,10 +336,12 @@ class _SignUpHotelState extends State<SignUpHotel> {
           Directionality(
             textDirection: TextDirection.rtl,
             child: TextField(
+              obscureText: true,
               onChanged: (value) {
                 onChangeFunction(value, 'confirmPassword');
               },
               decoration: InputDecoration(
+
                 labelText: 'تاكيد كلمة المرور',
                 errorText: dataErrorMessage['confirmPassword'],
               ),
@@ -364,8 +373,30 @@ class _SignUpHotelState extends State<SignUpHotel> {
             height: 35,
           ),
           InkWell(
-              onTap: () {
-                print(check());
+              onTap: () async{
+                var citiesListClone = dataList.citiesList;
+                print(dataList.citiesList);
+                citiesListClone.forEach((e) => {
+                  if( e["Name"] == cityName){
+                    data["cityName"] = e["id"],
+                  }
+                });
+                if(check()){
+                  dataList.citiesList.map((e) => {
+                    print(e),
+                  });
+                  print(jsonEncode(data));
+                  var response = await http.post(
+                    'http://api.hoteliercard.com/api/User/RegisterHotel',
+                    headers: <String, String>{
+                      'Content-Type': 'application/json; charset=UTF-8',
+                    },
+                    body: jsonEncode(data),
+                  );
+                  if(response.statusCode == 200){
+                    Navigator.of(context).pop();
+                  }
+                }
               },
               child: ButtonChildWidget("تسجيل حساب", mainAppColor, 18, 150)),
           SizedBox(
@@ -398,6 +429,77 @@ class _SignUpHotelState extends State<SignUpHotel> {
     return check;
   }
 
+
+uploadVideo() async{
+  final snackBar = SnackBar(content: Text('please wait till video uploads'));
+  final snackBar1 = SnackBar(content: Text('video uploaded'));
+  final snackBar2 = SnackBar(content: Text('your video size is too large'));
+  final picker = ImagePicker();
+  PickedFile pickedFile = await picker.getVideo(source: ImageSource.gallery);
+  Scaffold.of(context).showSnackBar(snackBar);
+  var response =  await saveVideoFunction(pickedFile);
+if(response.statusCode == 200){
+  response.stream.transform(utf8.decoder).listen((value) {
+    Map respondedData = jsonDecode(value);
+    List videoNameArray = respondedData['imgName'];
+    print(jsonDecode(value));
+    setState(() {
+      data["videoURL"] = videoNameArray[0];
+      Scaffold.of(context).showSnackBar(snackBar1);
+    });
+  });
+}else{
+  Scaffold.of(context).showSnackBar(snackBar2);
+}
+
+}
+
+
+
+  uploadImages() async{
+    List images = [];
+    int length;
+    final snackBar = SnackBar(content: Text('please wait till image uploads'));
+    final snackBar1 = SnackBar(content: Text('images uploaded'));
+    List<Asset> resultList = List<Asset>();
+
+    resultList = await MultiImagePicker.pickImages(
+      maxImages: 10,
+      enableCamera: false,
+      cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
+      materialOptions: MaterialOptions(
+        actionBarColor: "#abcdef",
+        actionBarTitle: "Hotelier",
+        allViewTitle: "All Photos",
+        selectCircleStrokeColor: "#000000",
+      ),
+    );
+    Scaffold.of(context).showSnackBar(snackBar);
+    length = resultList.length;
+    resultList.forEach((element) async {
+
+      var response =  await uploadAssetImages(element);
+
+      response.stream.transform(utf8.decoder).listen((value) {
+        Map respondedData = jsonDecode(value);
+        print(jsonDecode(value));
+        List imgNameArray = respondedData['imgName'];
+        images.add(imgNameArray[0]);
+
+        if(images.length == length){
+          Scaffold.of(context).showSnackBar(snackBar1);
+          setState(() {
+            data["imageURL"] = images;
+          });
+        }
+      });
+
+
+
+
+
+    });
+  }
   locationTextHandler() {
     if (data['address'] != null) {
       return Container(
