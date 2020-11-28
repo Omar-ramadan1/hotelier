@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:hotelier/screens/OfferDetailsScreen.dart';
+import 'package:hotelier/screens/HotelDetailsScreen.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 import 'ButtonWidget.dart';
 
 class HotelDetailsWidget extends StatelessWidget {
+  final Map data;
+
+  const HotelDetailsWidget(this.data);
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -16,7 +19,7 @@ class HotelDetailsWidget extends StatelessWidget {
 
           children: [
             Text(
-              "فندق المعمرين الرياض",
+              data["Name"].toString(),
               style: TextStyle(fontSize: 20 , fontWeight: FontWeight.w800),
             ),
 
@@ -25,7 +28,7 @@ class HotelDetailsWidget extends StatelessWidget {
               child: Directionality(
                 textDirection: TextDirection.rtl,
                 child: Text(
-                  "شارع اجياد 23 الرياض المملكه العربيه السعوديه",
+                  data["Address"].toString(),
                   style: TextStyle(fontSize: 16 ),
                 ),
               ),
@@ -36,14 +39,14 @@ class HotelDetailsWidget extends StatelessWidget {
                 starCount: 5,
                 filledIconData: Icons.star,
                 halfFilledIconData: Icons.star_half,
-                rating: 3,
+                rating: double.parse(data["starRating"].toString()),
                 size: 30.0,
                 color: Colors.amberAccent,
                 borderColor: Colors.amberAccent,
                 spacing:0.0
             ),
             InkWell(
-              onTap: (){Navigator.of(context).pushNamed(OfferDetailsScreen.routeName);},
+              onTap: (){Navigator.of(context).pushNamed(HotelDetailsScreen.routeName);},
               child: ButtonChildWidget(
                   "المزيد من التفاصيل", Colors.transparent, 15, 120),
             ),

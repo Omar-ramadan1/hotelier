@@ -4,7 +4,6 @@ import 'package:hotelier/widgets/DropdownWidget.dart';
 import 'package:hotelier/widgets/bottomBarWidget.dart';
 import 'package:hotelier/widgets/AppDrawerWidget.dart';
 import 'package:hotelier/widgets/ButtonWidget.dart';
-import 'package:hotelier/widgets/bottomBarWidget.dart';
 
 class Complaining extends StatefulWidget {
   static const routeName = '/Complaining';

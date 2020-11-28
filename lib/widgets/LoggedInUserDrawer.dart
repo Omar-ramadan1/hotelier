@@ -2,10 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hotelier/Model/UserData.dart';
 import 'package:hotelier/screens/Complaining.dart';
-import 'package:hotelier/screens/EditHotelData.dart';
 import 'package:hotelier/screens/EditUserData.dart';
 import 'package:hotelier/screens/PaymentScreen.dart';
-import 'package:hotelier/screens/RegistrationScreen.dart';
 import 'package:hotelier/screens/termsOfservice.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +13,8 @@ import '../Clippers/AppBarClipper.dart';
 class LoggedInUserDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    UserData userData = Provider.of<UserData>(context);
+    UserData userDataProvider = Provider.of<UserData>(context);
+    Map userData = userDataProvider.userData;
     Size sizes = MediaQuery.of(context).size;
     return Drawer(
       child: SingleChildScrollView(
@@ -28,35 +27,46 @@ class LoggedInUserDrawer extends StatelessWidget {
                   ClipPath(
                     clipper: AppBarClipper(),
                     child: Container(
-                      height: sizes.height / 3.5,
+                      height: sizes.height / 3,
                       width: double.maxFinite,
                       color: Color(0xFFBD954F),
                     ),
                   ),
-                  Center(
-                    child: Container(
-                      margin: EdgeInsets.only(top: 40),
-                      decoration: BoxDecoration(
-                        color: Color(0xFFBD954F),
-                        borderRadius: BorderRadius.all(Radius.circular(60)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.6),
-                            spreadRadius: 3,
-                            blurRadius: 9,
-                            offset: Offset(0, 3), // changes position of shadow
+                  Column(
+                    children: [
+                      Center(
+                        child: Container(
+                          margin: EdgeInsets.only(top: 40),
+                          decoration: BoxDecoration(
+                            color: Color(0xFFBD954F),
+                            borderRadius: BorderRadius.all(Radius.circular(60)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.6),
+                                spreadRadius: 3,
+                                blurRadius: 9,
+                                offset: Offset(0, 3), // changes position of shadow
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      child: CircleAvatar(
-                        radius: sizes.width / 9,
-                        backgroundColor: Colors.white,
-                        child: Icon(
-                          Icons.person,
-                          color: Color(0xFFBD954F),
+                          child: CircleAvatar(
+                            radius: sizes.width / 9,
+                            backgroundColor: Colors.white,
+                            child: Icon(
+                              Icons.person,
+                              color: Color(0xFFBD954F),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                      userData["fullName"] == null ? Container() :
+                      Container(
+                        margin: EdgeInsets.only(top: 20),
+                        child: Text(userData["fullName"] , style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                        ),),
+                      ),
+                    ],
                   )
                 ],
               ),
@@ -124,7 +134,7 @@ class LoggedInUserDrawer extends StatelessWidget {
               ),
               DrawerTabsWidget(Icons.logout, "تسجيل الخروج", () {
 
-                userData.updateUserInfo(null);
+                userDataProvider.updateUserInfo(null);
                 Navigator.of(context)
                     .pop();
               }),

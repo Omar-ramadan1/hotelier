@@ -36,16 +36,31 @@ class DataList extends ChangeNotifier{
   }
 
 
-  List _typesList;
-  List get typesList => _typesList;
-  set typesList(List citiesListParameter) {
-    _typesList = citiesListParameter;
+  List _categoryList;
+  List get categoryList => _categoryList;
+  set categoryList(List citiesListParameter) {
+    _categoryList = citiesListParameter;
+    notifyListeners();
+  }
+
+  List<String> _categoryNames;
+  List<String> get categoryNames => _categoryNames;
+  set categoryNames(List<String> citiesNamesParameter) {
+    _categoryNames = citiesNamesParameter;
     notifyListeners();
   }
   Future<void> getTypesListFunction() async {
+    List<String> categoryNamesClone = [];
     var response  = await http.get('http://api.hoteliercard.com/api/Types/List');
-    typesList = jsonDecode(response.body);
-    print(_typesList);
+    categoryList = jsonDecode(response.body);
+    print(_categoryList);
+
+    _categoryList.forEach((e) => {
+      categoryNamesClone.add(e["Name"]),
+    });
+    print(categoryNamesClone);
+    categoryNames = categoryNamesClone;
+
     notifyListeners();
   }
 

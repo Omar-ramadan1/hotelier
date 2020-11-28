@@ -1,14 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hotelier/screens/Complaining.dart';
-import 'package:hotelier/screens/EditHotelData.dart';
-import 'package:hotelier/screens/EditUserData.dart';
 import 'package:hotelier/screens/PaymentScreen.dart';
 import 'package:hotelier/screens/RegistrationScreen.dart';
 import 'package:hotelier/screens/termsOfservice.dart';
 
 import 'DrawerTabsWidget.dart';
 import '../Clippers/AppBarClipper.dart';
+enum Registration {
+  signIn,
+  signUp,
+}
 
 class NormalDrawer extends StatelessWidget {
   @override
@@ -58,49 +60,45 @@ class NormalDrawer extends StatelessWidget {
                 ],
               ),
               DrawerTabsWidget(Icons.person, "تسجيل الدخول", () {
-                Navigator.of(context).popAndPushNamed(RegistrationScreen.routeName);
+                Navigator.of(context).popAndPushNamed(RegistrationScreen.routeName ,arguments: "signIn");
               }),
               SizedBox(
                 height: 10,
               ),
-              InkWell(
-                child: DrawerTabsWidget(Icons.autorenew, "تجديد الاشتراك", () {
-                  // Navigator.of(context).popAndPushNamed(EditUserData.routeName);
-                }),
-              ),
+              DrawerTabsWidget(Icons.person, "تسجيل حساب جديد", () {
+                Navigator.of(context).popAndPushNamed(RegistrationScreen.routeName ,arguments: "signUp");
+              }),
               SizedBox(
                 height: 10,
               ),
-              InkWell(
-                child: DrawerTabsWidget(Icons.credit_card, "شراء البطاقة", () {
-                  Navigator.of(context).popAndPushNamed(PaymentScreen.routeName);
-                }),
-              ),
+              DrawerTabsWidget(Icons.autorenew, "تجديد الاشتراك", () {
+                // Navigator.of(context).popAndPushNamed(EditUserData.routeName);
+              }),
               SizedBox(
                 height: 10,
               ),
-              InkWell(
-                child: DrawerTabsWidget(Icons.phone, "للشكاوى و المقترحات", () {
-                  Navigator.of(context).popAndPushNamed(Complaining.routeName);
-                }),
-              ),
+              DrawerTabsWidget(Icons.credit_card, "شراء البطاقة", () {
+                Navigator.of(context).popAndPushNamed(PaymentScreen.routeName);
+              }),
               SizedBox(
                 height: 10,
               ),
-              InkWell(
-                child: DrawerTabsWidget(Icons.star_rate_sharp, "عن التطبيق", () {
-                  Navigator.of(context).popAndPushNamed(TermsOfService.routeName);
-                }),
-              ),
+              DrawerTabsWidget(Icons.phone, "للشكاوى و المقترحات", () {
+                Navigator.of(context).popAndPushNamed(Complaining.routeName);
+              }),
               SizedBox(
                 height: 10,
               ),
-              InkWell(
-                child: DrawerTabsWidget(Icons.sticky_note_2_rounded, "الشروط و الاحكام",
-                        () {
-                      Navigator.of(context).popAndPushNamed(TermsOfService.routeName);
-                    }),
+              DrawerTabsWidget(Icons.star_rate_sharp, "عن التطبيق", () {
+                Navigator.of(context).popAndPushNamed(TermsOfService.routeName);
+              }),
+              SizedBox(
+                height: 10,
               ),
+              DrawerTabsWidget(Icons.sticky_note_2_rounded, "الشروط و الاحكام",
+                      () {
+                    Navigator.of(context).popAndPushNamed(TermsOfService.routeName);
+                  }),
               SizedBox(
                 height: 10,
               ),

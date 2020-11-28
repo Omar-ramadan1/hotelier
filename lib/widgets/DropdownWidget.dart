@@ -9,7 +9,8 @@ class DropdownWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Container(
-   padding: EdgeInsets.only(top: 10),
+      margin: EdgeInsets.only(right: 20),
+   padding: EdgeInsets.only(top: 0),
       width: width,
 
       child: Directionality(

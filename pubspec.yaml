@@ -42,6 +42,8 @@ dependencies:
   image_picker: ^0.6.7+12
   crossplat_objectid: ^2.1.4
   shared_preferences: ^0.5.12+4
+  flutter_spinkit: ^4.1.2
+
 
 
 dev_dependencies:
@@ -91,3 +93,4 @@ flutter:
     - assets/ContactAppBarImage.jpg
     - assets/HotelProfileImage.jpg
     - assets/UserProfileImage.jpg
+    - assets/loading.gif

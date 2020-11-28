@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hotelier/screens/SignInScreen.dart';
+import 'package:hotelier/screens/SignUpScreen.dart';
 import 'package:hotelier/widgets/AppBarWidget.dart';
 import 'package:hotelier/widgets/AppDrawerWidget.dart';
 import 'package:hotelier/widgets/ButtonWidget.dart';
 
-import 'SignInScreen.dart';
-import 'SignUpScreen.dart';
-
-enum Registration {
-  signIn,
-  signUp,
-}
 
 class RegistrationScreen extends StatefulWidget {
   static const routeName = '/RegistrationScreen';
@@ -18,7 +13,18 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  Registration registration = Registration.signIn;
+  String registration ;
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    final args = ModalRoute.of(context).settings.arguments;
+
+      setState(() {
+        registration = args;
+      });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,34 +61,34 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     // text , Color , text font and widget width
                     child: ButtonChildWidget(
                         "تسجيل الدخول",
-                        registration == Registration.signIn
+                        registration == "signIn"
                             ? Color(0xFFF7BB85)
                             : Colors.white,
                         18 , 150),
                     onTap: () {
                       setState(() {
-                        registration = Registration.signIn;
+                        registration = "signIn";
                       });
                     },
                   ),
                   InkWell(
                     onTap: (){
                       setState(() {
-                        registration = Registration.signUp;
+                        registration = "signUp";
                       });
                     },
                     // ButtonChildWidget take parameters
                     // text , Color , text font and widget width
                     child: ButtonChildWidget(
                         "تسجيل حساب",
-                        registration == Registration.signUp
+                        registration == "signUp"
                             ? Color(0xFFF7BB85)
                             : Colors.white,
                         18 , 150),
                   ),
                 ],
               ),
-              registration == Registration.signIn ?
+              registration == "signIn" ?
               SignInScreen() : SignUpScreen(),
             ],
           ),

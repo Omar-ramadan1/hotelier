@@ -1,9 +1,10 @@
 import 'dart:convert';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hotelier/widgets/SingleTextFieldWidget.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:hotelier/Constant/Constant.dart';
 import 'package:hotelier/Model/DataList.dart';
 import 'package:hotelier/screens/GetLocationScreen.dart';
@@ -70,36 +71,16 @@ class _SignUpUserState extends State<SignUpUser> {
       width: size.width * 80 / 100,
       child: Column(
         children: [
-          Directionality(
-            textDirection: TextDirection.rtl,
-            child: TextField(
-              onChanged: (value) {
-                onChangeFunction(value, 'name');
-              },
-              decoration: InputDecoration(
-                labelText: 'الاسم',
-                errorText: dataErrorMessage['name'],
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Directionality(
-            textDirection: TextDirection.rtl,
-            child: TextField(
-              onChanged: (value) {
+          SingleTextFieldWidget(
+              'الاسم', null,
+                  (value) {
+                    onChangeFunction(value, 'name');
+              }),
+          SingleTextFieldWidget(
+              'رقم الهوية/رقم الاقامة', null,
+                  (value) {
                 onChangeFunction(value, 'idNumber');
-              },
-              decoration: InputDecoration(
-                labelText: 'رقم الهوية/رقم الاقامة',
-                errorText: dataErrorMessage['idNumber'],
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
+              }),
           Container(
             width: size.width,
             child: Row(
@@ -137,7 +118,7 @@ class _SignUpUserState extends State<SignUpUser> {
           InkWell(
             onTap: () async {
               // GetLocationScreen
-              Position position = await Navigator.of(context).push(
+              LatLng position = await Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => GetLocationScreen()));
               var address = await Geocoder.local.findAddressesFromCoordinates(
                   new Coordinates(position.latitude, position.longitude));
@@ -167,70 +148,26 @@ class _SignUpUserState extends State<SignUpUser> {
           SizedBox(
             height: 25,
           ),
-          Container(
-            child: Directionality(
-              textDirection: TextDirection.rtl,
-              child: TextField(
-                onChanged: (value) {
-                  onChangeFunction(value, 'phone');
-                },
-                decoration: InputDecoration(
-                  labelText: 'رقم الجوال',
-                  errorText: dataErrorMessage['phone'],
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 25,
-          ),
-          Directionality(
-            textDirection: TextDirection.rtl,
-            child: TextField(
-              onChanged: (value) {
+          SingleTextFieldWidget(
+              'رقم الجوال', null,
+                  (value) {
+                onChangeFunction(value, 'phone');
+              }),
+          SingleTextFieldWidget(
+              'الايميل', null,
+                  (value) {
                 onChangeFunction(value, 'email');
-              },
-              decoration: InputDecoration(
-                labelText: 'الايميل',
-                errorText: dataErrorMessage['email'],
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Directionality(
-            textDirection: TextDirection.rtl,
-            child: TextField(
-              obscureText: true,
-              onChanged: (value) {
+              }),
+          SingleTextFieldWidget(
+              'كلمة المرور', null,
+                  (value) {
                 onChangeFunction(value, 'password');
-              },
-              decoration: InputDecoration(
-                labelText: 'كلمة المرور',
-                errorText: dataErrorMessage['password'],
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Directionality(
-            textDirection: TextDirection.rtl,
-            child: TextField(
-              obscureText: true,
-              onChanged: (value) {
+              } , obscureText: true),
+          SingleTextFieldWidget(
+              'تاكيد كلمة المرور', null,
+                  (value) {
                 onChangeFunction(value, 'confirmPassword');
-              },
-              decoration: InputDecoration(
-                labelText: 'تاكيد كلمة المرور',
-                errorText: dataErrorMessage['confirmPassword'],
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 25,
-          ),
+              }, obscureText: true),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -263,16 +200,37 @@ class _SignUpUserState extends State<SignUpUser> {
                   }
                 });
                 if(check()){
-                  print(jsonEncode(data));
-                  var response = await http.post(
-                    'http://api.hoteliercard.com/api/User/Register',
-                    headers: <String, String>{
-                      'Content-Type': 'application/json; charset=UTF-8',
-                    },
-                    body: jsonEncode(data),
-                  );
-                  if(response.statusCode == 200){
-                    Navigator.of(context).pop();
+
+                  if(regularExpressionCheck(data["password"])){
+                    if(data["password"] == data["confirmPassword"]){
+                        print(jsonEncode(data));
+                        var response = await http.post(
+                          'http://api.hoteliercard.com/api/User/Register',
+                          headers: <String, String>{
+                            'Content-Type': 'application/json; charset=UTF-8',
+                          },
+                          body: jsonEncode(data),
+                        );
+                        print(response.statusCode);
+                        print(response.body);
+
+                        if(response.statusCode == 200){
+                          Navigator.of(context).pop();
+                        }else if(response.statusCode == 400){
+                          Map body = jsonDecode(response.body);
+                          Scaffold.of(context).showSnackBar(SnackBar(content: Text(body["Message"])));
+                        }
+                    }else{
+                      setState(() {
+                        dataErrorMessage["password"] = "من فضلك تاكد من تطابق كلمة المرور و تاكيدها";
+                        dataErrorMessage["confirmPassword"] = "من فضلك تاكد من تطابق كلمة المرور و تاكيدها";
+                      });
+                    }
+
+                  }else{
+                    setState(() {
+                      dataErrorMessage["password"] = "ادخل حروف و ارقام و رموز و ما لا يقل عن ثمانية مدخلات";
+                    });
                   }
                 }
               },
@@ -285,6 +243,18 @@ class _SignUpUserState extends State<SignUpUser> {
       ),
     );
   }
+
+  regularExpressionCheck(String data){
+    RegExp regExp = new RegExp(
+      r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$",
+      caseSensitive: false,
+      multiLine: false,
+    );
+
+    return regExp.hasMatch(data);
+  }
+
+
 
   check() {
     bool check = true;

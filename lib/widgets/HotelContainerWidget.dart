@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'HotelDetailsWidget.dart';
 import 'HotelImageWidget.dart';
 class HotelContainerWidget extends StatelessWidget {
+  final Map data;
+
+  const HotelContainerWidget(this.data);
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -15,8 +18,8 @@ class HotelContainerWidget extends StatelessWidget {
         color: Colors.transparent,
       ),
       child: Row(textDirection: TextDirection.rtl, children: [
-        HotelImageWidget(),
-        HotelDetailsWidget(),
+        HotelImageWidget(data),
+        HotelDetailsWidget(data),
         //Spacer(),
       ]),
     );

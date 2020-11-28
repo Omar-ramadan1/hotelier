@@ -6,7 +6,6 @@ import 'package:hotelier/widgets/ButtonWidget.dart';
 import 'package:hotelier/widgets/CreditCardChoiceWidget.dart';
 import 'package:hotelier/widgets/MainScreenCardWidget.dart';
 import 'package:hotelier/widgets/TextFieldWidget.dart';
-import 'package:hotelier/widgets/bottomBarWidget.dart';
 
 class PaymentScreen extends StatefulWidget {
   static const routeName = '/PaymentScreen';
@@ -74,7 +73,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 TextDirection.rtl,
                 "0000    0000    0000   0000",
               ),
-
               SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
