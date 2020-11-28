@@ -11,7 +11,7 @@ class HotelContainerWidget extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return  Container(
       width: size.width / 1.05,
-      height: size.width / 1.7,
+      height: size.width / 1.5,
       decoration: BoxDecoration(
         border: Border.all(width: 3.0, color: Color(0xFFC29D5E)),
         borderRadius: BorderRadius.circular(20),

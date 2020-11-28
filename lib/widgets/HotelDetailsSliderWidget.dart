@@ -6,7 +6,8 @@ class HotelDetailsSliderWidget extends StatelessWidget {
   final List imgList;
   final Function onChange;
   final int currentIndex;
-  const HotelDetailsSliderWidget({Key key, this.imgList , this.currentIndex ,this.onChange(index)}) : super(key: key);
+  final String text;
+  const HotelDetailsSliderWidget({Key key, this.text ,this.imgList , this.currentIndex ,this.onChange(index)}) : super(key: key);
 
 List<T> map<T>(List list, Function handler) {
   List<T> result = [];
@@ -21,7 +22,7 @@ List<T> map<T>(List list, Function handler) {
     return Container(
       child: Column(children: [
         Text(
-          "فندق المعمرين الرياض",
+          text,
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 10),
@@ -45,10 +46,10 @@ List<T> map<T>(List list, Function handler) {
               builder: (BuildContext context) {
                 return InkWell(
                   onTap: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => FullScreenPhotoViewer(imgUrl)));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => FullScreenPhotoViewer('http://api.hoteliercard.com/Content/Images/$imgUrl')));
                   },
                   child: Hero(
-                    tag: imgUrl,
+                    tag: 'http://api.hoteliercard.com/Content/Images/$imgUrl',
                     child: Container(
                       width: 400,
                       margin: EdgeInsets.symmetric(
@@ -65,7 +66,7 @@ List<T> map<T>(List list, Function handler) {
                             ),
                           ],
                           image: DecorationImage(fit: BoxFit.fill , image: Image.network(
-                            imgUrl,
+                            'http://api.hoteliercard.com/Content/Images/$imgUrl',
                           ).image)
                       ),
                     ),

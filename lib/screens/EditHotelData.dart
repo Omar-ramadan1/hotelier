@@ -1,8 +1,14 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:crossplat_objectid/crossplat_objectid.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hotelier/Constant/Constant.dart';
+import 'package:hotelier/Functions/UploadAssetImages.dart';
+import 'package:hotelier/Functions/UploadVideo.dart';
 import 'package:hotelier/Model/DataList.dart';
 import 'package:hotelier/Model/UserData.dart';
 import 'package:hotelier/screens/GetLocationScreen.dart';
@@ -14,6 +20,8 @@ import 'package:hotelier/widgets/DropdownWidget.dart';
 import 'package:hotelier/widgets/EditTextFieldWidget.dart';
 import 'package:hotelier/widgets/HotelImageEditWidget.dart';
 import 'package:hotelier/widgets/SignUpButtonWidget.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
@@ -25,17 +33,10 @@ class EditHotelData extends StatefulWidget {
 }
 
 class _EditHotelDataState extends State<EditHotelData> {
-  String discountValue = '10', cityId = 'الرياض';
-  double starRating = 0;
-  bool checkBoxValue = false;
+  String discountValue = '10', cityId = 'الرياض' , typeId;
+  int allowedImageNumberToBeUploaded = 10;
+  bool checkBoxValue = false, isVideoLoading = false;
   Map data, dataClone = {}, dataErrorMessage = {};
-  List imgList = [
-    'https://images.unsplash.com/photo-1502117859338-fd9daa518a9a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-    'https://images.unsplash.com/photo-1554321586-92083ba0a115?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-    'https://images.unsplash.com/photo-1536679545597-c2e5e1946495?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-    'https://images.unsplash.com/photo-1543922596-b3bbaba80649?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-    'https://images.unsplash.com/photo-1502943693086-33b5b1cfdf2f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80'
-  ];
   onChangeFunction(value, String variableName) {
     setState(() {
       dataClone[variableName] = value;
@@ -52,8 +53,6 @@ class _EditHotelDataState extends State<EditHotelData> {
     DataList dataListProvider = Provider.of<DataList>(context, listen: false);
     print(userDataProvider.userDataClone);
     setState(() {
-
-
       data = userDataProvider.userData;
       print(userDataProvider.userData);
       dataListProvider.citiesList.forEach((element) {
@@ -62,9 +61,17 @@ class _EditHotelDataState extends State<EditHotelData> {
           cityId = element["Name"];
         }
       });
-      discountValue = data['discountValue'].toString();
-      starRating = data['starRating'].toDouble();
+      dataListProvider.categoryList.forEach((element) {
+        print(element);
+        if (data["TypeId"] == element["id"]) {
+          typeId = element["Name"];
+        }
+      });
+      dataClone['discountValue'] = data['discountValue'];
+      dataClone['starRating'] = data['starRating'];
       dataClone['address'] = data['address'];
+      allowedImageNumberToBeUploaded =
+          allowedImageNumberToBeUploaded - data['img'].length;
     });
   }
 
@@ -102,8 +109,36 @@ class _EditHotelDataState extends State<EditHotelData> {
                 "تعديل حساب",
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
               ),
-              SignUpButtonWidget(
-                  data['name'], Icons.home_work_rounded, Color(0xFFF7BB85)),
+              InkWell(
+                onTap: () async{
+                  var resultList = await MultiImagePicker.pickImages(
+                    maxImages: 1,
+                    enableCamera: false,
+                    cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
+                    materialOptions: MaterialOptions(
+                      actionBarColor: "#abcdef",
+                      actionBarTitle: "Hotelier",
+                      allViewTitle: "All Photos",
+                      selectCircleStrokeColor: "#000000",
+                    ),
+                  );
+                  //"image${ObjectId().toHexString()}.jpg"
+                  resultList.forEach((element) async {
+                    var response = await uploadAssetImages(element, "profileImage${data['userId']}.jpg");
+
+                    response.stream.transform(utf8.decoder).listen((value) async {
+                      Map respondedData = jsonDecode(value);
+                      print(jsonDecode(value));
+                      List imgNameArray = respondedData['imgName'];
+                      setState(() {
+                        dataClone["userImg"] = imgNameArray[0];
+                      });
+                    });
+                  });
+                },
+                child: SignUpButtonWidget(
+                    data['name'], Icons.home_work_rounded, Color(0xFFF7BB85)),
+              ),
               EditTextFieldWidget(data['name'], (value) {
                 onChangeFunction(value, "name");
               }),
@@ -141,7 +176,9 @@ class _EditHotelDataState extends State<EditHotelData> {
                           child: Directionality(
                             textDirection: TextDirection.rtl,
                             child: TextField(
-                              onChanged: (value){onChangeFunction(value, "district");},
+                              onChanged: (value) {
+                                onChangeFunction(value, "district");
+                              },
                               decoration: InputDecoration(
                                 labelText: data['district'],
                               ),
@@ -209,7 +246,7 @@ class _EditHotelDataState extends State<EditHotelData> {
                       ),
                     ),
                     DropdownWidget(
-                        discountValue,
+                        dataClone['discountValue'].toString(),
                         [
                           '10',
                           '20',
@@ -225,7 +262,7 @@ class _EditHotelDataState extends State<EditHotelData> {
                         30,
                         0, (value) {
                       setState(() {
-                        discountValue = value;
+                        dataClone['discountValue'] = value;
                       });
                     }),
                   ],
@@ -248,17 +285,17 @@ class _EditHotelDataState extends State<EditHotelData> {
                             fontSize: 18, fontWeight: FontWeight.w800),
                       ),
                       SmoothStarRating(
-                          allowHalfRating: true,
+                          allowHalfRating: false,
                           onRated: (v) {
                             print(v);
                             setState(() {
-                              starRating = v;
+                              dataClone['starRating'] = v.toInt();
                             });
                           },
                           starCount: 5,
                           filledIconData: Icons.star,
                           halfFilledIconData: Icons.star_half,
-                          rating: starRating,
+                          rating: dataClone['starRating'].toDouble(),
                           size: 30.0,
                           color: Colors.amberAccent,
                           borderColor: Colors.amberAccent,
@@ -267,40 +304,149 @@ class _EditHotelDataState extends State<EditHotelData> {
                   ),
                 ],
               ),
+              Container(
+                margin: EdgeInsets.only(top: 25),
+                child: Row(
+                  textDirection: TextDirection.rtl,
+                  children: [
+                    Text(
+                      "التصنيف",
+                      style: TextStyle(fontWeight: FontWeight.w900),
+                    ),
+                    DropdownWidget(
+                        typeId,
+                        dataListProvider.categoryNames,
+                        60,
+                        25, (value) {
+                      setState(() {
+                        typeId = value;
+                      });
+                    }),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 25,
+              ),
               Row(
                 textDirection: TextDirection.rtl,
                 mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ButtonChildWidget("رفع صور", Color(0xFFF7BB85), 15, 100),
-                  ButtonChildWidget("رفع فديو", Color(0xFFF7BB85), 15, 100),
+                  InkWell(
+                    onTap: () {
+                      uploadImages();
+                    },
+                    child: ButtonChildWidget("رفع صورة", mainAppColor, 15, 100),
+                  ),
+                  InkWell(
+                    onTap: () async {
+                      uploadVideo();
+                    },
+                    child:
+                        ButtonChildWidget("رفع فيديو", mainAppColor, 15, 100),
+                  ),
+                  isVideoLoading
+                      ? Container(
+                          margin: EdgeInsets.only(top: 20),
+                          child: SpinKitFadingCircle(
+                            color: Colors.lightBlueAccent,
+                            size: 20.0,
+                          ),
+                        )
+                      : Container(),
                 ],
               ),
               SizedBox(
                 height: 20,
               ),
+              Row(
+                children: [
+                  Text(
+                    '-:تعديل بيانات الحساب البنكى',
+                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+                  )
+                ],
+                textDirection: TextDirection.rtl,
+              ),
+              EditTextFieldWidget(
+                  data['BankName'] == null ? "اسم البنك" : data['Bin'],
+                  (value) {
+                onChangeFunction(value, "BankName");
+              }),
+              EditTextFieldWidget(
+                  data['BankNumber'] == null
+                      ? "رقم الحساب البنكى"
+                      : data['Bin'], (value) {
+                onChangeFunction(value, "BankNumber");
+              }),
+              EditTextFieldWidget(data['Bin'] == null ? "الايبان" : data['Bin'],
+                  (value) {
+                onChangeFunction(value, "Bin");
+              }),
               Container(
                 width: size.width - 20,
                 child: GridView.count(
                   shrinkWrap: true,
                   addAutomaticKeepAlives: true,
                   scrollDirection: Axis.vertical,
-                  crossAxisCount: 4,
+                  crossAxisCount: 3,
                   children: [
-                    for (var imageURL in imgList)
+                    for (var imageBody in data['img'])
                       Container(
                         margin: EdgeInsets.only(top: 10),
-                        child: HotelImageEditWidget(imageURL),
-                      ),
-                    for (var imageURL in imgList)
-                      Container(
-                        margin: EdgeInsets.only(top: 10),
-                        child: HotelImageEditWidget(imageURL),
+                        child: HotelImageEditWidget(imageBody, (pkMediaId) {
+                          deleteImageFunction(pkMediaId);
+                        }),
                       ),
                   ],
                 ),
               ),
-              ButtonChildWidget("تعديل حساب", Color(0xFFF7BB85), 18, 150),
+              InkWell(
+                onTap: () async {
+                  var citiesListClone = dataListProvider.citiesList;
+                  var categoryListClone = dataListProvider.categoryList;
+                  citiesListClone.forEach((e) => {
+                    if (e["Name"] == cityId)
+                      {
+                        data["CityId"] = e["id"],
+                      }
+                  });
+                  categoryListClone.forEach((e) => {
+                    if (e["Name"] == typeId)
+                      {
+                        data["TypeId"] = e["id"],
+                      }
+                  });
+                  data.forEach((key, value) {
+                    if(key == 'access_token'){
+
+                    }else if(dataClone[key] == null){
+                      setState(() {
+                        dataClone[key] = value;
+                      });
+                    }
+                  });
+                  print(dataClone);
+                  print(data);
+
+                  var response = await http.post(
+                    '$serverURL/User/EditHotel',
+                    headers: <String, String>{
+                      'Authorization': 'Bearer ${data["access_token"]}',
+                      'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: jsonEncode(dataClone),
+                  );
+                  print(response.statusCode);
+                  print(response.body);
+                  setState(() {
+                    data = jsonDecode(response.body);
+                  });
+
+                },
+                  child: ButtonChildWidget("تعديل حساب", Color(0xFFF7BB85), 18, 150)
+              ),
               SizedBox(
                 height: 35,
               ),
@@ -334,7 +480,114 @@ class _EditHotelDataState extends State<EditHotelData> {
       return Container();
     }
   }
+
+  uploadVideo() async {
+    String name;
+    final snackBar = SnackBar(content: Text('please wait till video uploads'));
+    final snackBar1 = SnackBar(content: Text('video uploaded'));
+    final snackBar2 = SnackBar(content: Text('your video size is too large'));
+    final picker = ImagePicker();
+    PickedFile pickedFile = await picker.getVideo(source: ImageSource.gallery);
+    Scaffold.of(context).showSnackBar(snackBar);
+    setState(() {
+      isVideoLoading = true;
+    });
+    if (data["videoURL"] == null || data["videoURL"] == '') {
+      name = "video${ObjectId().toHexString()}.mp4";
+    } else {
+      name = data["videoURL"];
+    }
+    var response = await saveVideoFunction(pickedFile, name);
+    if (response.statusCode == 200) {
+      response.stream.transform(utf8.decoder).listen((value) {
+        Map respondedData = jsonDecode(value);
+        List videoNameArray = respondedData['imgName'];
+        print(jsonDecode(value));
+        Scaffold.of(context).showSnackBar(snackBar2);
+        if (mounted) {
+          setState(() {
+            dataClone["videoURL"] = videoNameArray[0];
+            setState(() {
+              isVideoLoading = false;
+            });
+            Scaffold.of(context).showSnackBar(snackBar1);
+          });
+        }
+      });
+    } else {
+      Scaffold.of(context).showSnackBar(snackBar2);
+    }
+  }
+
+  uploadImages() async {
+    List images = [];
+    final snackBar = SnackBar(content: Text('please wait till image uploads'));
+    // final snackBar1 = SnackBar(content: Text('images uploaded'));
+    List<Asset> resultList = List<Asset>();
+
+    resultList = await MultiImagePicker.pickImages(
+      maxImages: allowedImageNumberToBeUploaded,
+      enableCamera: false,
+      cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
+      materialOptions: MaterialOptions(
+        actionBarColor: "#abcdef",
+        actionBarTitle: "Hotelier",
+        allViewTitle: "All Photos",
+        selectCircleStrokeColor: "#000000",
+      ),
+    );
+     Scaffold.of(context).showSnackBar(snackBar);
+    //"image${ObjectId().toHexString()}.jpg"
+    resultList.forEach((element) async {
+      var response = await uploadAssetImages(element, "name.jpg");
+
+      response.stream.transform(utf8.decoder).listen((value) async {
+        Map respondedData = jsonDecode(value);
+        print(jsonDecode(value));
+        List imgNameArray = respondedData['imgName'];
+
+        images.add(imgNameArray[0]);
+        var response = await http.post(
+          '$serverURL/Media/AddImg?imgName=${imgNameArray[0]}',
+          headers: <String, String>{
+            'Authorization': 'Bearer ${data["access_token"]}',
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+        );
+        print(response.body);
+        print(response.statusCode);
+        setState(() {
+          data["img"].add(response.body);
+          allowedImageNumberToBeUploaded = 10 - data['img'].length;
+        });
+      });
+    });
+  }
+
+  void deleteImageFunction(pkMediaId) async {
+    List filter = [];
+    print(pkMediaId);
+    data['img'].forEach((element) {
+      if (element['PK_MediId'] == pkMediaId) {
+        print(element['PK_MediId']);
+      } else {
+        filter.add(element);
+      }
+    });
+    setState(() {
+      data['img'] = filter;
+      allowedImageNumberToBeUploaded = 10 - data['img'].length;
+    });
+    var response = await http.post(
+      '$serverURL/Media/DeleatImg?id=$pkMediaId',
+      headers: <String, String>{
+        'Authorization': 'Bearer ${data["access_token"]}',
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+    );
+    print(response.statusCode);
+    print(response.body);
+  }
 }
 
-
-// http://api.hoteliercard.com/api/Content/Images/image5fbfa71e2489b9bcaeadf55c.jpg
+// http://api.hoteliercard.com/Content/Images/image5fbfa71e2489b9bcaeadf55c.jpg

@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 
 class HotelImageEditWidget extends StatelessWidget {
-  final String imageURL;
+  final Map imageMap;
+  final Function deleteImageFunction;
 
-  const HotelImageEditWidget(this.imageURL);
+  const HotelImageEditWidget(this.imageMap , this.deleteImageFunction);
   @override
   Widget build(BuildContext context) {
+    String imageURL = 'http://api.hoteliercard.com/Content/Images/${imageMap['FileName']}';
     return Container(
       child: Stack(
         children: [
           Container(
-            width: 50,
+            width: 100,
+            height: 80,
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
@@ -22,15 +25,24 @@ class HotelImageEditWidget extends StatelessWidget {
               ],
             ),
             margin: EdgeInsets.only(top: 5),
-            child: Image.network(imageURL),
+            child: Image.network(imageURL , fit: BoxFit.fill, errorBuilder: (
+               context,
+               error,
+               stackTrace,
+            ){
+              return Container();
+      },),
           ),
           Container(
-            width: 60,
+            width: 100,
             child: Row(
               textDirection: TextDirection.rtl,
               children: [
                 InkWell(
-                  onTap: (){print("hello");},
+                  onTap: (){
+                    deleteImageFunction(imageMap['PK_MediId']);
+                    print("hello");
+                  },
                   child: Container(
                     width: 17,
                     height: 17,

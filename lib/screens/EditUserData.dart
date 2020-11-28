@@ -28,7 +28,7 @@ class EditUserData extends StatefulWidget {
 
 class _EditUserDataState extends State<EditUserData> {
 
-  String discountValue , CityId;
+  String discountValue , cityId;
   double starRating = 0;
   bool checkBoxValue = false;
   Map data, dataClone = {}, dataErrorMessage = {};
@@ -43,7 +43,7 @@ class _EditUserDataState extends State<EditUserData> {
       setState(() {
         data = userDataProvider.userData;
         print(userDataProvider.userData);
-        CityId = dataListProvider.citiesNames[0];
+        cityId = dataListProvider.citiesNames[0];
       });
   }
   @override
@@ -78,7 +78,32 @@ class _EditUserDataState extends State<EditUserData> {
             children: [
               Text("تعديل حساب"  , style: TextStyle(fontSize: 30 , fontWeight: FontWeight.w800),),
               InkWell(
-                onTap: (){ uploadImages();},
+                onTap: ()async{
+                  var resultList = await MultiImagePicker.pickImages(
+                  maxImages: 1,
+                  enableCamera: false,
+                  cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
+                  materialOptions: MaterialOptions(
+                    actionBarColor: "#abcdef",
+                    actionBarTitle: "Hotelier",
+                    allViewTitle: "All Photos",
+                    selectCircleStrokeColor: "#000000",
+                  ),
+                );
+                //"image${ObjectId().toHexString()}.jpg"
+                resultList.forEach((element) async {
+                  var response = await uploadAssetImages(element, "profileImage${data['userId']}.jpg");
+
+                  response.stream.transform(utf8.decoder).listen((value) async {
+                    Map respondedData = jsonDecode(value);
+                    print(jsonDecode(value));
+                    List imgNameArray = respondedData['imgName'];
+                    setState(() {
+                      dataClone["userImg"] = imgNameArray[0];
+                    });
+                  });
+                });
+                },
                 child: SignUpButtonWidget(
                     data['name'],
                     Icons.person_add_alt_1_sharp,
@@ -104,10 +129,10 @@ class _EditUserDataState extends State<EditUserData> {
                         Container(
                           width: 100,
                           margin: EdgeInsets.only(top: 20),
-                          child: DropdownWidget(CityId, dataListProvider.citiesNames, 100, 30,
+                          child: DropdownWidget(cityId, dataListProvider.citiesNames, 100, 30,
                                   (value) {
                                 setState(() {
-                                  CityId = value;
+                                  cityId = value;
                                 });
                               }),
                         ),
@@ -186,7 +211,7 @@ class _EditUserDataState extends State<EditUserData> {
                   var citiesListClone = dataListProvider.citiesList;
 
                   citiesListClone.forEach((e) => {
-                    if (e["Name"] == CityId)
+                    if (e["Name"] == cityId)
                       {
                         dataClone["CityId"] = e["id"],
                       }

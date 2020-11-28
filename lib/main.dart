@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hotelier/Model/DataList.dart';
 import 'package:hotelier/Model/UserData.dart';
+import 'package:hotelier/screens/About.dart';
 import 'package:hotelier/screens/Complaining.dart';
 import 'package:hotelier/screens/Contact.dart';
 import 'package:hotelier/screens/Error_404.dart';
@@ -8,7 +9,7 @@ import 'package:hotelier/screens/GetLocationScreen.dart';
 import 'package:hotelier/screens/HotelScreen.dart';
 import 'package:hotelier/screens/MainScreen.dart';
 import 'package:hotelier/screens/RegistrationScreen.dart';
-import 'package:hotelier/screens/Send_Successfully.dart';
+import 'package:hotelier/screens/SendSuccessfully.dart';
 import 'package:hotelier/screens/HotelDetailsScreen.dart';
 import 'package:hotelier/screens/SplashScreenWidget.dart';
 import 'package:hotelier/screens/PaymentScreen.dart';
@@ -49,7 +50,7 @@ class Hotelier extends StatelessWidget {
         Contact.routeName: (ctx) => Contact(),
         PaymentScreen.routeName: (ctx) => PaymentScreen(),
         Congratulation.routeName:(ctx)=>Congratulation(),
-        Send_Successfully.routeName:(ctx)=>Send_Successfully(),
+        SendSuccessfully.routeName:(ctx)=>SendSuccessfully(),
         HotelDetailsScreen.routeName:(ctx)=>HotelDetailsScreen(),
         Error_404.routeName:(ctx)=>Error_404(),
         EditUserData.routeName:(ctx)=>EditUserData(),
@@ -58,6 +59,7 @@ class Hotelier extends StatelessWidget {
         HotelScreen.routeName:(ctx)=>HotelScreen(),
         TermsOfService.routeName:(ctx)=>TermsOfService(),
         GetLocationScreen.routeName:(ctx)=>GetLocationScreen(),
+        About.routeName:(ctx)=>About(),
       },
     );
   }

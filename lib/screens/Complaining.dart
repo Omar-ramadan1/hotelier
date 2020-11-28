@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:hotelier/Constant/Constant.dart';
+import 'package:hotelier/screens/SendSuccessfully.dart';
 import 'package:hotelier/widgets/AppBarWidget.dart';
 import 'package:hotelier/widgets/DropdownWidget.dart';
 import 'package:hotelier/widgets/bottomBarWidget.dart';
 import 'package:hotelier/widgets/AppDrawerWidget.dart';
 import 'package:hotelier/widgets/ButtonWidget.dart';
-
+import 'package:http/http.dart' as http;
 class Complaining extends StatefulWidget {
   static const routeName = '/Complaining';
 
@@ -14,16 +18,16 @@ class Complaining extends StatefulWidget {
 
 class _ComplainingState extends State<Complaining> {
   Map data = {
-    'name': null,
-    'email': null,
-    'subject': 'شكوى',
-    'message': null,
+    'Name': null,
+    'Email': null,
+    'Type': 'شكوى',
+    'Message': null,
   };
 
   Map dataErrorMessage = {
-    'name': null,
-    'email': null,
-    'message': null,
+    'Name': null,
+    'Email': null,
+    'Message': null,
   };
 
 
@@ -80,10 +84,10 @@ class _ComplainingState extends State<Complaining> {
                 ),
                 TextField(
                   onChanged: (value) {
-                    onChangeFunction(value, 'name');
+                    onChangeFunction(value, 'Name');
                   },
                   decoration: InputDecoration(
-                    errorText: dataErrorMessage['name'],
+                    errorText: dataErrorMessage['Name'],
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(45),
                     ),
@@ -104,10 +108,10 @@ class _ComplainingState extends State<Complaining> {
                 ),
                 TextField(
                   onChanged: (value) {
-                    onChangeFunction(value, 'email');
+                    onChangeFunction(value, 'Email');
                   },
                   decoration: InputDecoration(
-                    errorText: dataErrorMessage['email'],
+                    errorText: dataErrorMessage['Email'],
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(45),
                     ),
@@ -129,10 +133,10 @@ class _ComplainingState extends State<Complaining> {
                         textAlign: TextAlign.left,
                       ),
                     ),
-                    DropdownWidget(data['subject'], ["شكوى", 'اقتراح'], 40, 0,
+                    DropdownWidget(data['Type'], ["شكوى", 'اقتراح'], 40, 0,
                         (value) {
                       setState(() {
-                        data['subject'] = value;
+                        data['Type'] = value;
                       });
                     }),
                   ],
@@ -155,10 +159,10 @@ class _ComplainingState extends State<Complaining> {
                 TextField(
                   maxLines: 7,
                   onChanged: (value) {
-                    onChangeFunction(value, 'message');
+                    onChangeFunction(value, 'Message');
                   },
                   decoration: InputDecoration(
-                    errorText: dataErrorMessage['message'],
+                    errorText: dataErrorMessage['Message'],
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
@@ -166,8 +170,21 @@ class _ComplainingState extends State<Complaining> {
                 ),
                 SizedBox(height: 20),
                 InkWell(
-                  onTap: (){
-                    check();
+                  onTap: ()async{
+                    if(check()){
+                      var response = await http.post(
+                        '$serverURL/Comlains',
+                        headers: <String, String>{
+                          'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: jsonEncode(data),
+                      );
+                      print(response.statusCode);
+                      print(response.body);
+                      if(response.statusCode == 201){
+                            Navigator.of(context).popAndPushNamed(SendSuccessfully.routeName);
+                      }
+                    }
                   },
                   child: ButtonChildWidget("ارسال", Color(0xFFF7BB85), 18, 130),
                 ),

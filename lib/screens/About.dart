@@ -1,19 +1,19 @@
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
-import 'package:hotelier/Constant/Constant.dart';
 import 'package:hotelier/widgets/AppBarWidget.dart';
 import 'package:hotelier/widgets/AppDrawerWidget.dart';
 import 'package:hotelier/widgets/bottomBarWidget.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
+import 'package:hotelier/Constant/Constant.dart';
 
-class TermsOfService extends StatefulWidget {
-  static const routeName = '/Terms';
+class About extends StatefulWidget {
+  static const routeName = '/About';
   @override
-  _TermsOfServiceState createState() => _TermsOfServiceState();
+  _AboutState createState() => _AboutState();
 }
 
-class _TermsOfServiceState extends State<TermsOfService> {
+class _AboutState extends State<About> {
+
   Map info;
   @override
   void initState(){
@@ -24,7 +24,7 @@ class _TermsOfServiceState extends State<TermsOfService> {
 
   getInfoFunction()async{
     var response = await http.get(
-      '$serverURL/Pages/?id=2',
+      '$serverURL/Pages/?id=1',
       headers: <String, String>{
         'Content-Type': 'application/x-www-form-urlencoded'
       },
@@ -35,6 +35,8 @@ class _TermsOfServiceState extends State<TermsOfService> {
     print(response.statusCode);
     print(response.body);
   }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,16 +60,19 @@ class _TermsOfServiceState extends State<TermsOfService> {
       ),
       drawerEdgeDragWidth: 200,
       drawer: AppDrawerWidget(),
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-      child: Directionality(
-          textDirection: TextDirection.rtl,
-          child: Text(info==null ? "" : info['PageBody']),
+      body: Container(decoration: BoxDecoration(
+
       ),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          child: Directionality(
+            textDirection: TextDirection.rtl,
+            child: Text(info==null ? "" : info['PageBody']),
+          ),
+        ),
       ),
       bottomNavigationBar : BottomBarWidget(),
 
     );
   }
 }
-

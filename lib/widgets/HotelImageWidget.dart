@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hotelier/Clippers/HotelImageClipper.dart';
-import 'package:hotelier/Constant/Constant.dart';
 
 class HotelImageWidget extends StatelessWidget {
   final Map data;
@@ -16,17 +15,17 @@ class HotelImageWidget extends StatelessWidget {
         children: [
           Container(
             width: size.width / 2.65,
-            height: size.width / 1.7,
+            height: size.width / 1.5,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(topRight: Radius.circular(17) , bottomRight: Radius.circular(17)),
-                 image: DecorationImage(image:NetworkImage("$serverURL/Content/Images/${images[0]}"),
+                 image: DecorationImage(image:NetworkImage("http://api.hoteliercard.com/Content/Images/${images[0]}"),
                  fit: BoxFit.cover),
                 color: Colors.transparent
             ),
           ),
           Container(
             alignment: Alignment.center,
-            margin: EdgeInsets.only(left: 45 , top: size.width / 2.3),
+            margin: EdgeInsets.only(left: 45 , top: size.width / 1.94),
             width: 70,
             height: 50,
             decoration: BoxDecoration(

@@ -7,7 +7,7 @@ import '../widgets/bottomBarWidget.dart';
 
 
 
-class Send_Successfully extends StatelessWidget {
+class SendSuccessfully extends StatelessWidget {
     static const routeName = '/SendSucee';
 
   @override
@@ -15,11 +15,19 @@ class Send_Successfully extends StatelessWidget {
     return Scaffold(
       drawerScrimColor: Colors.transparent,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(150.0),
+        preferredSize: Size.fromHeight(125.0),
         child: AppBar(
+          automaticallyImplyLeading: true,
+          actions: [
+            IconButton(
+              icon: Icon(Icons.arrow_forward_rounded, color: Colors.white),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ],
           backgroundColor: Colors.white,
           shadowColor: Colors.transparent,
-          flexibleSpace: AppBarWidget("assets/hotel-bell.jpg",""),
+          flexibleSpace:
+          AppBarWidget("assets/hotel-bell.jpg", ""),
         ),
       ),
       drawerEdgeDragWidth: 200,
@@ -41,7 +49,7 @@ class Send_Successfully extends StatelessWidget {
      //   AssetImage("assets/card.jpg"),
          NetworkImage(
       // "https://scontent.faly2-2.fna.fbcdn.net/v/t1.0-9/51877485_2277687155623321_6076822903532290048_o.jpg?_nc_cat=101&ccb=2&_nc_sid=8bfeb9&_nc_ohc=nQSqrNrPxlEAX-CjvzZ&_nc_ht=scontent.faly2-2.fna&oh=88bcdaa010846c64b8acf24de81be3ec&oe=5FC075F7"
-          //    "https://previews.123rf.com/images/rawpixel/rawpixel1901/rawpixel190103913/115929028-green-right-tick-icon-isolated.jpg"
+           "https://previews.123rf.com/images/rawpixel/rawpixel1901/rawpixel190103913/115929028-green-right-tick-icon-isolated.jpg"
           ""
          ),
         fit: BoxFit.cover

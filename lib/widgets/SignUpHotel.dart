@@ -27,7 +27,7 @@ class SignUpHotel extends StatefulWidget {
 }
 
 class _SignUpHotelState extends State<SignUpHotel> {
-  String CityId , TypeId;
+  String cityId , typeId;
   bool isVideoLoading = false;
   List<String> discountList = [
     '10',
@@ -81,8 +81,8 @@ class _SignUpHotelState extends State<SignUpHotel> {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     DataList dataList = Provider.of<DataList>(context);
-    CityId = dataList.citiesNames[0];
-    TypeId = dataList.categoryNames[0];
+    cityId = dataList.citiesNames[0];
+    typeId = dataList.categoryNames[0];
   }
 
   @override
@@ -111,10 +111,10 @@ class _SignUpHotelState extends State<SignUpHotel> {
               children: [
                 Container(
                   width: 100,
-                  child: DropdownWidget(CityId, dataList.citiesNames, 80, 0,
+                  child: DropdownWidget(cityId, dataList.citiesNames, 80, 0,
                       (value) {
                     setState(() {
-                      CityId = value;
+                      cityId = value;
                     });
                   }),
                 ),
@@ -209,12 +209,12 @@ class _SignUpHotelState extends State<SignUpHotel> {
                   style: TextStyle(fontWeight: FontWeight.w900),
                 ),
                 DropdownWidget(
-                    TypeId,
+                    typeId,
                     dataList.categoryNames,
                     60,
                     25, (value) {
                   setState(() {
-                    TypeId = value;
+                    typeId = value;
                   });
                 }),
               ],
@@ -331,13 +331,13 @@ class _SignUpHotelState extends State<SignUpHotel> {
                       content: Text('من فضلك قم بارفاق فديو لاكمال التسجيل')));
                 }
                 citiesListClone.forEach((e) => {
-                      if (e["Name"] == CityId)
+                      if (e["Name"] == cityId)
                         {
                           data["CityId"] = e["id"],
                         }
                     });
                 categoryListClone.forEach((e) => {
-                  if (e["Name"] == TypeId)
+                  if (e["Name"] == typeId)
                     {
                       data["TypeId"] = e["id"],
                     }
@@ -371,7 +371,7 @@ class _SignUpHotelState extends State<SignUpHotel> {
                                       onTap: ()async{
                                         Navigator.of(context1).pop();
                                         var response = await http.post(
-                                          'http://api.hoteliercard.com/api/User/RegisterHotel',
+                                          '$serverURL/User/RegisterHotel',
                                           headers: <String, String>{
                                             'Content-Type': 'application/json; charset=UTF-8',
                                           },
@@ -406,7 +406,7 @@ class _SignUpHotelState extends State<SignUpHotel> {
 
                         }else{
                           var response = await http.post(
-                            'http://api.hoteliercard.com/api/User/RegisterHotel',
+                            '$serverURL/User/RegisterHotel',
                             headers: <String, String>{
                               'Content-Type': 'application/json; charset=UTF-8',
                             },

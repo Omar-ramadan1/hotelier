@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hotelier/widgets/GoogleMapWidget.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class HotelDetailsInfoWidget extends StatelessWidget {
+  final Map data;
+
+  const HotelDetailsInfoWidget(this.data);
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -19,7 +23,7 @@ class HotelDetailsInfoWidget extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(left: 70),
             child: Text(
-              "فندق المعمرين الرياض",
+              data["Name"],
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 24,
@@ -33,7 +37,7 @@ class HotelDetailsInfoWidget extends StatelessWidget {
                 starCount: 5,
                 filledIconData: Icons.star,
                 halfFilledIconData: Icons.star_half,
-                rating: 3,
+                rating: data['starRating'].toDouble(),
                 size: 25.0,
                 color: Colors.amberAccent,
                 borderColor: Colors.amberAccent,
@@ -47,12 +51,18 @@ class HotelDetailsInfoWidget extends StatelessWidget {
                 onPressed: null,
                 icon: Icon(Icons.gps_fixed),
               ),
-              Text(
-                "  اشارع اجياد23 الرياض \nالمملكه العريبه السعوديه",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold),
+              Container(
+                width: 200,
+                child: Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: Text(
+                    data['Address'],
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold ,),
+                  ),
+                ),
               ),
             ],
           ),
@@ -65,7 +75,7 @@ class HotelDetailsInfoWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 15),
                 child: Text(
-                  "088564749",
+                  data['PhoneNumber'],
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -79,26 +89,7 @@ class HotelDetailsInfoWidget extends StatelessWidget {
             indent: 20,
             endIndent: 20,
           ),
-          Row(
-              textDirection: TextDirection.rtl,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              
-              children: [
-            Text("متاح اليوم" ,style: TextStyle(color: Colors.green),),
 
-            Text("10 AM"),
-
-            Text("8 PM"),
-
-            Text("جميع الاوقلات" ,style: TextStyle(color: Colors.blue),),
-          ]),
-          Divider(
-            height: 3,
-            thickness: 1,
-            color: Colors.black,
-            indent: 20,
-            endIndent: 20,
-          ),
           SizedBox(height: 75),
           Container(
             height: size.height / 5,
@@ -116,7 +107,7 @@ class HotelDetailsInfoWidget extends StatelessWidget {
                 ),
               ],
             ),
-            child: Center(child: Text("googlemaps Container")),
+            child: Center(child: GoogleMapWidget(data['lat'] , data['lng'])),
           ),
           SizedBox(height: 15),
           Container(
@@ -124,7 +115,6 @@ class HotelDetailsInfoWidget extends StatelessWidget {
             width: size.width / 1.5,
             margin: EdgeInsets.only(top: 10),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(40),
               color: Colors.greenAccent,
                 boxShadow: [
                   BoxShadow(

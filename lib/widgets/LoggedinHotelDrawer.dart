@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hotelier/Model/UserData.dart';
+import 'package:hotelier/screens/About.dart';
 import 'package:hotelier/screens/Complaining.dart';
 import 'package:hotelier/screens/EditHotelData.dart';
 import 'package:hotelier/screens/PaymentScreen.dart';
@@ -120,7 +121,7 @@ class LoggedInHotelDrawer extends StatelessWidget {
               InkWell(
                 child:
                     DrawerTabsWidget(Icons.star_rate_sharp, "عن التطبيق", () {
-                  // Navigator.of(context).popAndPushNamed(EditUserData.routeName);
+                  Navigator.of(context).popAndPushNamed(About.routeName);
                 }),
               ),
               SizedBox(

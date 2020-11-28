@@ -25,6 +25,7 @@ class HotelDetailsWidget extends StatelessWidget {
 
             Container(
               width: size.width / 2.0,
+              height: 100,
               child: Directionality(
                 textDirection: TextDirection.rtl,
                 child: Text(
@@ -46,7 +47,7 @@ class HotelDetailsWidget extends StatelessWidget {
                 spacing:0.0
             ),
             InkWell(
-              onTap: (){Navigator.of(context).pushNamed(HotelDetailsScreen.routeName);},
+              onTap: (){Navigator.of(context).pushNamed(HotelDetailsScreen.routeName ,arguments: data );},
               child: ButtonChildWidget(
                   "المزيد من التفاصيل", Colors.transparent, 15, 120),
             ),
