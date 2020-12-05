@@ -16,6 +16,12 @@ class DropdownWidget extends StatelessWidget {
       child: Directionality(
         textDirection: TextDirection.rtl,
         child: DropdownButton<String>(
+         underline: Container(
+           child: Divider(
+             height: 0,
+             color: Colors.black,
+           ),
+         ),
           isExpanded: true,
           iconSize: iconSize,
           iconEnabledColor: Colors.black,

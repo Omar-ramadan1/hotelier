@@ -14,7 +14,7 @@ final double lat , lng;
   Widget build(BuildContext context) {
      final CameraPosition _kGooglePlex = CameraPosition(
       target: LatLng(lat, lng),
-      zoom: 14.4746,
+      zoom: 16,
     );// ,
     // final Completer<GoogleMapController> _controller = Completer();
     final Map<MarkerId, Marker> markers = <MarkerId, Marker>{};

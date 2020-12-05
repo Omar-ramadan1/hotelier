@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:crossplat_objectid/crossplat_objectid.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hotelier/screens/termsOfservice.dart';
 import 'package:hotelier/widgets/DoubleTextFieldWidget.dart';
 import 'package:hotelier/widgets/SingleTextFieldWidget.dart';
 import 'package:http/http.dart' as http;
@@ -28,7 +29,7 @@ class SignUpHotel extends StatefulWidget {
 
 class _SignUpHotelState extends State<SignUpHotel> {
   String cityId , typeId;
-  bool isVideoLoading = false;
+  bool isVideoLoading = false , isSubmittingRegistration = false;
   List<String> discountList = [
     '10',
     '20',
@@ -100,7 +101,7 @@ class _SignUpHotelState extends State<SignUpHotel> {
           SingleTextFieldWidget(
               'رقم السجل التجارى', dataErrorMessage['commercialRegistrationNo'],
               (value) {
-            onChangeFunction(value, "commercialRegistrationNo");
+            onChangeFunction(int.parse(value), "commercialRegistrationNo");
           }),
           Container(
             width: size.width,
@@ -111,7 +112,9 @@ class _SignUpHotelState extends State<SignUpHotel> {
               children: [
                 Container(
                   width: 100,
-                  child: DropdownWidget(cityId, dataList.citiesNames, 80, 0,
+                  height: 75,
+                  padding: EdgeInsets.only(top: 20),
+                  child: DropdownWidget(cityId, dataList.citiesNames, 80, 30,
                       (value) {
                     setState(() {
                       cityId = value;
@@ -120,6 +123,7 @@ class _SignUpHotelState extends State<SignUpHotel> {
                 ),
                 Container(
                   width: 100,
+
                   child: Directionality(
                     textDirection: TextDirection.rtl,
                     child: TextField(
@@ -171,7 +175,8 @@ class _SignUpHotelState extends State<SignUpHotel> {
           ),
           DoubleTextFieldWidget(dataErrorMessage['phone1'] , (value , mapKeyName){
             onChangeFunction(value, mapKeyName);
-          }),
+          } , 'phone1',),
+
           SingleTextFieldWidget(
               'الايميل', dataErrorMessage['email'],
                   (value) {
@@ -313,133 +318,171 @@ class _SignUpHotelState extends State<SignUpHotel> {
                 value: checkBoxValue,
                 activeColor: mainAppColor,
               ),
-              Text(
-                'اوافق على الشروط و الاحكام',
-                style: TextStyle(fontSize: 20),
+              FlatButton(
+                onPressed: (){
+                  Navigator.of(context).pushNamed(TermsOfService.routeName);
+                },
+                child: Text(
+                  'اوافق على الشروط و الاحكام',
+                  style: TextStyle(fontSize: 20),
+                ),
               ),
             ],
           ),
           SizedBox(
             height: 35,
           ),
-          InkWell(
-              onTap: () async {
-                var citiesListClone = dataList.citiesList;
-                var categoryListClone = dataList.categoryList;
-                if (data["videoURL"] == null) {
-                  Scaffold.of(context).showSnackBar(SnackBar(
-                      content: Text('من فضلك قم بارفاق فديو لاكمال التسجيل')));
-                }
-                citiesListClone.forEach((e) => {
-                      if (e["Name"] == cityId)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            textDirection: TextDirection.rtl,
+            children: [
+              InkWell(
+                  onTap: () async {
+                    var citiesListClone = dataList.citiesList;
+                    var categoryListClone = dataList.categoryList;
+                    if (data["videoURL"] == null) {
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                          content: Text('من فضلك قم بارفاق فديو لاكمال التسجيل')));
+                    }
+                    citiesListClone.forEach((e) => {
+                          if (e["Name"] == cityId)
+                            {
+                              data["CityId"] = e["id"],
+                            }
+                        });
+                    categoryListClone.forEach((e) => {
+                      if (e["Name"] == typeId)
                         {
-                          data["CityId"] = e["id"],
+                          data["TypeId"] = e["id"],
                         }
                     });
-                categoryListClone.forEach((e) => {
-                  if (e["Name"] == typeId)
-                    {
-                      data["TypeId"] = e["id"],
-                    }
-                });
-                if (check()) {
-                  if (regularExpressionCheck(data["password"])) {
-                    if (data["password"] == data["confirmPassword"]) {
-                      if (data["imageURL"].length == 0) {
-                        Scaffold.of(context).showSnackBar(SnackBar(
-                            content: Text(
-                                'من فضلك قم بارفاق على الاقل صورة واحدة'),),);
-                      } else {
-                        print("entered");
-                        print("jsonEncode(data)");
-                        if(isVideoLoading){
-                          print("entered");
-                          return showDialog(
-                            context: context,
-                            builder: (BuildContext context1) {
-                              return AlertDialog(
-                                title: Text("AlertDialog"),
-                                content: Directionality(
-                                  textDirection: TextDirection.rtl,
-                                  child: Text("الفديو مازال يرفع هل ترغب فى المتابعة و رفع الفديو لاحقا"),),
+                    if (check()) {
+                      if (regularExpressionCheck(data["password"])) {
+                        if (data["password"] == data["confirmPassword"]) {
+                          if (data["imageURL"].length == 0) {
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                                content: Text(
+                                    'من فضلك قم بارفاق على الاقل صورة واحدة'),),);
+                          } else {
+                            if(isCommercialRegistrationIs10Digits(data['commercialRegistrationNo'])){
+                              print("entered");
+                              print("jsonEncode(data)");
+                              if(isVideoLoading){
+                                print("entered");
+                                return showDialog(
+                                  context: context,
+                                  builder: (BuildContext context1) {
+                                    return AlertDialog(
+                                      title: Text("AlertDialog"),
+                                      content: Directionality(
+                                        textDirection: TextDirection.rtl,
+                                        child: Text("الفديو مازال يرفع هل ترغب فى المتابعة و رفع الفديو لاحقا"),),
 
-                                actions:
-                                [
-                                  Container(
-                                    margin: EdgeInsets.only(right: 70),
-                                    child: InkWell(
-                                      onTap: ()async{
-                                        Navigator.of(context1).pop();
-                                        var response = await http.post(
-                                          '$serverURL/User/RegisterHotel',
-                                          headers: <String, String>{
-                                            'Content-Type': 'application/json; charset=UTF-8',
-                                          },
-                                          body: jsonEncode(data),
-                                        );
-                                        print(response.statusCode);
-                                        print(response.body);
-                                        if (response.statusCode == 200) {
-                                          Navigator.of(context).pop();
-                                        } else if (response.statusCode == 400) {
-                                          Map body = jsonDecode(response.body);
-                                          Scaffold.of(context).showSnackBar(
-                                              SnackBar(content: Text(body["Message"])));
-                                        }
-                                      },
-                                      child: Text("نعم" , style: TextStyle(fontSize: 20),),
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(right: 70),
-                                    child: InkWell(
-                                      onTap: (){
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Text("لا"  , style: TextStyle(fontSize: 20),),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
+                                      actions:
+                                      [
+                                        Container(
+                                          margin: EdgeInsets.only(right: 70),
+                                          child: InkWell(
+                                            onTap: ()async{
+                                              Navigator.of(context1).pop();
+                                              setState(() {
+                                                isSubmittingRegistration = true;
+                                              });
+                                              var response = await http.post(
+                                                '$serverURL/User/RegisterHotel',
+                                                headers: <String, String>{
+                                                  'Content-Type': 'application/json',
+                                                },
+                                                body: jsonEncode(data),
+                                              );
+                                              print(response.statusCode);
+                                              print(response.body);
+                                              setState(() {
+                                                isSubmittingRegistration = false;
+                                              });
+                                              if (response.statusCode == 200) {
+                                                Navigator.of(context).pop();
+                                              } else if (response.statusCode == 400) {
+                                                Map body = jsonDecode(response.body);
+                                                Scaffold.of(context).showSnackBar(
+                                                    SnackBar(content: Text(body["Message"])));
+                                              }
+                                            },
+                                            child: Text("نعم" , style: TextStyle(fontSize: 20),),
+                                          ),
+                                        ),
+                                        Container(
+                                          margin: EdgeInsets.only(right: 70),
+                                          child: InkWell(
+                                            onTap: (){
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text("لا"  , style: TextStyle(fontSize: 20),),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
 
-                        }else{
-                          var response = await http.post(
-                            '$serverURL/User/RegisterHotel',
-                            headers: <String, String>{
-                              'Content-Type': 'application/json; charset=UTF-8',
-                            },
-                            body: jsonEncode(data),
-                          );
-                          print(response.statusCode);
-                          print(response.body);
-                          if (response.statusCode == 200) {
-                            Navigator.of(context).pop();
-                          } else if (response.statusCode == 400) {
-                            Map body = jsonDecode(response.body);
-                            Scaffold.of(context).showSnackBar(
-                                SnackBar(content: Text(body["Message"])));
+                              }else{
+                                setState(() {
+                                  isSubmittingRegistration = true;
+                                });
+                                var response = await http.post(
+                                  '$serverURL/User/RegisterHotel',
+                                  headers: <String, String>{
+                                    'Content-Type': 'application/json',
+                                  },
+                                  body: jsonEncode(data),
+                                );
+                                print(response.statusCode);
+                                print(response.body);
+                                setState(() {
+                                  isSubmittingRegistration = false;
+                                });
+                                if (response.statusCode == 200) {
+                                  Navigator.of(context).pop();
+                                } else if (response.statusCode == 400) {
+                                  Map body = jsonDecode(response.body);
+                                  Scaffold.of(context).showSnackBar(
+                                      SnackBar(content: Text(body["Message"])));
+                                }
+                              }
+                            }else{
+                              setState(() {
+                                dataErrorMessage['commercialRegistrationNo'] = 'من فضلك  لابد من ادخال عشر ارقام';
+                              });
+                            }
                           }
+                        } else {
+                          setState(() {
+                            dataErrorMessage["password"] =
+                                "من فضلك تاكد من تطابق كلمة المرور و تاكيدها";
+                            dataErrorMessage["confirmPassword"] =
+                                "من فضلك تاكد من تطابق كلمة المرور و تاكيدها";
+                          });
                         }
+                      } else {
+                        setState(() {
+                          dataErrorMessage["password"] =
+                              "ادخل حروف و ارقام و رموز و ما لا يقل عن ثمانية مدخلات";
+                        });
                       }
-                    } else {
-                      setState(() {
-                        dataErrorMessage["password"] =
-                            "من فضلك تاكد من تطابق كلمة المرور و تاكيدها";
-                        dataErrorMessage["confirmPassword"] =
-                            "من فضلك تاكد من تطابق كلمة المرور و تاكيدها";
-                      });
                     }
-                  } else {
-                    setState(() {
-                      dataErrorMessage["password"] =
-                          "ادخل حروف و ارقام و رموز و ما لا يقل عن ثمانية مدخلات";
-                    });
-                  }
-                }
-              },
-              child: ButtonChildWidget("تسجيل حساب", mainAppColor, 18, 150)),
+                  },
+                  child: ButtonChildWidget("تسجيل حساب", mainAppColor, 18, 150),
+              ),
+
+              isSubmittingRegistration ? Container(
+                margin: EdgeInsets.only(top: 20),
+                child: SpinKitFadingCircle(
+                  color: Colors.lightBlueAccent,
+                  size: 20.0,
+                ),
+              ) : Container(),
+            ],
+          ),
           SizedBox(
             height: 35,
           ),
@@ -470,6 +513,15 @@ class _SignUpHotelState extends State<SignUpHotel> {
     return check;
   }
 
+  isCommercialRegistrationIs10Digits (String data){
+    RegExp regExp = new RegExp(
+      r"^[0-9]{10}$",
+      caseSensitive: false,
+      multiLine: false,
+    );
+
+    return regExp.hasMatch(data);
+  }
   uploadVideo() async {
     final snackBar = SnackBar(content: Text('please wait till video uploads'));
     final snackBar1 = SnackBar(content: Text('video uploaded'));
@@ -486,7 +538,6 @@ class _SignUpHotelState extends State<SignUpHotel> {
         Map respondedData = jsonDecode(value);
         List videoNameArray = respondedData['imgName'];
         print(jsonDecode(value));
-        Scaffold.of(context).showSnackBar(snackBar2);
         if(mounted){
           setState(() {
             data["videoURL"] = videoNameArray[0];

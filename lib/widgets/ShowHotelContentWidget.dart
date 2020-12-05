@@ -27,7 +27,7 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
   var refreshKey = GlobalKey<RefreshIndicatorState>();
   double lastOffset;
   List hotelDataList = [];
-  int i = 0;
+  int pageNumber = 0;
   List<String> discountList = [
     '10',
     '20',
@@ -48,7 +48,7 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
   @override
   initState() {
     super.initState();
-    DataList dataList = Provider.of<DataList>(context , listen: false);
+    DataList dataList = Provider.of<DataList>(context, listen: false);
     setState(() {
       cityId = dataList.citiesNames[0];
       typeId = dataList.categoryNames[0];
@@ -56,11 +56,12 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
       categoryListClone = dataList.categoryList;
       data = {
         'cityId': cityId,
-        'Discount': 10,
+        'discountValue': 10,
         'typeId': typeId,
         'starRating': 1,
         'pageNumber': 1,
         'isSpecialOffer': widget.isSpecialOfferScreen,
+        'searchWord' : ''
       };
     });
 
@@ -94,7 +95,7 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
               data["typeId"] = e["id"],
             }
         });
-    data["pageNumber"] = ((hotelDataList.length / 5) + 1).floor();
+
     print(data);
     var response = await http.post(
       '$serverURL/Hotels/HotelsList',
@@ -108,6 +109,13 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
     print(response.body);
     setState(() {
       hotelDataList.addAll(jsonDecode(response.body));
+      if(jsonDecode(response.body).length == 0){
+
+      }else{
+        setState(() {
+          data["pageNumber"] ++;
+        });
+      }
     });
   }
 
@@ -134,7 +142,7 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
           backgroundColor: Colors.white,
           shadowColor: Colors.transparent,
           flexibleSpace: AppBarWidget("assets/hotel-bell.jpg",
-              widget.isSpecialOfferScreen ? "العروض المميزة" : typeId , isSearchAvailable: true,),
+              widget.isSpecialOfferScreen ? "العروض المميزة" : typeId),
           title: Container(
             margin: EdgeInsets.only(left: width / 1.43),
             child: Icon(Icons.arrow_forward_rounded, color: Colors.white),
@@ -157,7 +165,6 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
           controller: _scrollController,
           child: Column(
             children: [
-              SizedBox(height: 25),
               // the header part -------------------->>>>>
               // the header part -------------------->>>>>
               // the header part -------------------->>>>>
@@ -166,34 +173,42 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
               // but i made this change here because on server side
               // names of variables is so important and he made it this way
               // despite the fact i send him the variable names
-              InkWell(
-                onTap: (){
-                  return  showDialog(
-                      context: context,
-                      builder: (_) =>  AlertDialog(
-                        title: Center(child: Text("البحث")),
-                        content: TextField(decoration: InputDecoration(hintText: "من فضلك ادخل اسم الفندق للبحث عنه") ,textDirection: TextDirection.rtl, onChanged: (value){print(value);},),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: Text('بحث'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                          FlatButton(
-                            child: Text('اغلاق'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          )
-                        ],
-                        actionsOverflowButtonSpacing: 100,
-                        actionsPadding: EdgeInsets.only(right: 60),
-                      ));
-                },
-                child: Container(
-                  margin: EdgeInsets.only(left: width / 1.13 , bottom: 10),
-                  child: Icon(Icons.search, color: Colors.black),
+              Container(
+                margin: EdgeInsets.only(bottom: 20),
+                child: Row(
+                  textDirection: TextDirection.rtl,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          hotelDataList = [];
+                          data["pageNumber"] = 1;
+                        });
+                        refreshIndicatorFunction(true);
+                      },
+                      child: Container(
+                        width: 20,
+                        margin: EdgeInsets.only(right: 10),
+                        child: Icon(Icons.search, color: Colors.black),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(right: 10),
+                      width: 200,
+                      child: Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: TextField(
+                          onChanged: (value){
+                            data['searchWord'] = value;
+                          },
+                            textDirection: TextDirection.rtl,
+                            decoration: InputDecoration(
+                              hintText: 'ادخل اسم المكان للبحث عنه',
+                            ),
+                           ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
 
@@ -206,15 +221,16 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
                     setState(() {
                       cityId = value;
                       hotelDataList = [];
+                      data["pageNumber"] = 1;
                     });
                     refreshIndicatorFunction(true);
                   }),
-                  HotelHeaderDropDownWidget(
-                      "نسبه الخصم", data["Discount"].toString(), discountList,
-                      (value) {
+                  HotelHeaderDropDownWidget("نسبه الخصم",
+                      data["discountValue"].toString(), discountList, (value) {
                     setState(() {
-                      data["Discount"] = int.parse(value);
+                      data["discountValue"] = int.parse(value);
                       hotelDataList = [];
+                      data["pageNumber"] = 1;
                     });
                     refreshIndicatorFunction(true);
                   }),
@@ -223,6 +239,7 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
                     setState(() {
                       typeId = value;
                       hotelDataList = [];
+                      data["pageNumber"] = 1;
                     });
                     refreshIndicatorFunction(true);
                   }),
@@ -233,6 +250,7 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
                     setState(() {
                       data["starRating"] = int.parse(value);
                       hotelDataList = [];
+                      data["pageNumber"] = 1;
                     });
                     refreshIndicatorFunction(true);
                   }),
@@ -247,8 +265,9 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
 
               for (var data in hotelDataList)
                 Container(
-                    margin: EdgeInsets.only(top: 10),
-                    child: HotelContainerWidget(data),),
+                  margin: EdgeInsets.only(top: 10),
+                  child: HotelContainerWidget(data),
+                ),
               SizedBox(
                 height: 30,
               )

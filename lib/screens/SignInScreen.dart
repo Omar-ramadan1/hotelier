@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hotelier/Model/UserData.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  bool checkBoxValue = false;
+  bool checkBoxValue = false , isSubmittingRegistration = false;
   Map data = {
     // 'grant_type': 'password',
     'email': null,
@@ -77,39 +78,58 @@ class _SignInScreenState extends State<SignInScreen> {
             }),
 
             // ButtonChildWidget takes text to show , Color , fontsize and width as parameters
-            InkWell(
-              onTap: () async {
-                if (check()) {
-                  print(jsonEncode(data));
-                  var response = await http.post(
-                    'http://api.hoteliercard.com/api/Account/CustomToken',
-                    headers: <String, String>{
-                      "Accept": "application/json",
-                      "Content-Type": "application/x-www-form-urlencoded"
-                    },
-                    body: data,
-                  );
-                  print(response.statusCode);
-                  print(response.body);
-                  Map body = jsonDecode(response.body);
-                  if (response.statusCode == 200) {
-                    if(checkBoxValue){
-                      userData.updateUserInfo(body);
-                       Navigator.of(context).pop();
-                    }else{
-                      userData.userData =  body;
-                     Navigator.of(context).pop();
+            Row(
+               mainAxisAlignment: MainAxisAlignment.center,
+              textDirection: TextDirection.rtl,
+              children: [
+                InkWell(
+                  onTap: () async {
+                    if (check()) {
+                      setState(() {
+                        isSubmittingRegistration = true;
+                      });
+                      print(jsonEncode(data));
+                      var response = await http.post(
+                        'http://api.hoteliercard.com/api/Account/CustomToken',
+                        headers: <String, String>{
+                          "Accept": "application/json",
+                          "Content-Type": "application/x-www-form-urlencoded"
+                        },
+                        body: data,
+                      );
+                      print(response.statusCode);
+                      print(response.body);
+                      Map body = jsonDecode(response.body);
+                      setState(() {
+                        isSubmittingRegistration = false;
+                      });
+                      if (response.statusCode == 200) {
+                        if(checkBoxValue){
+                          userData.updateUserInfo(body);
+                           Navigator.of(context).pop();
+                        }else{
+                          userData.userData =  body;
+                         Navigator.of(context).pop();
+                        }
+                      } else if(response.statusCode == 400) {
+                        print(response.body);
+                        setState(() {
+                          dataErrorMessage['serverError'] = body["Message"];
+                        });
+                      }
                     }
-                  } else if(response.statusCode == 400) {
-                    print(response.body);
-                    setState(() {
-                      dataErrorMessage['serverError'] = body["Message"];
-                    });
-                  }
-                }
-              },
-              child:
-                  ButtonChildWidget("تسجيل دخول", Color(0xFFF7BB85), 25, 150),
+                  },
+                  child:
+                      ButtonChildWidget("تسجيل دخول", Color(0xFFF7BB85), 25, 150),
+                ),
+                isSubmittingRegistration ? Container(
+                  margin: EdgeInsets.only(top: 20),
+                  child: SpinKitFadingCircle(
+                    color: Colors.lightBlueAccent,
+                    size: 20.0,
+                  ),
+                ) : Container(),
+              ],
             ),
           ],
         ),

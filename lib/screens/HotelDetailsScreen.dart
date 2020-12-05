@@ -51,7 +51,7 @@ class HotelDetailsScreenState extends State<HotelDetailsScreen> {
           backgroundColor: Colors.white,
           shadowColor: Colors.transparent,
           flexibleSpace:
-          AppBarWidget("assets/hotelAppBarImage.jpg", "العروض المميزة"),
+          AppBarWidget("assets/hotelAppBarImage.jpg", data['Name']),
         ),
       ),
       drawerEdgeDragWidth: 200,

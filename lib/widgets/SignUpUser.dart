@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hotelier/screens/termsOfservice.dart';
 import 'package:hotelier/widgets/SingleTextFieldWidget.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
@@ -72,12 +73,12 @@ class _SignUpUserState extends State<SignUpUser> {
       child: Column(
         children: [
           SingleTextFieldWidget(
-              'الاسم', null,
+              'الاسم', dataErrorMessage['name'],
                   (value) {
                     onChangeFunction(value, 'name');
               }),
           SingleTextFieldWidget(
-              'رقم الهوية/رقم الاقامة', null,
+              'رقم الهوية/رقم الاقامة', dataErrorMessage['idNumber'],
                   (value) {
                 onChangeFunction(value, 'idNumber');
               }),
@@ -90,8 +91,10 @@ class _SignUpUserState extends State<SignUpUser> {
               children: [
                 Container(
                   width: 100,
+                  height: 75,
+                  padding: EdgeInsets.only(top: 20),
                   child: DropdownWidget(
-                      cityName , dataList.citiesNames, 80, 0, (value) {
+                      cityName , dataList.citiesNames, 50, 30, (value) {
                     setState(() {
                       cityName = value;
                     });
@@ -149,31 +152,37 @@ class _SignUpUserState extends State<SignUpUser> {
             height: 25,
           ),
           SingleTextFieldWidget(
-              'رقم الجوال', null,
+              'رقم الجوال', dataErrorMessage['phone'],
                   (value) {
                 onChangeFunction(value, 'phone');
               }),
           SingleTextFieldWidget(
-              'الايميل', null,
+              'الايميل', dataErrorMessage['email'],
                   (value) {
                 onChangeFunction(value, 'email');
               }),
           SingleTextFieldWidget(
-              'كلمة المرور', null,
+              'كلمة المرور',  dataErrorMessage['password'],
                   (value) {
                 onChangeFunction(value, 'password');
               } , obscureText: true),
           SingleTextFieldWidget(
-              'تاكيد كلمة المرور', null,
+              'تاكيد كلمة المرور',  dataErrorMessage['confirmPassword'],
                   (value) {
                 onChangeFunction(value, 'confirmPassword');
               }, obscureText: true),
-          Column(
+          Row(
+            textDirection: TextDirection.rtl,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                'اوافق على الشروط و الاحكام',
-                style: TextStyle(fontSize: 20),
+              FlatButton(
+                onPressed: (){
+                  Navigator.of(context).pushNamed(TermsOfService.routeName);
+                },
+                child: Text(
+                  'اوافق على الشروط و الاحكام',
+                  style: TextStyle(fontSize: 20),
+                ),
               ),
               Checkbox(
                 onChanged: (value) {
@@ -207,7 +216,7 @@ class _SignUpUserState extends State<SignUpUser> {
                         var response = await http.post(
                           'http://api.hoteliercard.com/api/User/Register',
                           headers: <String, String>{
-                            'Content-Type': 'application/json; charset=UTF-8',
+                            'Content-Type': 'application/json',
                           },
                           body: jsonEncode(data),
                         );

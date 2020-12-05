@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hotelier/screens/About.dart';
 import 'package:hotelier/screens/Complaining.dart';
 import 'package:hotelier/screens/PaymentScreen.dart';
 import 'package:hotelier/screens/RegistrationScreen.dart';
@@ -90,7 +91,7 @@ class NormalDrawer extends StatelessWidget {
                 height: 10,
               ),
               DrawerTabsWidget(Icons.star_rate_sharp, "عن التطبيق", () {
-                Navigator.of(context).popAndPushNamed(TermsOfService.routeName);
+                Navigator.of(context).popAndPushNamed(About.routeName);
               }),
               SizedBox(
                 height: 10,

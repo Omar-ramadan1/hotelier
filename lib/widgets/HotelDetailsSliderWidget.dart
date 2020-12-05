@@ -56,7 +56,7 @@ List<T> map<T>(List list, Function handler) {
                           horizontal: 25.0, vertical: 2),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(40),
-                          color: Colors.green,
+                          color: Colors.white,
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black,

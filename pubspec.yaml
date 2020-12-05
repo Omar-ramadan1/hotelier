@@ -43,12 +43,19 @@ dependencies:
   crossplat_objectid: ^2.1.4
   shared_preferences: ^0.5.12+4
   flutter_spinkit: ^4.1.2
+  flutter_launcher_icons: ^0.8.1
 
 
+flutter_icons:
+  ios: true
+  android: true
+  image_path: "assets/iconPhoto.png"
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -94,3 +101,5 @@ flutter:
     - assets/HotelProfileImage.jpg
     - assets/UserProfileImage.jpg
     - assets/loading.gif
+    - assets/iconPhoto.png
+    - assets/cash-01.png

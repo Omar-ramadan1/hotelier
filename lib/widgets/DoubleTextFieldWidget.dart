@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class DoubleTextFieldWidget extends StatelessWidget {
   final Function onChangeFunction;
-  final String errorText , phone1 , phone2 ;
+  final String errorText , phone1 , phone2  , parameterStringName;
   final bool isEditWidget;
-  const DoubleTextFieldWidget(this.errorText , this.onChangeFunction , {this.phone1 , this.phone2 , this.isEditWidget});
+  const DoubleTextFieldWidget(this.errorText , this.onChangeFunction , this.parameterStringName , {this.phone1 , this.phone2 , this.isEditWidget});
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -26,7 +26,7 @@ class DoubleTextFieldWidget extends StatelessWidget {
                     textDirection: TextDirection.rtl,
                     child: TextField(
                       onChanged: (value) {
-                        onChangeFunction(value, 'phone1');
+                        onChangeFunction(value, parameterStringName);
                       },
                       decoration: InputDecoration(
                         labelText: phone1 != null ? phone1 : 'رقم الجوال',

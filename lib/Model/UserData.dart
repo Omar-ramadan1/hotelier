@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 class UserData  extends ChangeNotifier{
-   Map _userData , userDataClone;
+   Map _userData;
    Map get userData => _userData;
    bool _isUserDataLoaded = false;
    bool get isUserDataLoaded => _isUserDataLoaded;
@@ -12,7 +12,6 @@ class UserData  extends ChangeNotifier{
 
    set userData(Map userDataParameter){
      _userData = userDataParameter;
-     userDataClone = userDataParameter;
      print(_userData);
      _isUserDataLoaded = true;
        notifyListeners();

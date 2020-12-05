@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hotelier/Model/UserData.dart';
+import 'package:hotelier/screens/About.dart';
 import 'package:hotelier/screens/Complaining.dart';
 import 'package:hotelier/screens/EditUserData.dart';
 import 'package:hotelier/screens/PaymentScreen.dart';
@@ -45,27 +46,40 @@ class LoggedInUserDrawer extends StatelessWidget {
                                 color: Colors.black.withOpacity(0.6),
                                 spreadRadius: 3,
                                 blurRadius: 9,
-                                offset: Offset(0, 3), // changes position of shadow
+                                offset:
+                                    Offset(0, 3), // changes position of shadow
                               ),
                             ],
                           ),
-                          child: CircleAvatar(
-                            radius: sizes.width / 9,
-                            backgroundColor: Colors.white,
-                            child: Icon(
-                              Icons.person,
-                              color: Color(0xFFBD954F),
-                            ),
-                          ),
+                          child: userData["userImg"] == '' ||
+                                  userData['userImg'] == null
+                              ? CircleAvatar(
+                                  radius: sizes.width / 9,
+                                  backgroundColor: Colors.white,
+                                  child: Icon(
+                                    Icons.person,
+                                    color: Color(0xFFBD954F),
+                                  ),
+                                )
+                              : CircleAvatar(
+                                  backgroundImage: Image.network(
+                                          'http://api.hoteliercard.com/Content/Images/${userData['userImg']}')
+                                      .image,
+                                  radius: 40,
+                                ),
                         ),
                       ),
-                      userData["fullName"] == null ? Container() :
-                      Container(
-                        margin: EdgeInsets.only(top: 20),
-                        child: Text(userData["fullName"] , style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                        ),),
-                      ),
+                      userData["fullName"] == null
+                          ? Container()
+                          : Container(
+                              margin: EdgeInsets.only(top: 20),
+                              child: Text(
+                                userData["fullName"],
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
                     ],
                   )
                 ],
@@ -85,8 +99,9 @@ class LoggedInUserDrawer extends StatelessWidget {
                 height: 5,
               ),
               InkWell(
-                child: DrawerTabsWidget(Icons.attach_money_rounded, "المدفوعات", () {
-                  Navigator.of(context).popAndPushNamed(PaymentScreen.routeName);
+                child: DrawerTabsWidget(Icons.attach_money_rounded, "المدفوعات",
+                    () {
+                  // Navigator.of(context).popAndPushNamed(PaymentScreen.routeName);
                 }),
               ),
               SizedBox(
@@ -102,15 +117,16 @@ class LoggedInUserDrawer extends StatelessWidget {
               ),
               InkWell(
                 child: DrawerTabsWidget(Icons.credit_card, "شراء بطاقة", () {
-                  Navigator.of(context).popAndPushNamed(PaymentScreen.routeName);
+                  Navigator.of(context)
+                      .popAndPushNamed(PaymentScreen.routeName);
                 }),
               ),
               SizedBox(
                 height: 5,
               ),
               InkWell(
-                child: DrawerTabsWidget(CupertinoIcons.phone, "للشكاوى و المقترحات",
-                    () {
+                child: DrawerTabsWidget(
+                    CupertinoIcons.phone, "للشكاوى و المقترحات", () {
                   Navigator.of(context).popAndPushNamed(Complaining.routeName);
                 }),
               ),
@@ -118,25 +134,24 @@ class LoggedInUserDrawer extends StatelessWidget {
                 height: 5,
               ),
               InkWell(
-                child: DrawerTabsWidget(Icons.star_rate_sharp, "عن التطبيق", () {
-                  // Navigator.of(context).popAndPushNamed(EditUserData.routeName);
+                child:
+                    DrawerTabsWidget(Icons.star_rate_sharp, "عن التطبيق", () {
+                  Navigator.of(context).popAndPushNamed(About.routeName);
                 }),
               ),
               SizedBox(
                 height: 5,
               ),
-              DrawerTabsWidget(Icons.sticky_note_2_rounded, "الشروط و الاحكام", () {
-                Navigator.of(context)
-                    .popAndPushNamed(TermsOfService.routeName);
+              DrawerTabsWidget(Icons.sticky_note_2_rounded, "الشروط و الاحكام",
+                  () {
+                Navigator.of(context).popAndPushNamed(TermsOfService.routeName);
               }),
               SizedBox(
                 height: 5,
               ),
               DrawerTabsWidget(Icons.logout, "تسجيل الخروج", () {
-
                 userDataProvider.updateUserInfo(null);
-                Navigator.of(context)
-                    .pop();
+                Navigator.of(context).pop();
               }),
               SizedBox(
                 height: 10,

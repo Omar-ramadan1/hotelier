@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:hotelier/Model/DataList.dart';
-import 'package:hotelier/Model/UserData.dart';
 import 'package:hotelier/screens/HotelScreen.dart';
 import 'package:hotelier/screens/PaymentScreen.dart';
 import 'package:hotelier/widgets/AppBarWidget.dart';
 import 'package:hotelier/widgets/AppDrawerWidget.dart';
 import 'package:hotelier/widgets/MainScreenCardWidget.dart';
 import 'package:hotelier/widgets/bottomBarWidget.dart';
-import 'package:provider/provider.dart';
 import 'SpecialOfferScreen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -17,18 +14,6 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    final dataList = Provider.of<DataList>(context , listen: false);
-    UserData userData = Provider.of<UserData>(context , listen: false);
-
-      dataList.getCitiesListFunction();
-      userData.checkIfUserDataOnMobileStorage();
-      dataList.getTypesListFunction();
-
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

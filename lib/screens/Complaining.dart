@@ -133,7 +133,7 @@ class _ComplainingState extends State<Complaining> {
                         textAlign: TextAlign.left,
                       ),
                     ),
-                    DropdownWidget(data['Type'], ["شكوى", 'اقتراح'], 40, 0,
+                    DropdownWidget(data['Type'], ["شكوى", 'اقتراح'], 70, 30,
                         (value) {
                       setState(() {
                         data['Type'] = value;

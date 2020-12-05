@@ -84,7 +84,7 @@ class CreditCardChoiceWidget extends StatelessWidget {
               ),
               child: Image.asset(
                 "assets/mada_logo.png",
-              )),
+              ),),
         ),
         Container(
           height: 30,
@@ -100,7 +100,7 @@ class CreditCardChoiceWidget extends StatelessWidget {
           },
           child: Container(
               width: width / 6,
-              padding: EdgeInsets.all(5),
+              padding: EdgeInsets.all(2),
               decoration: BoxDecoration(
                 color: cardValue == "payAtArrive"
                     ? Color(0xFFFBDBBF)
@@ -109,7 +109,9 @@ class CreditCardChoiceWidget extends StatelessWidget {
                     ? Border.all(width: 0.8, color: Color(0xFFB29368))
                     : null,
               ),
-              child: Text("الدفع عند الاستلام")),
+              child: Image.asset(
+                "assets/cash-01.png",
+              ),),
         ),
       ],
     );

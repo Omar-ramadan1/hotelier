@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class EditTextFieldWidget extends StatelessWidget {
-  final String text;
+  final String text , errorText;
   final Function onChangeFunction;
 
-  const EditTextFieldWidget(this.text, this.onChangeFunction);
+  const EditTextFieldWidget(this.text, this.onChangeFunction , {this.errorText});
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -19,6 +19,7 @@ class EditTextFieldWidget extends StatelessWidget {
               onChanged: (value){onChangeFunction(value);},
               decoration: InputDecoration(
                 labelText: text,
+                errorText: errorText
               ),
             ),
           ),

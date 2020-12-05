@@ -6,7 +6,7 @@ saveVideoFunction(PickedFile videoFile , String name) async {
   var request = new http.MultipartRequest("POST", Uri.parse("http://api.hoteliercard.com/api/Upload/Post"));
 
   var multipartFile = new http.MultipartFile.fromBytes('File', length,
-      filename: "name");
+      filename: name);
   request.files.add(multipartFile);
   var response = await request.send();
 

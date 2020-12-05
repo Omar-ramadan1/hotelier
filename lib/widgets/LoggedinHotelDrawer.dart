@@ -4,7 +4,6 @@ import 'package:hotelier/Model/UserData.dart';
 import 'package:hotelier/screens/About.dart';
 import 'package:hotelier/screens/Complaining.dart';
 import 'package:hotelier/screens/EditHotelData.dart';
-import 'package:hotelier/screens/PaymentScreen.dart';
 import 'package:hotelier/screens/termsOfservice.dart';
 import 'package:provider/provider.dart';
 
@@ -51,22 +50,30 @@ class LoggedInHotelDrawer extends StatelessWidget {
                               ),
                             ],
                           ),
-                          child: CircleAvatar(
-                            radius: sizes.width / 9,
-                            backgroundColor: Colors.white,
-                            backgroundImage: Image.asset(
-                              'assets/HotelProfileImage.jpg',
-                            ).image,
-                            // child: Image.asset('assets/HotelProfileImage.jpg')
-                          ),
+                          child: userData["userImg"] == '' ||
+                                  userData['userImg'] == null
+                              ? CircleAvatar(
+                                  radius: sizes.width / 9,
+                                  backgroundColor: Colors.white,
+                                  backgroundImage: Image.asset(
+                                    'assets/HotelProfileImage.jpg',
+                                  ).image,
+                                  // child: Image.asset('assets/HotelProfileImage.jpg')
+                                )
+                              : CircleAvatar(
+                                  backgroundImage: Image.network(
+                                          'http://api.hoteliercard.com/Content/Images/${userData['userImg']}')
+                                      .image,
+                                  radius: 40,
+                                ),
                         ),
                       ),
-                      userData["fullName"] == null
+                      userData["name"] == null
                           ? Container()
                           : Container(
                               margin: EdgeInsets.only(top: 20),
                               child: Text(
-                                userData["fullName"],
+                                userData["name"],
                                 style: TextStyle(
                                   fontWeight: FontWeight.w700,
                                 ),
@@ -94,8 +101,8 @@ class LoggedInHotelDrawer extends StatelessWidget {
               InkWell(
                 child: DrawerTabsWidget(Icons.attach_money_rounded, "المدفوعات",
                     () {
-                  Navigator.of(context)
-                      .popAndPushNamed(PaymentScreen.routeName);
+                  // Navigator.of(context)
+                  //     .popAndPushNamed(PaymentScreen.routeName);
                 }),
               ),
               SizedBox(
