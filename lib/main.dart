@@ -48,7 +48,7 @@ class Hotelier extends StatelessWidget {
         RegistrationScreen.routeName: (ctx) => RegistrationScreen(),
         Complaining.routeName: (ctx) => Complaining(),
         Contact.routeName: (ctx) => Contact(),
-        PaymentScreen.routeName: (ctx) => PaymentScreen(),
+        // PaymentScreen.routeName: (ctx) => PaymentScreen(),
         Congratulation.routeName:(ctx)=>Congratulation(),
         SendSuccessfully.routeName:(ctx)=>SendSuccessfully(),
         HotelDetailsScreen.routeName:(ctx)=>HotelDetailsScreen(),

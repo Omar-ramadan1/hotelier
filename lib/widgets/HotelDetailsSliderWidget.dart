@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:hotelier/Constant/Constant.dart';
 import 'package:hotelier/screens/FullScreenPhotoViewer.dart';
 
 class HotelDetailsSliderWidget extends StatelessWidget {
@@ -46,10 +47,10 @@ List<T> map<T>(List list, Function handler) {
               builder: (BuildContext context) {
                 return InkWell(
                   onTap: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => FullScreenPhotoViewer('http://api.hoteliercard.com/Content/Images/$imgUrl')));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => FullScreenPhotoViewer('${anotherServerURL}Content/Images/$imgUrl')));
                   },
                   child: Hero(
-                    tag: 'http://api.hoteliercard.com/Content/Images/$imgUrl',
+                    tag: '${anotherServerURL}Content/Images/$imgUrl',
                     child: Container(
                       width: 400,
                       margin: EdgeInsets.symmetric(

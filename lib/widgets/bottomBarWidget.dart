@@ -24,7 +24,7 @@ class BottomBarWidget extends StatelessWidget {
           children: [
             GestureDetector(
 
-              onTap: (){Navigator.of(context).pushNamed (PaymentScreen.routeName);},
+              // onTap: (){Navigator.of(context).pushNamed (PaymentScreen.routeName);},
               child: Container(
                 margin: EdgeInsets.only(top: 5),
                 child: Column(
@@ -32,7 +32,7 @@ class BottomBarWidget extends StatelessWidget {
                     Icon(Icons.monetization_on_outlined),
                     InkWell(child: Text("المدفوعات" , style: TextStyle(fontWeight: FontWeight.w900),
                     ),
-                    onTap: (){Navigator.of(context).pushNamed (PaymentScreen.routeName);},
+                    // onTap: (){Navigator.of(context).pushNamed (PaymentScreen.routeName);},
                     )
 
                   ],

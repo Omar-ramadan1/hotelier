@@ -1,10 +1,11 @@
 import 'dart:typed_data';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:hotelier/Constant/Constant.dart';
 
 uploadAssetImages(Asset image , String name) async {
   Uri uri =
-      Uri.parse("http://api.hoteliercard.com/api/Upload/Post");
+      Uri.parse("${anotherServerURL}api/Upload/Post");
   http.MultipartRequest request = http.MultipartRequest("POST", uri);
   ByteData byteData = await image.getByteData();
   List<int> imageData = byteData.buffer.asUint8List();

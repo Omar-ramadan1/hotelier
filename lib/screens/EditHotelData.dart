@@ -146,7 +146,7 @@ class _EditHotelDataState extends State<EditHotelData> {
                         children: [
                           CircleAvatar(
                             backgroundImage: Image.network(
-                                    'http://api.hoteliercard.com/Content/Images/${data['userImg']}')
+                                    '${anotherServerURL}Content/Images/${data['userImg']}')
                                 .image,
                             radius: 50,
                           ),
@@ -534,11 +534,11 @@ class _EditHotelDataState extends State<EditHotelData> {
     setState(() {
       isVideoLoading = true;
     });
-    if (data["videoURL"] == null || data["videoURL"] == '') {
+    // if (data["videoURL"] == null || data["videoURL"] == '') {
       name = "Video${data['userId']}.mp4";
-    } else {
-      name = data["videoURL"];
-    }
+    // } else {
+    //   name = data["videoURL"];
+    // }
     var response = await saveVideoFunction(pickedFile, name);
     if (response.statusCode == 200) {
       response.stream.transform(utf8.decoder).listen((value) {

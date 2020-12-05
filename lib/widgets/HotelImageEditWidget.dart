@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hotelier/Constant/Constant.dart';
 
 class HotelImageEditWidget extends StatelessWidget {
   final Map imageMap;
@@ -7,7 +8,7 @@ class HotelImageEditWidget extends StatelessWidget {
   const HotelImageEditWidget(this.imageMap , this.deleteImageFunction);
   @override
   Widget build(BuildContext context) {
-    String imageURL = 'http://api.hoteliercard.com/Content/Images/${imageMap['FileName']}';
+    String imageURL = '${anotherServerURL}Content/Images/${imageMap['FileName']}';
     return Container(
       child: Stack(
         children: [

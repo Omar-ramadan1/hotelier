@@ -72,18 +72,18 @@ class NormalDrawer extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              DrawerTabsWidget(Icons.autorenew, "تجديد الاشتراك", () {
-                // Navigator.of(context).popAndPushNamed(EditUserData.routeName);
-              }),
-              SizedBox(
-                height: 10,
-              ),
-              DrawerTabsWidget(Icons.credit_card, "شراء البطاقة", () {
-                Navigator.of(context).popAndPushNamed(PaymentScreen.routeName);
-              }),
-              SizedBox(
-                height: 10,
-              ),
+              // DrawerTabsWidget(Icons.autorenew, "تجديد الاشتراك", () {
+              //   // Navigator.of(context).popAndPushNamed(EditUserData.routeName);
+              // }),
+              // SizedBox(
+              //   height: 10,
+              // ),
+              // DrawerTabsWidget(Icons.credit_card, "شراء البطاقة", () {
+              //   Navigator.of(context).popAndPushNamed(PaymentScreen.routeName);
+              // }),
+              // SizedBox(
+              //   height: 10,
+              // ),
               DrawerTabsWidget(Icons.phone, "للشكاوى و المقترحات", () {
                 Navigator.of(context).popAndPushNamed(Complaining.routeName);
               }),

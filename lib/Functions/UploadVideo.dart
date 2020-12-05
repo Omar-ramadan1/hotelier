@@ -1,9 +1,10 @@
+import 'package:hotelier/Constant/Constant.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 saveVideoFunction(PickedFile videoFile , String name) async {
   var stream = new http.ByteStream(videoFile.openRead());
   var length = await stream.toBytes();
-  var request = new http.MultipartRequest("POST", Uri.parse("http://api.hoteliercard.com/api/Upload/Post"));
+  var request = new http.MultipartRequest("POST", Uri.parse("${anotherServerURL}api/Upload/Post"));
 
   var multipartFile = new http.MultipartFile.fromBytes('File', length,
       filename: name);

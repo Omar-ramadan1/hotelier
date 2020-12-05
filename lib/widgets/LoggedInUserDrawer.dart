@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hotelier/Constant/Constant.dart';
 import 'package:hotelier/Model/UserData.dart';
 import 'package:hotelier/screens/About.dart';
 import 'package:hotelier/screens/Complaining.dart';
@@ -63,7 +64,7 @@ class LoggedInUserDrawer extends StatelessWidget {
                                 )
                               : CircleAvatar(
                                   backgroundImage: Image.network(
-                                          'http://api.hoteliercard.com/Content/Images/${userData['userImg']}')
+                                          '${anotherServerURL}Content/Images/${userData['userImg']}')
                                       .image,
                                   radius: 40,
                                 ),
@@ -107,23 +108,23 @@ class LoggedInUserDrawer extends StatelessWidget {
               SizedBox(
                 height: 5,
               ),
-              InkWell(
-                child: DrawerTabsWidget(Icons.autorenew, "تجديد الاشتراك", () {
-                  // Navigator.of(context).popAndPushNamed(Complaining.routeName);
-                }),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              InkWell(
-                child: DrawerTabsWidget(Icons.credit_card, "شراء بطاقة", () {
-                  Navigator.of(context)
-                      .popAndPushNamed(PaymentScreen.routeName);
-                }),
-              ),
-              SizedBox(
-                height: 5,
-              ),
+              // InkWell(
+              //   child: DrawerTabsWidget(Icons.autorenew, "تجديد الاشتراك", () {
+              //     // Navigator.of(context).popAndPushNamed(Complaining.routeName);
+              //   }),
+              // ),
+              // SizedBox(
+              //   height: 5,
+              // ),
+              // InkWell(
+              //   child: DrawerTabsWidget(Icons.credit_card, "شراء بطاقة", () {
+              //     Navigator.of(context)
+              //         .popAndPushNamed(PaymentScreen.routeName);
+              //   }),
+              // ),
+              // SizedBox(
+              //   height: 5,
+              // ),
               InkWell(
                 child: DrawerTabsWidget(
                     CupertinoIcons.phone, "للشكاوى و المقترحات", () {

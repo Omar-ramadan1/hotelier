@@ -37,7 +37,9 @@ class _MainScreenState extends State<MainScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              MainScreenCardWidget("assets/card.jpg",(){Navigator.of(context).pushNamed(PaymentScreen.routeName);}),
+              MainScreenCardWidget("assets/card.jpg",(){
+                // Navigator.of(context).pushNamed(PaymentScreen.routeName);
+              }),
               MainScreenCardWidget("assets/specialOffers.jpg",(){Navigator.of(context).pushNamed(SpecialOfferScreen.routeName);}),
               MainScreenCardWidget("assets/Group 1.jpg",(){Navigator.of(context).pushNamed(HotelScreen.routeName);}),
             ],
