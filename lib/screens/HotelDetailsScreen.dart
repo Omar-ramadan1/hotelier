@@ -35,12 +35,14 @@ class HotelDetailsScreenState extends State<HotelDetailsScreen> {
     setState(() {
       data = ModalRoute.of(context ).settings.arguments;
     });
-    print(data);
+print("data[videoURL]");
+print(data["videoURL"]);
     return Scaffold(
       drawerScrimColor: Colors.transparent,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(125.0),
         child: AppBar(
+          excludeHeaderSemantics: false,
           automaticallyImplyLeading: true,
           actions: [
             IconButton(
@@ -54,6 +56,8 @@ class HotelDetailsScreenState extends State<HotelDetailsScreen> {
           AppBarWidget("assets/hotelAppBarImage.jpg", data['Name']),
         ),
       ),
+      drawerEnableOpenDragGesture: false,
+      endDrawerEnableOpenDragGesture: false,
       drawerEdgeDragWidth: 200,
       drawer: AppDrawerWidget(),
       body: SingleChildScrollView(

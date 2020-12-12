@@ -27,7 +27,7 @@ class EditUserData extends StatefulWidget {
 }
 
 class _EditUserDataState extends State<EditUserData> {
-  String discountValue, cityName;
+  String discountValue, cityName , imageName;
   double starRating = 0;
   bool checkBoxValue = false;
   Map data, dataClone = {}, dataErrorMessage = {};
@@ -41,12 +41,20 @@ class _EditUserDataState extends State<EditUserData> {
     setState(() {
       data = userDataProvider.userData;
       dataClone['address'] = data['address'];
+      dataClone["userImg"] = data['userImg'];
       print(userDataProvider.userData);
-      dataListProvider.citiesList.forEach((element) {
-        if (element['id'] == data['cityName']) {
-          cityName = element['Name'];
-        }
-      });
+      if(data['cityName'] == null){
+        Map cityMap = dataListProvider.citiesList[0];
+        cityName = cityMap['Name'];
+
+      }else{
+        dataListProvider.citiesList.forEach((element) {
+
+          if (element['id'] == data['cityName']) {
+            cityName = element['Name'];
+          }
+        });
+      }
     });
   }
 
@@ -110,20 +118,22 @@ class _EditUserDataState extends State<EditUserData> {
                       Map respondedData = jsonDecode(value);
                       print(jsonDecode(value));
                       List imgNameArray = respondedData['imgName'];
+                      PaintingBinding.instance.imageCache.clearLiveImages();
+                      PaintingBinding.instance.imageCache.clear();
                       setState(() {
                         dataClone["userImg"] = imgNameArray[0];
                       });
                     });
                   });
                 },
-                child: data['userImg'] == '' || data['userImg'] == null
+                child: dataClone["userImg"] == '' || dataClone["userImg"] == null
                     ? SignUpButtonWidget(data['name'],
                         Icons.person_add_alt_1_sharp, Color(0xFFF7BB85))
                     : Column(
                         children: [
                           CircleAvatar(
                             backgroundImage: Image.network(
-                                    'http://api.hoteliercard.com/Content/Images/${data['userImg']}')
+                                    '${anotherServerURL}Content/Images/${dataClone["userImg"]}')
                                 .image,
                             radius: 50,
                           ),
@@ -147,16 +157,25 @@ class _EditUserDataState extends State<EditUserData> {
                     Row(
                       textDirection: TextDirection.rtl,
                       children: [
-                        Container(
-                          width: 100,
-                          margin: EdgeInsets.only(top: 20),
-                          child: DropdownWidget(
-                              cityName, dataListProvider.citiesNames, 100, 30,
-                              (value) {
-                            setState(() {
-                              cityName = value;
-                            });
-                          }),
+                        Row(
+                          textDirection: TextDirection.rtl,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.only(top: 20),
+                              child: Text("المدينة" , style: TextStyle(fontWeight: FontWeight.w800),),
+                            ),
+                            Container(
+                              width: 100,
+                              height: 75,
+                              padding: EdgeInsets.only(top: 20),
+                              child: DropdownWidget(cityName, dataListProvider.citiesNames, 80, 30,
+                                      (value) {
+                                    setState(() {
+                                      cityName = value;
+                                    });
+                                  }),
+                            ),
+                          ],
                         ),
                         Icon(Icons.edit),
                       ],
@@ -221,9 +240,6 @@ class _EditUserDataState extends State<EditUserData> {
               SizedBox(
                 height: 10,
               ),
-              EditTextFieldWidget(data['phone'], (value) {
-                onChangeFunction(value, "phone");
-              }),
               EditTextFieldWidget(data['phone'], (value) {
                 onChangeFunction(value, "phone");
               }),

@@ -28,7 +28,7 @@ class SignUpHotel extends StatefulWidget {
 }
 
 class _SignUpHotelState extends State<SignUpHotel> {
-  String cityId , typeId;
+  String cityId , typeId , errorString = '';
   bool isVideoLoading = false , isSubmittingRegistration = false;
   List<String> discountList = [
     '10',
@@ -61,6 +61,9 @@ class _SignUpHotelState extends State<SignUpHotel> {
     'confirmPassword': null,
     'latitude': null,
     'longitude': null,
+    'bankName' : null,
+    'bankNumber':null,
+    'bin' : null,
     'isHotel': true,
   };
 
@@ -108,19 +111,29 @@ class _SignUpHotelState extends State<SignUpHotel> {
             child: Row(
               textDirection: TextDirection.rtl,
               mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  width: 100,
-                  height: 75,
-                  padding: EdgeInsets.only(top: 20),
-                  child: DropdownWidget(cityId, dataList.citiesNames, 80, 30,
-                      (value) {
-                    setState(() {
-                      cityId = value;
-                    });
-                  }),
+                Row(
+                  textDirection: TextDirection.rtl,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(top: 20),
+                        child: Text("المدينة" , style: TextStyle(fontWeight: FontWeight.w800),),
+                    ),
+                    Container(
+                      width: 100,
+                      height: 75,
+                      padding: EdgeInsets.only(top: 20),
+                      child: DropdownWidget(cityId, dataList.citiesNames, 80, 30,
+                              (value) {
+                            setState(() {
+                              cityId = value;
+                            });
+                          }),
+                    ),
+                  ],
                 ),
+
                 Container(
                   width: 100,
 
@@ -260,6 +273,7 @@ class _SignUpHotelState extends State<SignUpHotel> {
               ),
             ],
           ),
+          SizedBox(height: 30,),
           Row(
             textDirection: TextDirection.rtl,
             mainAxisSize: MainAxisSize.max,
@@ -305,9 +319,32 @@ class _SignUpHotelState extends State<SignUpHotel> {
                   (value) {
                 onChangeFunction(value, "confirmPassword");
               }, obscureText: true),
+          // SingleTextFieldWidget('اسم البنك', dataErrorMessage['bankName'],
+          //         (value) {
+          //       onChangeFunction(value, "bankName");
+          //     }),
+          // SingleTextFieldWidget('رقم البنك', dataErrorMessage['bankNumber'],
+          //         (value) {
+          //       onChangeFunction(value, "bankNumber");
+          //     }),
+          // SingleTextFieldWidget('bin', dataErrorMessage['bin'],
+          //         (value) {
+          //       onChangeFunction(value, "bin");
+          //     }),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+
+              FlatButton(
+                onPressed: (){
+                  Navigator.of(context).pushNamed(TermsOfService.routeName);
+                },
+                child: Text(
+                  'اوافق على الشروط و الاحكام',
+                  style: TextStyle(fontSize: 18 , color: Colors.blue),
+                ),
+              ),
+
               Checkbox(
                 onChanged: (value) {
                   print(value);
@@ -318,17 +355,9 @@ class _SignUpHotelState extends State<SignUpHotel> {
                 value: checkBoxValue,
                 activeColor: mainAppColor,
               ),
-              FlatButton(
-                onPressed: (){
-                  Navigator.of(context).pushNamed(TermsOfService.routeName);
-                },
-                child: Text(
-                  'اوافق على الشروط و الاحكام',
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
             ],
           ),
+          errorString == ""?Container() : Text(errorString , style: TextStyle(color: Colors.red , fontSize: 14),),
           SizedBox(
             height: 35,
           ),
@@ -338,6 +367,7 @@ class _SignUpHotelState extends State<SignUpHotel> {
             children: [
               InkWell(
                   onTap: () async {
+                    print(data["imageURL"]);
                     var citiesListClone = dataList.citiesList;
                     var categoryListClone = dataList.categoryList;
                     if (data["videoURL"] == null) {
@@ -364,7 +394,7 @@ class _SignUpHotelState extends State<SignUpHotel> {
                                 content: Text(
                                     'من فضلك قم بارفاق على الاقل صورة واحدة'),),);
                           } else {
-                            if(isCommercialRegistrationIs10Digits(data['commercialRegistrationNo'])){
+                            if(isCommercialRegistrationIs10Digits(data['commercialRegistrationNo'].toString())){
                               print("entered");
                               print("jsonEncode(data)");
                               if(isVideoLoading){
@@ -388,6 +418,7 @@ class _SignUpHotelState extends State<SignUpHotel> {
                                               setState(() {
                                                 isSubmittingRegistration = true;
                                               });
+                                              print(data["imageURL"]);
                                               var response = await http.post(
                                                 '$serverURL/User/RegisterHotel',
                                                 headers: <String, String>{
@@ -403,9 +434,8 @@ class _SignUpHotelState extends State<SignUpHotel> {
                                               if (response.statusCode == 200) {
                                                 Navigator.of(context).pop();
                                               } else if (response.statusCode == 400) {
-                                                Map body = jsonDecode(response.body);
                                                 Scaffold.of(context).showSnackBar(
-                                                    SnackBar(content: Text(body["Message"])));
+                                                    SnackBar(content: Text('هذا الايميل مستخدم من قبل')));
                                               }
                                             },
                                             child: Text("نعم" , style: TextStyle(fontSize: 20),),
@@ -429,6 +459,7 @@ class _SignUpHotelState extends State<SignUpHotel> {
                                 setState(() {
                                   isSubmittingRegistration = true;
                                 });
+                                print(data["imageURL"]);
                                 var response = await http.post(
                                   '$serverURL/User/RegisterHotel',
                                   headers: <String, String>{
@@ -444,19 +475,20 @@ class _SignUpHotelState extends State<SignUpHotel> {
                                 if (response.statusCode == 200) {
                                   Navigator.of(context).pop();
                                 } else if (response.statusCode == 400) {
-                                  Map body = jsonDecode(response.body);
                                   Scaffold.of(context).showSnackBar(
-                                      SnackBar(content: Text(body["Message"])));
+                                      SnackBar(content: Text('هذا الايميل مستخدم من قبل')));
                                 }
                               }
                             }else{
                               setState(() {
-                                dataErrorMessage['commercialRegistrationNo'] = 'من فضلك  لابد من ادخال عشر ارقام';
+                                errorString = "من فضلك اصعد لاعلى لاستكمال البيانات بشكل صحيح";
+                                dataErrorMessage['commercialRegistrationNo'] = 'من فضلك  لابد من ادخال عشر ارقام و تاكد ان اول رقم ليس صفر';
                               });
                             }
                           }
                         } else {
                           setState(() {
+                            errorString = "من فضلك اصعد لاعلى لاستكمال البيانات بشكل صحيح";
                             dataErrorMessage["password"] =
                                 "من فضلك تاكد من تطابق كلمة المرور و تاكيدها";
                             dataErrorMessage["confirmPassword"] =
@@ -465,8 +497,9 @@ class _SignUpHotelState extends State<SignUpHotel> {
                         }
                       } else {
                         setState(() {
+                          errorString = "من فضلك اصعد لاعلى لاستكمال البيانات بشكل صحيح";
                           dataErrorMessage["password"] =
-                              "ادخل حروف و ارقام و رموز و ما لا يقل عن ثمانية مدخلات";
+                              "يجب ادخال ست مدخلات";
                         });
                       }
                     }
@@ -495,6 +528,7 @@ class _SignUpHotelState extends State<SignUpHotel> {
     setState(() {
       data[variableName] = value;
       dataErrorMessage[variableName] = null;
+      errorString = "";
     });
   }
 
@@ -504,6 +538,7 @@ class _SignUpHotelState extends State<SignUpHotel> {
       if (value == null) {
         print('$key   $value');
         setState(() {
+          errorString = "من فضلك اصعد لاعلى لاستكمال البيانات بشكل صحيح";
           dataErrorMessage[key] = "من فضلك اكمل هذه الخانة";
         });
         check = false;
@@ -515,7 +550,7 @@ class _SignUpHotelState extends State<SignUpHotel> {
 
   isCommercialRegistrationIs10Digits (String data){
     RegExp regExp = new RegExp(
-      r"^[0-9]{10}$",
+      r"^[0-9]{10,10}$",
       caseSensitive: false,
       multiLine: false,
     );
@@ -556,7 +591,7 @@ class _SignUpHotelState extends State<SignUpHotel> {
 
   regularExpressionCheck(String data) {
     RegExp regExp = new RegExp(
-      r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$",
+      r"^[a-zA-Z0-9]{6,}$",
       caseSensitive: false,
       multiLine: false,
     );
@@ -596,7 +631,7 @@ class _SignUpHotelState extends State<SignUpHotel> {
         if (images.length == length) {
           Scaffold.of(context).showSnackBar(snackBar1);
           setState(() {
-            data["imageURL"] = images;
+             data["imageURL"] = images;
           });
         }
       });
@@ -616,7 +651,7 @@ class _SignUpHotelState extends State<SignUpHotel> {
           ));
     } else if (dataErrorMessage['address'] != null) {
       return Container(
-        width: 150,
+        width: 140,
         margin: EdgeInsets.only(right: 5),
         padding: EdgeInsets.all(5),
         child: Text("من فضلك اختر مكان على الخريطة",

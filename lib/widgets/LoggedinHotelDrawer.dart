@@ -5,6 +5,7 @@ import 'package:hotelier/Model/UserData.dart';
 import 'package:hotelier/screens/About.dart';
 import 'package:hotelier/screens/Complaining.dart';
 import 'package:hotelier/screens/EditHotelData.dart';
+import 'package:hotelier/screens/PersonalInformationScreen.dart';
 import 'package:hotelier/screens/termsOfservice.dart';
 import 'package:provider/provider.dart';
 
@@ -85,7 +86,7 @@ class LoggedInHotelDrawer extends StatelessWidget {
                 ],
               ),
               DrawerTabsWidget(Icons.person, "حسابى", () {
-                // Navigator.of(context).pushNamed(EditUserData.routeName);
+                Navigator.of(context).pushNamed(PersonalInformationScreen.routeName);
               }),
               SizedBox(
                 height: 5,
@@ -117,15 +118,15 @@ class LoggedInHotelDrawer extends StatelessWidget {
               // SizedBox(
               //   height: 5,
               // ),
-              // InkWell(
-              //   child: DrawerTabsWidget(
-              //       CupertinoIcons.phone, "للشكاوى و المقترحات", () {
-              //     Navigator.of(context).popAndPushNamed(Complaining.routeName);
-              //   }),
-              // ),
-              // SizedBox(
-              //   height: 5,
-              // ),
+              InkWell(
+                child: DrawerTabsWidget(
+                    CupertinoIcons.phone, "للشكاوى و المقترحات", () {
+                  Navigator.of(context).popAndPushNamed(Complaining.routeName);
+                }),
+              ),
+              SizedBox(
+                height: 5,
+              ),
               InkWell(
                 child:
                     DrawerTabsWidget(Icons.star_rate_sharp, "عن التطبيق", () {

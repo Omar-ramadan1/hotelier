@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:hotelier/Constant/Constant.dart';
 import 'package:hotelier/Model/UserData.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -93,9 +94,9 @@ class _SignInScreenState extends State<SignInScreen> {
                         'http://api.hoteliercard.com/api/Account/CustomToken',
                         headers: <String, String>{
                           "Accept": "application/json",
-                          "Content-Type": "application/x-www-form-urlencoded"
+                          "Content-Type": "application/json"
                         },
-                        body: data,
+                        body: jsonEncode(data),
                       );
                       print(response.statusCode);
                       print(response.body);
@@ -104,6 +105,27 @@ class _SignInScreenState extends State<SignInScreen> {
                         isSubmittingRegistration = false;
                       });
                       if (response.statusCode == 200) {
+
+                    if(body['IsHotel']){
+                      print(body["img"]);
+                      List imageList = body["img"];
+                      List newImageList = [];
+                      imageList.forEach((element) {
+                        if(element['FileName'] == ''){
+                          print('entered');
+                          http.post(
+                            '$serverURL/Media/DeleatImg?id=${element['PK_MediId']}',
+                            headers: <String, String>{
+                              'Authorization': 'Bearer ${body["access_token"]}',
+                              'Content-Type': 'application/json'
+                            },
+                          );
+                        }else{
+                          newImageList.add(element);
+                        }
+                      });
+                      body["img"] = newImageList;
+                    }
                         if(checkBoxValue){
                           userData.updateUserInfo(body);
                            Navigator.of(context).pop();
@@ -114,7 +136,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       } else if(response.statusCode == 400) {
                         print(response.body);
                         setState(() {
-                          dataErrorMessage['serverError'] = body["Message"];
+                          dataErrorMessage['serverError'] = 'يوجد خطا فى الحساب او كلمة المرور';
                         });
                       }
                     }

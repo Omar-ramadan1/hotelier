@@ -6,6 +6,7 @@ import 'package:hotelier/screens/About.dart';
 import 'package:hotelier/screens/Complaining.dart';
 import 'package:hotelier/screens/EditUserData.dart';
 import 'package:hotelier/screens/PaymentScreen.dart';
+import 'package:hotelier/screens/PersonalInformationScreen.dart';
 import 'package:hotelier/screens/termsOfservice.dart';
 import 'package:provider/provider.dart';
 
@@ -86,7 +87,7 @@ class LoggedInUserDrawer extends StatelessWidget {
                 ],
               ),
               DrawerTabsWidget(Icons.person, "حسابى", () {
-                // Navigator.of(context).pushNamed(EditUserData.routeName);
+                 Navigator.of(context).pushNamed(PersonalInformationScreen.routeName);
               }),
               SizedBox(
                 height: 5,
@@ -108,23 +109,23 @@ class LoggedInUserDrawer extends StatelessWidget {
               SizedBox(
                 height: 5,
               ),
-              // InkWell(
-              //   child: DrawerTabsWidget(Icons.autorenew, "تجديد الاشتراك", () {
-              //     // Navigator.of(context).popAndPushNamed(Complaining.routeName);
-              //   }),
-              // ),
-              // SizedBox(
-              //   height: 5,
-              // ),
+              InkWell(
+                child: DrawerTabsWidget(Icons.autorenew, "تجديد الاشتراك", () {
+                  // Navigator.of(context).popAndPushNamed(Complaining.routeName);
+                }),
+              ),
+              SizedBox(
+                height: 5,
+              ),
               // InkWell(
               //   child: DrawerTabsWidget(Icons.credit_card, "شراء بطاقة", () {
               //     Navigator.of(context)
               //         .popAndPushNamed(PaymentScreen.routeName);
               //   }),
               // ),
-              // SizedBox(
-              //   height: 5,
-              // ),
+              SizedBox(
+                height: 5,
+              ),
               InkWell(
                 child: DrawerTabsWidget(
                     CupertinoIcons.phone, "للشكاوى و المقترحات", () {

@@ -33,9 +33,8 @@ class _SignUpUserState extends State<SignUpUser> {
     'confirmPassword': null,
     'latitude': null,
     'longitude': null,
-    'isHotel' : false,
+    'isHotel': false,
   };
-
 
   Map dataErrorMessage = {
     'name': null,
@@ -72,33 +71,42 @@ class _SignUpUserState extends State<SignUpUser> {
       width: size.width * 80 / 100,
       child: Column(
         children: [
+          SingleTextFieldWidget('الاسم', dataErrorMessage['name'], (value) {
+            onChangeFunction(value, 'name');
+          }),
           SingleTextFieldWidget(
-              'الاسم', dataErrorMessage['name'],
-                  (value) {
-                    onChangeFunction(value, 'name');
-              }),
-          SingleTextFieldWidget(
-              'رقم الهوية/رقم الاقامة', dataErrorMessage['idNumber'],
-                  (value) {
-                onChangeFunction(value, 'idNumber');
-              }),
+              'رقم الهوية/رقم الاقامة', dataErrorMessage['idNumber'], (value) {
+            onChangeFunction(value, 'idNumber');
+          }),
           Container(
             width: size.width,
             child: Row(
               textDirection: TextDirection.rtl,
               mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  width: 100,
-                  height: 75,
-                  padding: EdgeInsets.only(top: 20),
-                  child: DropdownWidget(
-                      cityName , dataList.citiesNames, 50, 30, (value) {
-                    setState(() {
-                      cityName = value;
-                    });
-                  }),
+                Row(
+                  textDirection: TextDirection.rtl,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(top: 20),
+                      child: Text(
+                        "المدينة",
+                        style: TextStyle(fontWeight: FontWeight.w800),
+                      ),
+                    ),
+                    Container(
+                      width: 100,
+                      height: 75,
+                      padding: EdgeInsets.only(top: 20),
+                      child: DropdownWidget(cityName, dataList.citiesNames, 50, 30,
+                              (value) {
+                            setState(() {
+                              cityName = value;
+                            });
+                          }),
+                    ),
+                  ],
                 ),
                 Container(
                   width: 100,
@@ -151,37 +159,33 @@ class _SignUpUserState extends State<SignUpUser> {
           SizedBox(
             height: 25,
           ),
+          SingleTextFieldWidget('رقم الجوال', dataErrorMessage['phone'],
+              (value) {
+            onChangeFunction(value, 'phone');
+          }),
+          SingleTextFieldWidget('الايميل', dataErrorMessage['email'], (value) {
+            onChangeFunction(value, 'email');
+          }),
+          SingleTextFieldWidget('كلمة المرور', dataErrorMessage['password'],
+              (value) {
+            onChangeFunction(value, 'password');
+          }, obscureText: true),
           SingleTextFieldWidget(
-              'رقم الجوال', dataErrorMessage['phone'],
-                  (value) {
-                onChangeFunction(value, 'phone');
-              }),
-          SingleTextFieldWidget(
-              'الايميل', dataErrorMessage['email'],
-                  (value) {
-                onChangeFunction(value, 'email');
-              }),
-          SingleTextFieldWidget(
-              'كلمة المرور',  dataErrorMessage['password'],
-                  (value) {
-                onChangeFunction(value, 'password');
-              } , obscureText: true),
-          SingleTextFieldWidget(
-              'تاكيد كلمة المرور',  dataErrorMessage['confirmPassword'],
-                  (value) {
-                onChangeFunction(value, 'confirmPassword');
-              }, obscureText: true),
+              'تاكيد كلمة المرور', dataErrorMessage['confirmPassword'],
+              (value) {
+            onChangeFunction(value, 'confirmPassword');
+          }, obscureText: true),
           Row(
-            textDirection: TextDirection.rtl,
+            textDirection: TextDirection.ltr,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               FlatButton(
-                onPressed: (){
+                onPressed: () {
                   Navigator.of(context).pushNamed(TermsOfService.routeName);
                 },
                 child: Text(
                   'اوافق على الشروط و الاحكام',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 18 , color: Colors.blue),
                 ),
               ),
               Checkbox(
@@ -200,45 +204,46 @@ class _SignUpUserState extends State<SignUpUser> {
             height: 35,
           ),
           InkWell(
-              onTap: () async{
+              onTap: () async {
                 var citiesListClone = dataList.citiesList;
                 print(dataList.citiesList);
                 citiesListClone.forEach((e) => {
-                  if( e["Name"] == cityName){
-                    data["cityName"] = e["id"],
-                  }
-                });
-                if(check()){
-
-                  if(regularExpressionCheck(data["password"])){
-                    if(data["password"] == data["confirmPassword"]){
-                        print(jsonEncode(data));
-                        var response = await http.post(
-                          'http://api.hoteliercard.com/api/User/Register',
-                          headers: <String, String>{
-                            'Content-Type': 'application/json',
-                          },
-                          body: jsonEncode(data),
-                        );
-                        print(response.statusCode);
-                        print(response.body);
-
-                        if(response.statusCode == 200){
-                          Navigator.of(context).pop();
-                        }else if(response.statusCode == 400){
-                          Map body = jsonDecode(response.body);
-                          Scaffold.of(context).showSnackBar(SnackBar(content: Text(body["Message"])));
+                      if (e["Name"] == cityName)
+                        {
+                          data["cityName"] = e["id"],
                         }
-                    }else{
+                    });
+                if (check()) {
+                  if (regularExpressionCheck(data["password"])) {
+                    if (data["password"] == data["confirmPassword"]) {
+                      print(jsonEncode(data));
+                      var response = await http.post(
+                        '$serverURL/User/Register',
+                        headers: <String, String>{
+                          'Content-Type': 'application/json',
+                        },
+                        body: jsonEncode(data),
+                      );
+                      print(response.statusCode);
+                      print(response.body);
+
+                      if (response.statusCode == 200) {
+                        Navigator.of(context).pop();
+                      } else if (response.statusCode == 400) {
+                        Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text('هذا الايميل مستخدم من قبل')));
+                      }
+                    } else {
                       setState(() {
-                        dataErrorMessage["password"] = "من فضلك تاكد من تطابق كلمة المرور و تاكيدها";
-                        dataErrorMessage["confirmPassword"] = "من فضلك تاكد من تطابق كلمة المرور و تاكيدها";
+                        dataErrorMessage["password"] =
+                            "من فضلك تاكد من تطابق كلمة المرور و تاكيدها";
+                        dataErrorMessage["confirmPassword"] =
+                            "من فضلك تاكد من تطابق كلمة المرور و تاكيدها";
                       });
                     }
-
-                  }else{
+                  } else {
                     setState(() {
-                      dataErrorMessage["password"] = "ادخل حروف و ارقام و رموز و ما لا يقل عن ثمانية مدخلات";
+                      dataErrorMessage["password"] = " يجب ادخال ست مدخلات";
                     });
                   }
                 }
@@ -253,17 +258,15 @@ class _SignUpUserState extends State<SignUpUser> {
     );
   }
 
-  regularExpressionCheck(String data){
+  regularExpressionCheck(String data) {
     RegExp regExp = new RegExp(
-      r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$",
+      r"^[a-zA-Z0-9]{6,}$",
       caseSensitive: false,
       multiLine: false,
     );
 
     return regExp.hasMatch(data);
   }
-
-
 
   check() {
     bool check = true;
@@ -283,7 +286,7 @@ class _SignUpUserState extends State<SignUpUser> {
   locationTextHandler() {
     if (data['address'] != null) {
       return Container(
-          width: 150,
+          width: 140,
           margin: EdgeInsets.only(right: 5),
           padding: EdgeInsets.all(5),
           decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
@@ -293,7 +296,7 @@ class _SignUpUserState extends State<SignUpUser> {
           ));
     } else if (dataErrorMessage['address'] != null) {
       return Container(
-        width: 150,
+        width: 140,
         margin: EdgeInsets.only(right: 5),
         padding: EdgeInsets.all(5),
         child: Text("من فضلك اختر مكان على الخريطة",

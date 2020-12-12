@@ -8,6 +8,7 @@ import 'package:hotelier/screens/Error_404.dart';
 import 'package:hotelier/screens/GetLocationScreen.dart';
 import 'package:hotelier/screens/HotelScreen.dart';
 import 'package:hotelier/screens/MainScreen.dart';
+import 'package:hotelier/screens/PersonalInformationScreen.dart';
 import 'package:hotelier/screens/RegistrationScreen.dart';
 import 'package:hotelier/screens/SendSuccessfully.dart';
 import 'package:hotelier/screens/HotelDetailsScreen.dart';
@@ -59,6 +60,7 @@ class Hotelier extends StatelessWidget {
         HotelScreen.routeName:(ctx)=>HotelScreen(),
         TermsOfService.routeName:(ctx)=>TermsOfService(),
         GetLocationScreen.routeName:(ctx)=>GetLocationScreen(),
+        PersonalInformationScreen.routeName:(ctx)=>PersonalInformationScreen(),
         About.routeName:(ctx)=>About(),
       },
     );

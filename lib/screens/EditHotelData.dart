@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:math';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:http/http.dart' as http;
 import 'package:crossplat_objectid/crossplat_objectid.dart';
 import 'package:flutter/cupertino.dart';
@@ -33,8 +35,9 @@ class EditHotelData extends StatefulWidget {
 }
 
 class _EditHotelDataState extends State<EditHotelData> {
-  String discountValue = '10', cityId = 'الرياض', typeId;
+  String discountValue = '10', cityId = 'الرياض', typeId , imageName;
   int allowedImageNumberToBeUploaded = 10;
+  Key keyValue = ValueKey(new Random().nextInt(100));
   bool checkBoxValue = false, isVideoLoading = false , isSubmittingRegistration = false;
   Map data, dataClone = {}, dataErrorMessage = {};
   onChangeFunction(value, String variableName) {
@@ -52,7 +55,6 @@ class _EditHotelDataState extends State<EditHotelData> {
     DataList dataListProvider = Provider.of<DataList>(context, listen: false);
     setState(() {
       data = userDataProvider.userData;
-      print(data['vedio']);
       print(userDataProvider.userData);
       dataListProvider.citiesList.forEach((element) {
         print(element);
@@ -69,6 +71,7 @@ class _EditHotelDataState extends State<EditHotelData> {
       dataClone['discountValue'] = data['discountValue'];
       dataClone['starRating'] = data['starRating'];
       dataClone['address'] = data['address'];
+      imageName = data['userImg'];
       allowedImageNumberToBeUploaded =
           allowedImageNumberToBeUploaded - data['img'].length;
     });
@@ -76,7 +79,8 @@ class _EditHotelDataState extends State<EditHotelData> {
 
   @override
   Widget build(BuildContext context) {
-    UserData userDataProvider = Provider.of<UserData>(context, listen: false);
+    print(keyValue);
+    UserData userDataProvider = Provider.of<UserData>(context);
     DataList dataListProvider = Provider.of<DataList>(context);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -130,23 +134,29 @@ class _EditHotelDataState extends State<EditHotelData> {
                     response.stream
                         .transform(utf8.decoder)
                         .listen((value) async {
+                      DefaultCacheManager manager = new DefaultCacheManager();
+                      manager.emptyCache();
                       Map respondedData = jsonDecode(value);
                       print(jsonDecode(value));
                       List imgNameArray = respondedData['imgName'];
                       setState(() {
+                        PaintingBinding.instance.imageCache.clearLiveImages();
+                        PaintingBinding.instance.imageCache.clear();
                         dataClone["userImg"] = imgNameArray[0];
+                        imageName =  imgNameArray[0];
+                        keyValue = ValueKey(new Random().nextInt(100));
                       });
                     });
                   });
                 },
-                child: data['userImg'] == '' || data['userImg'] == null
+                child: imageName == '' || imageName == null
                     ? SignUpButtonWidget(data['name'], Icons.home_work_rounded,
                         Color(0xFFF7BB85))
                     : Column(
                         children: [
                           CircleAvatar(
                             backgroundImage: Image.network(
-                                    '${anotherServerURL}Content/Images/${data['userImg']}')
+                                    '${anotherServerURL}Content/Images/$imageName' , key: keyValue,)
                                 .image,
                             radius: 50,
                           ),
@@ -157,7 +167,7 @@ class _EditHotelDataState extends State<EditHotelData> {
               EditTextFieldWidget(data['name'], (value) {
                 onChangeFunction(value, "name");
               }),
-              EditTextFieldWidget(data['commercialRegistrationNo'], (value) {
+              EditTextFieldWidget(data['commercialRegistrationNo'] == null ? "رقم السجل التجارى" : data['commercialRegistrationNo'], (value) {
                 onChangeFunction(value.toString(), "commercialRegistrationNo");
               } , errorText: dataErrorMessage['commercialRegistrationNo'],),
               Container(
@@ -165,22 +175,30 @@ class _EditHotelDataState extends State<EditHotelData> {
                 child: Row(
                   textDirection: TextDirection.rtl,
                   mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
                       textDirection: TextDirection.rtl,
                       children: [
-                        Container(
-                          width: 100,
-                          height: 75,
-                          padding: EdgeInsets.only(top: 20),
-                          child: DropdownWidget(
-                              cityId, dataListProvider.citiesNames, 80, 30,
-                              (value) {
-                            setState(() {
-                              cityId = value;
-                            });
-                          }),
+                        Row(
+                          textDirection: TextDirection.rtl,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.only(top: 20),
+                              child: Text("المدينة" , style: TextStyle(fontWeight: FontWeight.w800),),
+                            ),
+                            Container(
+                              width: 100,
+                              height: 75,
+                              padding: EdgeInsets.only(top: 20),
+                              child: DropdownWidget(cityId, dataListProvider.citiesNames, 80, 30,
+                                      (value) {
+                                    setState(() {
+                                      cityId = value;
+                                    });
+                                  }),
+                            ),
+                          ],
                         ),
                         Icon(Icons.edit),
                       ],
@@ -377,30 +395,30 @@ class _EditHotelDataState extends State<EditHotelData> {
               SizedBox(
                 height: 20,
               ),
-              Row(
-                children: [
-                  Text(
-                    '-:تعديل بيانات الحساب البنكى',
-                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
-                  )
-                ],
-                textDirection: TextDirection.rtl,
-              ),
-              EditTextFieldWidget(
-                  data['BankName'] == null ? "اسم البنك" : data['BankName'],
-                  (value) {
-                onChangeFunction(value, "BankName");
-              }),
-              EditTextFieldWidget(
-                  data['BankNumber'] == null
-                      ? "رقم الحساب البنكى"
-                      : data['BankNumber'], (value) {
-                onChangeFunction(value, "BankNumber");
-              }),
-              EditTextFieldWidget(data['Bin'] == null ? "الايبان" : data['Bin'],
-                  (value) {
-                onChangeFunction(value, "Bin");
-              }),
+              // Row(
+              //   children: [
+              //     Text(
+              //       '-:تعديل بيانات الحساب البنكى',
+              //       style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+              //     )
+              //   ],
+              //   textDirection: TextDirection.rtl,
+              // ),
+              // EditTextFieldWidget(
+              //     data['BankName'] == null ? "اسم البنك" : data['BankName'],
+              //     (value) {
+              //   onChangeFunction(value, "BankName");
+              // }),
+              // EditTextFieldWidget(
+              //     data['BankNumber'] == null
+              //         ? "رقم الحساب البنكى"
+              //         : data['BankNumber'], (value) {
+              //   onChangeFunction(value, "BankNumber");
+              // }),
+              // EditTextFieldWidget(data['Bin'] == null ? "الايبان" : data['Bin'],
+              //     (value) {
+              //   onChangeFunction(value, "Bin");
+              // }),
               Container(
                 width: size.width - 20,
                 child: GridView.count(
@@ -534,11 +552,11 @@ class _EditHotelDataState extends State<EditHotelData> {
     setState(() {
       isVideoLoading = true;
     });
-    // if (data["videoURL"] == null || data["videoURL"] == '') {
+    if (data["videoURL"] == null || data["videoURL"] == '') {
       name = "Video${data['userId']}.mp4";
-    // } else {
-    //   name = data["videoURL"];
-    // }
+    } else {
+      name = data["videoURL"];
+    }
     var response = await saveVideoFunction(pickedFile, name);
     if (response.statusCode == 200) {
       response.stream.transform(utf8.decoder).listen((value) {
@@ -549,9 +567,7 @@ class _EditHotelDataState extends State<EditHotelData> {
         if (mounted) {
           setState(() {
             dataClone["videoURL"] = videoNameArray[0];
-            setState(() {
               isVideoLoading = false;
-            });
             // Scaffold.of(context).showSnackBar(snackBar1);
           });
         }
@@ -650,4 +666,3 @@ class _EditHotelDataState extends State<EditHotelData> {
   }
 }
 
-// http://api.hoteliercard.com/Content/Images/image5fbfa71e2489b9bcaeadf55c.jpg

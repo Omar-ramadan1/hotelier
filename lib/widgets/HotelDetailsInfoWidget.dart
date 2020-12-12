@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hotelier/widgets/GoogleMapWidget.dart';
+import 'package:hotelier/widgets/VideoPlayerWidget.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class HotelDetailsInfoWidget extends StatelessWidget {
@@ -38,6 +39,7 @@ class HotelDetailsInfoWidget extends StatelessWidget {
                 filledIconData: Icons.star,
                 halfFilledIconData: Icons.star_half,
                 rating: data['starRating'].toDouble(),
+                isReadOnly: true,
                 size: 25.0,
                 color: Colors.amberAccent,
                 borderColor: Colors.amberAccent,
@@ -109,25 +111,26 @@ class HotelDetailsInfoWidget extends StatelessWidget {
             ),
             child: Center(child: GoogleMapWidget(data['lat'] , data['lng'])),
           ),
-          SizedBox(height: 15),
-          Container(
-            height: size.height / 5,
-            width: size.width / 1.5,
-            margin: EdgeInsets.only(top: 10),
-            decoration: BoxDecoration(
-              color: Colors.greenAccent,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black,
-                    spreadRadius: 0.3,
-                    blurRadius: 5,
-                    offset: Offset(0, 0), // changes position of shadow
-                  ),
-                ],
-            ),
-            child: Center(child: Text("video Container")),
-          ),
-          SizedBox(height: 60),
+
+          // SizedBox(height: 15),
+          // Container(
+          //   height: size.height / 5,
+          //   width: size.width / 1.5,
+          //   margin: EdgeInsets.only(top: 10),
+          //   decoration: BoxDecoration(
+          //     color: Colors.transparent,
+          //       boxShadow: [
+          //         BoxShadow(
+          //           color: Colors.black,
+          //           spreadRadius: 0.3,
+          //           blurRadius: 5,
+          //           offset: Offset(0, 0), // changes position of shadow
+          //         ),
+          //       ],
+          //   ),
+          //   child: VideoPlayerWidget(),
+          // ),
+          SizedBox(height: 70),
         ],
       ),
     );

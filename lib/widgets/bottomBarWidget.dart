@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:hotelier/screens/EditUserData.dart';
+import 'package:hotelier/Model/UserData.dart';
 import 'package:hotelier/screens/PaymentScreen.dart';
+import 'package:hotelier/screens/PersonalInformationScreen.dart';
 import 'package:hotelier/screens/SpecialOfferScreen.dart';
+import 'package:provider/provider.dart';
 
 class BottomBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    UserData userDataProvider = Provider.of<UserData>(context);
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(topLeft: Radius.circular(35) , topRight: Radius.circular(35)),
@@ -22,26 +25,26 @@ class BottomBarWidget extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            GestureDetector(
+            // GestureDetector(
+            //
+            //   onTap: (){Navigator.of(context).pushNamed (PaymentScreen.routeName);},
+            //   child: Container(
+            //     margin: EdgeInsets.only(top: 5),
+            //     child: Column(
+            //       children: [
+            //         Icon(Icons.monetization_on_outlined),
+            //         InkWell(child: Text("المدفوعات" , style: TextStyle(fontWeight: FontWeight.w900),
+            //         ),
+            //         onTap: (){Navigator.of(context).pushNamed (PaymentScreen.routeName);},
+            //         )
+            //
+            //       ],
+            //     ),
+            //   ),
+            // ),
+            userDataProvider.userData == null ? Container() : GestureDetector(
 
-              // onTap: (){Navigator.of(context).pushNamed (PaymentScreen.routeName);},
-              child: Container(
-                margin: EdgeInsets.only(top: 5),
-                child: Column(
-                  children: [
-                    Icon(Icons.monetization_on_outlined),
-                    InkWell(child: Text("المدفوعات" , style: TextStyle(fontWeight: FontWeight.w900),
-                    ),
-                    // onTap: (){Navigator.of(context).pushNamed (PaymentScreen.routeName);},
-                    )
-
-                  ],
-                ),
-              ),
-            ),
-            GestureDetector(
-
-              onTap: (){Navigator.of(context).pushNamed(EditUserData.routeName);},
+              onTap: (){Navigator.of(context).pushNamed(PersonalInformationScreen.routeName);},
               child: Container(
                 margin: EdgeInsets.only(top: 5),
                 child: Column(
@@ -49,7 +52,7 @@ class BottomBarWidget extends StatelessWidget {
                     Icon(Icons.person),
                     InkWell(child: Text("حسابى" , style: TextStyle(fontWeight: FontWeight.w900),
                     ),
-                    onTap: (){Navigator.of(context).pushNamed(EditUserData.routeName);},
+                    onTap: (){Navigator.of(context).pushNamed(PersonalInformationScreen.routeName);},
                     )
 
                   ],

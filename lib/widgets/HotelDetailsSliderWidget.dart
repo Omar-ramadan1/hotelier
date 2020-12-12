@@ -28,8 +28,9 @@ List<T> map<T>(List list, Function handler) {
         ),
         SizedBox(height: 10),
         CarouselSlider(
-          height: 160.0,
-          aspectRatio: 1 / 2,
+
+          height: 200.0,
+          // aspectRatio: 1 / 0.2,
           initialPage: 0,
           enlargeCenterPage: true,
           autoPlay: true,
@@ -47,14 +48,14 @@ List<T> map<T>(List list, Function handler) {
               builder: (BuildContext context) {
                 return InkWell(
                   onTap: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => FullScreenPhotoViewer('${anotherServerURL}Content/Images/$imgUrl')));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => FullScreenPhotoViewer(imgList , imgUrl)));
                   },
                   child: Hero(
                     tag: '${anotherServerURL}Content/Images/$imgUrl',
                     child: Container(
-                      width: 400,
+                      width: 300,
                       margin: EdgeInsets.symmetric(
-                          horizontal: 25.0, vertical: 2),
+                          horizontal: 10.0, vertical: 0),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(40),
                           color: Colors.white,
@@ -67,7 +68,7 @@ List<T> map<T>(List list, Function handler) {
                             ),
                           ],
                           image: DecorationImage(fit: BoxFit.fill , image: Image.network(
-                            'http://api.hoteliercard.com/Content/Images/$imgUrl',
+                            '${anotherServerURL}Content/Images/$imgUrl', width: 100,
                           ).image)
                       ),
                     ),
