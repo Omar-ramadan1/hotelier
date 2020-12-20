@@ -2,9 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hotelier/screens/About.dart';
 import 'package:hotelier/screens/Complaining.dart';
-import 'package:hotelier/screens/PaymentScreen.dart';
+import 'package:hotelier/screens/BuyCardScreen.dart';
 import 'package:hotelier/screens/RegistrationScreen.dart';
 import 'package:hotelier/screens/termsOfservice.dart';
+import 'package:hotelier/widgets/SignInMessageWidget.dart';
 
 import 'DrawerTabsWidget.dart';
 import '../Clippers/AppBarClipper.dart';
@@ -73,14 +74,14 @@ class NormalDrawer extends StatelessWidget {
                 height: 10,
               ),
               DrawerTabsWidget(Icons.autorenew, "تجديد الاشتراك", () {
-                // Navigator.of(context).popAndPushNamed(EditUserData.routeName);
+                SignInMessageWidget().showInMessageWidget(context);
               }),
               SizedBox(
                 height: 10,
               ),
-              // DrawerTabsWidget(Icons.credit_card, "شراء البطاقة", () {
-              //   Navigator.of(context).popAndPushNamed(PaymentScreen.routeName);
-              // }),
+              DrawerTabsWidget(Icons.credit_card, "شراء البطاقة", () {
+                SignInMessageWidget().showInMessageWidget(context);
+              }),
               SizedBox(
                 height: 10,
               ),

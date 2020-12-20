@@ -16,7 +16,7 @@ class HotelImageWidget extends StatelessWidget {
         children: [
           Container(
             width: size.width / 2.65,
-            height: size.width / 1.5,
+            height: size.height /2.7,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(topRight: Radius.circular(17) , bottomRight: Radius.circular(17)),
                  image: DecorationImage(image:NetworkImage("${anotherServerURL}Content/Images/${images[0]}"),
@@ -26,7 +26,7 @@ class HotelImageWidget extends StatelessWidget {
           ),
           Container(
             alignment: Alignment.center,
-            margin: EdgeInsets.only(left: 45 , top: size.width / 1.94),
+            margin: EdgeInsets.only(left: 45 , top: size.height /3.3),
             width: 70,
             height: 50,
             decoration: BoxDecoration(

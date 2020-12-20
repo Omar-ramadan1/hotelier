@@ -22,11 +22,11 @@ class _SignUpUserState extends State<SignUpUser> {
   bool checkBoxValue = false;
   String cityName;
   Map data = {
-    'cityName': 'الرياض',
+    'cityName': 1,
     'name': null,
     'idNumber': null,
     'district': null,
-    'phone': null,
+    'phone1': null,
     'email': null,
     'password': null,
     'address': null,
@@ -40,7 +40,7 @@ class _SignUpUserState extends State<SignUpUser> {
     'name': null,
     'idNumber': null,
     'district': null,
-    'phone': null,
+    'phone1': null,
     'email': null,
     'password': null,
     'address': null,
@@ -159,9 +159,9 @@ class _SignUpUserState extends State<SignUpUser> {
           SizedBox(
             height: 25,
           ),
-          SingleTextFieldWidget('رقم الجوال', dataErrorMessage['phone'],
+          SingleTextFieldWidget('رقم الجوال', dataErrorMessage['phone1'],
               (value) {
-            onChangeFunction(value, 'phone');
+            onChangeFunction(value, 'phone1');
           }),
           SingleTextFieldWidget('الايميل', dataErrorMessage['email'], (value) {
             onChangeFunction(value, 'email');

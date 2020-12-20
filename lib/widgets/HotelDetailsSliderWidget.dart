@@ -50,27 +50,24 @@ List<T> map<T>(List list, Function handler) {
                   onTap: (){
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => FullScreenPhotoViewer(imgList , imgUrl)));
                   },
-                  child: Hero(
-                    tag: '${anotherServerURL}Content/Images/$imgUrl',
-                    child: Container(
-                      width: 300,
-                      margin: EdgeInsets.symmetric(
-                          horizontal: 10.0, vertical: 0),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(40),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black,
-                              spreadRadius: 0.3,
-                              blurRadius: 5,
-                              offset: Offset(0, 0), // changes position of shadow
-                            ),
-                          ],
-                          image: DecorationImage(fit: BoxFit.fill , image: Image.network(
-                            '${anotherServerURL}Content/Images/$imgUrl', width: 100,
-                          ).image)
-                      ),
+                  child: Container(
+                    width: 300,
+                    margin: EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 0),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(40),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black,
+                            spreadRadius: 0.3,
+                            blurRadius: 5,
+                            offset: Offset(0, 0), // changes position of shadow
+                          ),
+                        ],
+                        image: DecorationImage(fit: BoxFit.fill , image: Image.network(
+                          '${anotherServerURL}Content/Images/$imgUrl', width: 100,
+                        ).image)
                     ),
                   ),
                 );

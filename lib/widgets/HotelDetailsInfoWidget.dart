@@ -111,8 +111,9 @@ class HotelDetailsInfoWidget extends StatelessWidget {
             ),
             child: Center(child: GoogleMapWidget(data['lat'] , data['lng'])),
           ),
-
-          // SizedBox(height: 15),
+          SizedBox(height: 15),
+          // data["video"] == "" || data["video"] == "null"  || data["video"] == null?
+          // Container() :
           // Container(
           //   height: size.height / 5,
           //   width: size.width / 1.5,
@@ -128,7 +129,7 @@ class HotelDetailsInfoWidget extends StatelessWidget {
           //         ),
           //       ],
           //   ),
-          //   child: VideoPlayerWidget(),
+          //   child: VideoPlayerWidget(data["video"]),
           // ),
           SizedBox(height: 70),
         ],

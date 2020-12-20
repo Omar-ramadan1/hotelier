@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hotelier/screens/HotelScreen.dart';
-import 'package:hotelier/screens/PaymentScreen.dart';
+import 'package:hotelier/screens/BuyCardScreen.dart';
 import 'package:hotelier/widgets/AppBarWidget.dart';
 import 'package:hotelier/widgets/AppDrawerWidget.dart';
 import 'package:hotelier/widgets/MainScreenCardWidget.dart';
@@ -37,9 +37,9 @@ class _MainScreenState extends State<MainScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              // MainScreenCardWidget("assets/card.jpg",(){
-              //   Navigator.of(context).pushNamed(PaymentScreen.routeName);
-              // }),
+              MainScreenCardWidget("assets/card.jpg",(){
+                Navigator.of(context).pushNamed(BuyCardScreen.routeName);
+              }),
               MainScreenCardWidget("assets/specialOffers.jpg",(){Navigator.of(context).pushNamed(SpecialOfferScreen.routeName);}),
               MainScreenCardWidget("assets/Group 1.jpg",(){Navigator.of(context).pushNamed(HotelScreen.routeName);}),
             ],

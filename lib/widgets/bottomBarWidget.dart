@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hotelier/Model/UserData.dart';
-import 'package:hotelier/screens/PaymentScreen.dart';
+import 'package:hotelier/screens/CartDetailsScreen.dart';
 import 'package:hotelier/screens/PersonalInformationScreen.dart';
 import 'package:hotelier/screens/SpecialOfferScreen.dart';
+import 'package:hotelier/widgets/SignInMessageWidget.dart';
 import 'package:provider/provider.dart';
 
 class BottomBarWidget extends StatelessWidget {
@@ -25,34 +26,43 @@ class BottomBarWidget extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // GestureDetector(
-            //
-            //   onTap: (){Navigator.of(context).pushNamed (PaymentScreen.routeName);},
-            //   child: Container(
-            //     margin: EdgeInsets.only(top: 5),
-            //     child: Column(
-            //       children: [
-            //         Icon(Icons.monetization_on_outlined),
-            //         InkWell(child: Text("المدفوعات" , style: TextStyle(fontWeight: FontWeight.w900),
-            //         ),
-            //         onTap: (){Navigator.of(context).pushNamed (PaymentScreen.routeName);},
-            //         )
-            //
-            //       ],
-            //     ),
-            //   ),
-            // ),
-            userDataProvider.userData == null ? Container() : GestureDetector(
+             GestureDetector(
 
-              onTap: (){Navigator.of(context).pushNamed(PersonalInformationScreen.routeName);},
+              onTap: (){
+                if(userDataProvider.userData == null){
+                  SignInMessageWidget().showInMessageWidget(context);
+                }else{
+                  Navigator.of(context).pushNamed (CartDetailsScreen.routeName);
+                }
+             },
+
+              child: Container(
+                margin: EdgeInsets.only(top: 5),
+                child: Column(
+                  children: [
+                    Icon(Icons.monetization_on_outlined),
+                    Text("المدفوعات" , style: TextStyle(fontWeight: FontWeight.w900),
+                    )
+
+                  ],
+                ),
+              ),
+            ),
+          GestureDetector(
+
+              onTap: (){
+                if(userDataProvider.userData == null){
+                  SignInMessageWidget().showInMessageWidget(context);
+                }else{
+                  Navigator.of(context).pushNamed (PersonalInformationScreen.routeName);
+                }
+                },
               child: Container(
                 margin: EdgeInsets.only(top: 5),
                 child: Column(
                   children: [
                     Icon(Icons.person),
-                    InkWell(child: Text("حسابى" , style: TextStyle(fontWeight: FontWeight.w900),
-                    ),
-                    onTap: (){Navigator.of(context).pushNamed(PersonalInformationScreen.routeName);},
+                    Text("حسابى" , style: TextStyle(fontWeight: FontWeight.w900),
                     )
 
                   ],

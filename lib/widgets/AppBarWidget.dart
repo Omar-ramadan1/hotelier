@@ -24,7 +24,7 @@ final bool isSearchAvailable;
                   Center(
                     child: Container(
 
-                      padding: EdgeInsets.only(top: 0 , left: isSearchAvailable != null ? text == "العروض المميزة" ? width / 4 : width / 2.6 : 0),
+                      padding: EdgeInsets.only(top: 0),
                       child: Text(text,style: TextStyle(fontSize:30,color:Colors.white,fontWeight: FontWeight.w800),),),
                   ),
                 ],

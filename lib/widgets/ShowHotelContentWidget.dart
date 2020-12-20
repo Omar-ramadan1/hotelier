@@ -143,10 +143,6 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
           shadowColor: Colors.transparent,
           flexibleSpace: AppBarWidget("assets/hotel-bell.jpg",
               widget.isSpecialOfferScreen ? "العروض المميزة" : typeId),
-          title: Container(
-            margin: EdgeInsets.only(left: width / 1.43),
-            child: Icon(Icons.arrow_forward_rounded, color: Colors.white),
-          ),
         ),
       ),
       drawerEdgeDragWidth: 200,

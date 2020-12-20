@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:hotelier/widgets/PaymentAlertDialog.dart';
 import 'package:http/http.dart' as http;
 import 'package:crossplat_objectid/crossplat_objectid.dart';
 import 'package:flutter/cupertino.dart';
@@ -266,7 +267,7 @@ class _EditHotelDataState extends State<EditHotelData> {
                   onChangeFunction(value, mapKeyName);
                 },
                 'phone',
-                phone1: data['PhoneNumber'],
+                phone1: data['phone'],
                 phone2: data['PhoneNumber2'],
                 isEditWidget: true,
               ),
@@ -395,30 +396,30 @@ class _EditHotelDataState extends State<EditHotelData> {
               SizedBox(
                 height: 20,
               ),
-              // Row(
-              //   children: [
-              //     Text(
-              //       '-:تعديل بيانات الحساب البنكى',
-              //       style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
-              //     )
-              //   ],
-              //   textDirection: TextDirection.rtl,
-              // ),
-              // EditTextFieldWidget(
-              //     data['BankName'] == null ? "اسم البنك" : data['BankName'],
-              //     (value) {
-              //   onChangeFunction(value, "BankName");
-              // }),
-              // EditTextFieldWidget(
-              //     data['BankNumber'] == null
-              //         ? "رقم الحساب البنكى"
-              //         : data['BankNumber'], (value) {
-              //   onChangeFunction(value, "BankNumber");
-              // }),
-              // EditTextFieldWidget(data['Bin'] == null ? "الايبان" : data['Bin'],
-              //     (value) {
-              //   onChangeFunction(value, "Bin");
-              // }),
+              Row(
+                children: [
+                  Text(
+                    '-:تعديل بيانات الحساب البنكى',
+                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+                  )
+                ],
+                textDirection: TextDirection.rtl,
+              ),
+              EditTextFieldWidget(
+                  data['BankName'] == null ? "اسم البنك" : data['BankName'],
+                  (value) {
+                onChangeFunction(value, "BankName");
+              }),
+              EditTextFieldWidget(
+                  data['BankNumber'] == null
+                      ? "رقم الحساب البنكى"
+                      : data['BankNumber'], (value) {
+                onChangeFunction(value, "BankNumber");
+              }),
+              EditTextFieldWidget(data['Bin'] == null ? "الايبان" : data['Bin'],
+                  (value) {
+                onChangeFunction(value, "Bin");
+              }),
               Container(
                 width: size.width - 20,
                 child: GridView.count(
@@ -480,6 +481,7 @@ class _EditHotelDataState extends State<EditHotelData> {
                           );
                           print(response.statusCode);
                           print(response.body);
+
                           var body = jsonDecode(response.body);
                           setState(() {
                             isSubmittingRegistration = false;
@@ -487,7 +489,10 @@ class _EditHotelDataState extends State<EditHotelData> {
                           if (body['Message'] == null) {
                             dataClone["access_token"] = data['access_token'];
                             userDataProvider.userData = dataClone;
-                          }
+                              PaymentAlertDialog().showInMessageWidget(context,
+                                  "من فضلك قم بتسجيل الدخول مرة اخرى");
+                              userDataProvider.userData = null;
+                            }
                           Navigator.of(context).pop();
                         }else{
                           setState(() {

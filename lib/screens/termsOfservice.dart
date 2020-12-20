@@ -30,7 +30,7 @@ class _TermsOfServiceState extends State<TermsOfService> {
       },
     );
     setState(() {
-      info = jsonDecode(response.body);
+     print(response.body);
     });
     print(response.statusCode);
     print(response.body);

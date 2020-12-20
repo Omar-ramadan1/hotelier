@@ -55,7 +55,7 @@ class _AboutState extends State<About> {
           backgroundColor: Colors.white,
           shadowColor: Colors.transparent,
           flexibleSpace:
-          AppBarWidget("assets/hotelAppBarImage.jpg", info == null ? "" : info['PageName']),
+          AppBarWidget("assets/hotelAppBarImage.jpg", "عن التطبيق"),
         ),
       ),
       drawerEdgeDragWidth: 200,
@@ -65,9 +65,14 @@ class _AboutState extends State<About> {
       ),
         child: Container(
           width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.only(top: 40 , left: 20 , right: 20),
           child: Directionality(
             textDirection: TextDirection.rtl,
-            child: Text(info==null ? "" : info['PageBody']),
+            child: Text("تطبيق متميز في تقديم خدمة ترفيهيه لرواد الفنادق والمنتجعات حيث يقدم بطاقة خصم مباشرة للعميل يقدر يستفيد من خلالها بخصومات ويحصل على تخفيض عند الحجز طوال السنة ويستطيع تجديدها بكل سهولة عند انتهاء فترة الاشتراك وذلك على كافة فنادق - منتجعات - اجنحة فندقية شاليهات شقق مفروشة - استراحات المسجلة في انحاء المملكة داخل التطبيق" ,
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+                  fontSize: 20,
+            ),),
           ),
         ),
       ),

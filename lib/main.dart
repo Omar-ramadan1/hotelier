@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hotelier/Model/DataList.dart';
 import 'package:hotelier/Model/UserData.dart';
 import 'package:hotelier/screens/About.dart';
+import 'package:hotelier/screens/CartDetailsScreen.dart';
 import 'package:hotelier/screens/Complaining.dart';
 import 'package:hotelier/screens/Contact.dart';
 import 'package:hotelier/screens/Error_404.dart';
@@ -10,10 +11,11 @@ import 'package:hotelier/screens/HotelScreen.dart';
 import 'package:hotelier/screens/MainScreen.dart';
 import 'package:hotelier/screens/PersonalInformationScreen.dart';
 import 'package:hotelier/screens/RegistrationScreen.dart';
+import 'package:hotelier/screens/RenewRegistrationScreen.dart';
 import 'package:hotelier/screens/SendSuccessfully.dart';
 import 'package:hotelier/screens/HotelDetailsScreen.dart';
 import 'package:hotelier/screens/SplashScreenWidget.dart';
-import 'package:hotelier/screens/PaymentScreen.dart';
+import 'package:hotelier/screens/BuyCardScreen.dart';
 import 'package:hotelier/screens/EditUserData.dart';
 import 'package:hotelier/screens/EditHotelData.dart';
 import 'package:hotelier/screens/SpecialOfferScreen.dart';
@@ -43,13 +45,17 @@ class Hotelier extends StatelessWidget {
       debugShowCheckedModeBanner: false,
 
       home: SplashScreenWidget(),
+      //CartDetailsScreen(),
+      // SplashScreenWidget(),
 
       routes: {
         MainScreen.routeName: (ctx) => MainScreen(),
         RegistrationScreen.routeName: (ctx) => RegistrationScreen(),
         Complaining.routeName: (ctx) => Complaining(),
         Contact.routeName: (ctx) => Contact(),
-        // PaymentScreen.routeName: (ctx) => PaymentScreen(),
+        BuyCardScreen.routeName: (ctx) => BuyCardScreen(),
+        CartDetailsScreen.routeName: (ctx) => CartDetailsScreen(),
+        RenewRegistrationScreen.routeName: (ctx) => RenewRegistrationScreen(),
         Congratulation.routeName:(ctx)=>Congratulation(),
         SendSuccessfully.routeName:(ctx)=>SendSuccessfully(),
         HotelDetailsScreen.routeName:(ctx)=>HotelDetailsScreen(),

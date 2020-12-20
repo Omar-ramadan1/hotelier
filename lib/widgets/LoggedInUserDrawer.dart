@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:hotelier/Constant/Constant.dart';
 import 'package:hotelier/Model/UserData.dart';
 import 'package:hotelier/screens/About.dart';
+import 'package:hotelier/screens/CartDetailsScreen.dart';
 import 'package:hotelier/screens/Complaining.dart';
 import 'package:hotelier/screens/EditUserData.dart';
-import 'package:hotelier/screens/PaymentScreen.dart';
+import 'package:hotelier/screens/BuyCardScreen.dart';
 import 'package:hotelier/screens/PersonalInformationScreen.dart';
+import 'package:hotelier/screens/RenewRegistrationScreen.dart';
 import 'package:hotelier/screens/termsOfservice.dart';
 import 'package:provider/provider.dart';
 
@@ -103,7 +105,7 @@ class LoggedInUserDrawer extends StatelessWidget {
               InkWell(
                 child: DrawerTabsWidget(Icons.attach_money_rounded, "المدفوعات",
                     () {
-                  // Navigator.of(context).popAndPushNamed(PaymentScreen.routeName);
+                 Navigator.of(context).popAndPushNamed(CartDetailsScreen.routeName);
                 }),
               ),
               SizedBox(
@@ -111,18 +113,18 @@ class LoggedInUserDrawer extends StatelessWidget {
               ),
               InkWell(
                 child: DrawerTabsWidget(Icons.autorenew, "تجديد الاشتراك", () {
-                  // Navigator.of(context).popAndPushNamed(Complaining.routeName);
+                  Navigator.of(context).popAndPushNamed(RenewRegistrationScreen.routeName);
                 }),
               ),
               SizedBox(
                 height: 5,
               ),
-              // InkWell(
-              //   child: DrawerTabsWidget(Icons.credit_card, "شراء بطاقة", () {
-              //     Navigator.of(context)
-              //         .popAndPushNamed(PaymentScreen.routeName);
-              //   }),
-              // ),
+              InkWell(
+                child: DrawerTabsWidget(Icons.credit_card, "شراء بطاقة", () {
+                  Navigator.of(context)
+                      .popAndPushNamed(BuyCardScreen.routeName);
+                }),
+              ),
               SizedBox(
                 height: 5,
               ),

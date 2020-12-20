@@ -34,6 +34,7 @@ class _FullScreenPhotoViewerState extends State<FullScreenPhotoViewer> {
   Widget build(BuildContext context) {
     Size sizes = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(sizes.height),
         child: AppBar(
@@ -42,21 +43,18 @@ class _FullScreenPhotoViewerState extends State<FullScreenPhotoViewer> {
             scrollDirection: Axis.horizontal,
             children: [
               for(int i=0; i< widget.imgList.length; i++)
-                Hero(
-                  tag: "${anotherServerURL}Content/Images/${widget.imgList[i]}" ,
-                  child: Container(
-                    height: sizes.height,
-                    child: PhotoView(
-                      customSize: sizes,
-                      maxScale: sizes.height,
-                      basePosition: Alignment.center,
-                      imageProvider:
-                      Image.network(
-                        "${anotherServerURL}Content/Images/${widget.imgList[i]}",
-                        fit: BoxFit.fill,
-                        height: sizes.height,
-                      ).image,
-                    ),
+                Container(
+                  height: sizes.height,
+                  child: PhotoView(
+                    customSize: sizes,
+                    maxScale: sizes.height,
+                    basePosition: Alignment.center,
+                    imageProvider:
+                    Image.network(
+                      "${anotherServerURL}Content/Images/${widget.imgList[i]}",
+                      fit: BoxFit.fill,
+                      height: sizes.height,
+                    ).image,
                   ),
                 ),
             ],

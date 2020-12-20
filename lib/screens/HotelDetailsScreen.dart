@@ -35,8 +35,8 @@ class HotelDetailsScreenState extends State<HotelDetailsScreen> {
     setState(() {
       data = ModalRoute.of(context ).settings.arguments;
     });
-print("data[videoURL]");
-print(data["videoURL"]);
+print("data[video]");
+print(data["video"]);
     return Scaffold(
       drawerScrimColor: Colors.transparent,
       appBar: PreferredSize(

@@ -291,7 +291,11 @@ class _EditUserDataState extends State<EditUserData> {
               SizedBox(
                 height: 25,
               ),
-              ButtonChildWidget("تجديد الاشتراك", Color(0xFFF7BB85), 23, 250),
+              InkWell(
+                onTap: (){
+
+                },
+                  child: ButtonChildWidget("تجديد الاشتراك", Color(0xFFF7BB85), 23, 250)),
               SizedBox(
                 height: 45,
               ),

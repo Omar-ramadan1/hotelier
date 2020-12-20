@@ -31,6 +31,7 @@ class TextFieldWidget extends StatelessWidget {
           TextField(
               textAlign: TextAlign.center,
               showCursor: true,
+              enabled: false,
               textAlignVertical: TextAlignVertical.center,
               decoration: InputDecoration(
                   alignLabelWithHint: true,

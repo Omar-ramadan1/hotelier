@@ -319,18 +319,18 @@ class _SignUpHotelState extends State<SignUpHotel> {
                   (value) {
                 onChangeFunction(value, "confirmPassword");
               }, obscureText: true),
-          // SingleTextFieldWidget('اسم البنك', dataErrorMessage['bankName'],
-          //         (value) {
-          //       onChangeFunction(value, "bankName");
-          //     }),
-          // SingleTextFieldWidget('رقم البنك', dataErrorMessage['bankNumber'],
-          //         (value) {
-          //       onChangeFunction(value, "bankNumber");
-          //     }),
-          // SingleTextFieldWidget('bin', dataErrorMessage['bin'],
-          //         (value) {
-          //       onChangeFunction(value, "bin");
-          //     }),
+          SingleTextFieldWidget('اسم البنك', dataErrorMessage['bankName'],
+                  (value) {
+                onChangeFunction(value, "bankName");
+              }),
+          SingleTextFieldWidget('رقم البنك', dataErrorMessage['bankNumber'],
+                  (value) {
+                onChangeFunction(value, "bankNumber");
+              }),
+          SingleTextFieldWidget('bin', dataErrorMessage['bin'],
+                  (value) {
+                onChangeFunction(value, "bin");
+              }),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

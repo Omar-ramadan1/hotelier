@@ -12,9 +12,9 @@ class CreditCardChoiceWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         InkWell(
-          onTap: () {
-            changeCardValueFunction("visa");
-          },
+          // onTap: () {
+          //   changeCardValueFunction("visa");
+          // },
           child: Container(
               height: width / 9,
               width: width / 6,
@@ -40,9 +40,9 @@ class CreditCardChoiceWidget extends StatelessWidget {
           ),
         ),
         InkWell(
-          onTap: () {
-            changeCardValueFunction("master");
-          },
+          // onTap: () {
+          //   changeCardValueFunction("master");
+          // },
           child: Container(
               width: width / 6,
               padding: EdgeInsets.all(5),
@@ -67,9 +67,9 @@ class CreditCardChoiceWidget extends StatelessWidget {
           ),
         ),
         InkWell(
-          onTap: () {
-            changeCardValueFunction("mada");
-          },
+          // onTap: () {
+          //   changeCardValueFunction("mada");
+          // },
           child: Container(
               width: width / 6,
               height: width / 9,
@@ -95,16 +95,17 @@ class CreditCardChoiceWidget extends StatelessWidget {
           ),
         ),
         InkWell(
-          onTap: () {
-            changeCardValueFunction("payAtArrive");
-          },
+          // onTap: () {
+          //   changeCardValueFunction("payAtArrive");
+          // },
           child: Container(
               width: width / 6,
               padding: EdgeInsets.all(2),
               decoration: BoxDecoration(
-                color: cardValue == "payAtArrive"
-                    ? Color(0xFFFBDBBF)
-                    : Colors.transparent,
+                color: Color(0xFFFBDBBF),
+                // cardValue == "payAtArrive"
+                //     ? Color(0xFFFBDBBF)
+                //     : Colors.transparent,
                 border: cardValue == "payAtArrive"
                     ? Border.all(width: 0.8, color: Color(0xFFB29368))
                     : null,

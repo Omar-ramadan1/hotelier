@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:hotelier/screens/Contact.dart';
+import 'package:hotelier/Constant/Constant.dart';
 import 'package:video_player/video_player.dart';
 class VideoPlayerWidget extends StatefulWidget {
+  final String video;
+
+  const VideoPlayerWidget(this.video);
   @override
   _VideoPlayerWidgetState createState() => _VideoPlayerWidgetState();
 }
@@ -9,16 +12,20 @@ class VideoPlayerWidget extends StatefulWidget {
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
 
   VideoPlayerController _controller;
-
+//'https://dashboard.hoteliercard.com/Content/images/${widget.video}'
   @override
   void initState() {
     super.initState();
+    print('${anotherServerURL}Content/images/${widget.video}');
+
     _controller = VideoPlayerController.network(
-        'https://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4')
+      'https://cdn.videvo.net/videvo_files/video/premium/video0230/small_watermarked/MR_Stock Footage MR (650)_preview.mp4'
+        )
       ..initialize().then((_) {
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {});
       });
+
   }
 
   @override
