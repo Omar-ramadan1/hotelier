@@ -29,11 +29,7 @@ class BottomBarWidget extends StatelessWidget {
              GestureDetector(
 
               onTap: (){
-                if(userDataProvider.userData == null){
-                  SignInMessageWidget().showInMessageWidget(context);
-                }else{
                   Navigator.of(context).pushNamed (CartDetailsScreen.routeName);
-                }
              },
 
               child: Container(

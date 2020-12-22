@@ -6,7 +6,7 @@ import 'package:hotelier/widgets/AppDrawerWidget.dart';
 import 'package:hotelier/widgets/ButtonWidget.dart';
 import 'package:hotelier/widgets/CreditCardChoiceWidget.dart';
 import 'package:hotelier/widgets/MainScreenCardWidget.dart';
-import 'package:hotelier/widgets/PaymentAlertDialog.dart';
+import 'package:hotelier/widgets/PaymentAlertDialogMessage.dart';
 import 'package:hotelier/widgets/TextFieldWidget.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -76,7 +76,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
               CreditCardChoiceWidget(cardValue, changeCardValueFunction),
               SizedBox(height: 20),
               Text(
-                "برجاء اختيار طريقة الدفع",
+                "المتاح الان هو الدفع عند الاستلام",
                 style: TextStyle(fontSize: 17, fontWeight: FontWeight.w800),
               ),
               TextFieldWidget(
@@ -116,49 +116,62 @@ class _PaymentWidgetState extends State<PaymentWidget> {
               widget.isItBuyScreen
                   ? InkWell(
                       onTap: () async {
-                        var response = await http.post(
-                          '$serverURL/Order/AddOrder/?isMinorRenewal=false',
-                          headers: <String, String>{
-                            'Content-Type': 'application/json',
-                            'Authorization': 'Bearer ${userDataProvider.userData["access_token"]}'
-                          },
-                        );
-                        print(response.statusCode);
-                        print(response.body);
-                        if (response.statusCode == 200) {
-                          PaymentAlertDialog().showInMessageWidget(context,
-                              "سيتم التواصل معك للتوصيل من فضلك تاكد من رقم هاتفك فى الاعدادات");
-
-                        }else if(response.statusCode == 401){
-                          PaymentAlertDialog().showInMessageWidget(context,
-                              "من فضلك قم بتسجيل الدخول مرة اخرى");
-                          userDataProvider.userData = null;
+                        if (userDataProvider.userData == null) {
+                          PaymentAlertDialogMessage().showInMessageWidget(
+                              context,
+                              "من فضلك قم بتسجيل الدخول لاتمام العملية");
+                        } else {
+                          var response = await http.post(
+                            '$serverURL/Order/AddOrder/?isMinorRenewal=false',
+                            headers: <String, String>{
+                              'Content-Type': 'application/json',
+                              'Authorization':
+                                  'Bearer ${userDataProvider.userData["access_token"]}'
+                            },
+                          );
+                          print(response.statusCode);
+                          print(response.body);
+                          if (response.statusCode == 200) {
+                            PaymentAlertDialogMessage().showInMessageWidget(
+                                context,
+                                "سيتم التواصل معك للتوصيل من فضلك تاكد من رقم هاتفك فى الاعدادات");
+                          } else if (response.statusCode == 401) {
+                            PaymentAlertDialogMessage().showInMessageWidget(
+                                context, "من فضلك قم بتسجيل الدخول مرة اخرى");
+                            userDataProvider.userData = null;
+                          }
                         }
                       },
                       child: ButtonChildWidget(
                           "شراء بطاقة", Color(0xFFF7BB85), 25, 150))
                   : InkWell(
                       onTap: () async {
-                        print(
-                            'Bearer ${userDataProvider.userData["access_token"]}');
-                        var response = await http.post(
-                          '$serverURL/Order/AddOrder/?isMinorRenewal=true',
-                          headers: <String, String>{
-                            'Content-Type': 'application/json',
-                            'Authorization': 'Bearer ${userDataProvider.userData["access_token"]}'
-                          },
-                        );
-                        print(response.statusCode);
-                        if (response.statusCode == 200) {
-                          PaymentAlertDialog().showInMessageWidget(context,
-                              "لقد تمت العملية بنجاح");
-
-                        }else if(response.statusCode == 401){
-                          PaymentAlertDialog().showInMessageWidget(context,
-                              "من فضلك قم بتسجيل الدخول مرة اخرى");
-                          userDataProvider.userData = null;
+                        if (userDataProvider.userData == null) {
+                          PaymentAlertDialogMessage().showInMessageWidget(
+                              context,
+                              "من فضلك قم بتسجيل الدخول لاتمام العملية");
+                        } else {
+                          print(
+                              'Bearer ${userDataProvider.userData["access_token"]}');
+                          var response = await http.post(
+                            '$serverURL/Order/AddOrder/?isMinorRenewal=true',
+                            headers: <String, String>{
+                              'Content-Type': 'application/json',
+                              'Authorization':
+                                  'Bearer ${userDataProvider.userData["access_token"]}'
+                            },
+                          );
+                          print(response.statusCode);
+                          if (response.statusCode == 200) {
+                            PaymentAlertDialogMessage().showInMessageWidget(
+                                context, "لقد تمت العملية بنجاح");
+                          } else if (response.statusCode == 401) {
+                            PaymentAlertDialogMessage().showInMessageWidget(
+                                context, "من فضلك قم بتسجيل الدخول مرة اخرى");
+                            userDataProvider.userData = null;
+                          }
+                          print(response.body);
                         }
-                        print(response.body);
                       },
                       child: ButtonChildWidget(
                           "تجديد الاشتراك", Color(0xFFF7BB85), 25, 150)),

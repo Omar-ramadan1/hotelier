@@ -114,23 +114,23 @@ class HotelDetailsInfoWidget extends StatelessWidget {
           SizedBox(height: 15),
           // data["video"] == "" || data["video"] == "null"  || data["video"] == null?
           // Container() :
-          // Container(
-          //   height: size.height / 5,
-          //   width: size.width / 1.5,
-          //   margin: EdgeInsets.only(top: 10),
-          //   decoration: BoxDecoration(
-          //     color: Colors.transparent,
-          //       boxShadow: [
-          //         BoxShadow(
-          //           color: Colors.black,
-          //           spreadRadius: 0.3,
-          //           blurRadius: 5,
-          //           offset: Offset(0, 0), // changes position of shadow
-          //         ),
-          //       ],
-          //   ),
-          //   child: VideoPlayerWidget(data["video"]),
-          // ),
+          Container(
+            height: size.height / 5,
+            width: size.width / 1.5,
+            margin: EdgeInsets.only(top: 10),
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black,
+                    spreadRadius: 0.3,
+                    blurRadius: 5,
+                    offset: Offset(0, 0), // changes position of shadow
+                  ),
+                ],
+            ),
+            child: VideoPlayerWidget(data["video"]),
+          ),
           SizedBox(height: 70),
         ],
       ),

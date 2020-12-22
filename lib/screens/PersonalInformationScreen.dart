@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hotelier/Model/UserData.dart';
 import 'package:hotelier/widgets/HotelPersonalInformationWidget.dart';
-import 'package:hotelier/widgets/UserInformationScreen.dart';
+import 'file:///D:/andriod_projects/hotelier/lib/screens/UserInformationScreen.dart';
 import 'package:provider/provider.dart';
 
 class PersonalInformationScreen extends StatelessWidget {

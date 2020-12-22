@@ -4,6 +4,7 @@ import 'package:hotelier/screens/About.dart';
 import 'package:hotelier/screens/Complaining.dart';
 import 'package:hotelier/screens/BuyCardScreen.dart';
 import 'package:hotelier/screens/RegistrationScreen.dart';
+import 'package:hotelier/screens/RenewRegistrationScreen.dart';
 import 'package:hotelier/screens/termsOfservice.dart';
 import 'package:hotelier/widgets/SignInMessageWidget.dart';
 
@@ -74,13 +75,13 @@ class NormalDrawer extends StatelessWidget {
                 height: 10,
               ),
               DrawerTabsWidget(Icons.autorenew, "تجديد الاشتراك", () {
-                SignInMessageWidget().showInMessageWidget(context);
+                Navigator.of(context).popAndPushNamed(RenewRegistrationScreen.routeName);
               }),
               SizedBox(
                 height: 10,
               ),
               DrawerTabsWidget(Icons.credit_card, "شراء البطاقة", () {
-                SignInMessageWidget().showInMessageWidget(context);
+                Navigator.of(context).popAndPushNamed(BuyCardScreen.routeName);
               }),
               SizedBox(
                 height: 10,

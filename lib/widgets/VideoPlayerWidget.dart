@@ -19,7 +19,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     print('${anotherServerURL}Content/images/${widget.video}');
 
     _controller = VideoPlayerController.network(
-      'https://cdn.videvo.net/videvo_files/video/premium/video0230/small_watermarked/MR_Stock Footage MR (650)_preview.mp4'
+        'http://dashboard.hoteliercard.com/Content/images/${widget.video}'
         )
       ..initialize().then((_) {
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.

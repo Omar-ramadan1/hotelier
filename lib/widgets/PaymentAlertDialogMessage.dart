@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-class PaymentAlertDialog  {
+class PaymentAlertDialogMessage  {
   showInMessageWidget(context , String text){
     return showDialog(
         context: context,

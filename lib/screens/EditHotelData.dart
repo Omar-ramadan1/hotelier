@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:hotelier/widgets/PaymentAlertDialog.dart';
+import 'package:hotelier/widgets/PaymentAlertDialogMessage.dart';
 import 'package:http/http.dart' as http;
 import 'package:crossplat_objectid/crossplat_objectid.dart';
 import 'package:flutter/cupertino.dart';
@@ -489,7 +489,7 @@ class _EditHotelDataState extends State<EditHotelData> {
                           if (body['Message'] == null) {
                             dataClone["access_token"] = data['access_token'];
                             userDataProvider.userData = dataClone;
-                              PaymentAlertDialog().showInMessageWidget(context,
+                              PaymentAlertDialogMessage().showInMessageWidget(context,
                                   "من فضلك قم بتسجيل الدخول مرة اخرى");
                               userDataProvider.userData = null;
                             }

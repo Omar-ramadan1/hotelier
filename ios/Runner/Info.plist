@@ -9,9 +9,9 @@
     <key>NSPhotoLibraryUsageDescription</key>
     <string>This app needs access to gallery to take photos for hotels accounts and videos as type of marketing campaign</string>
     <key>NSLocationWhenInUseUsageDescription</key>
-    <string>This app needs access to location when you are going to create new account.</string>
+    <string>This app needs access to location to make make user know the hotel exact location and the location of  user to deliver the card when he/she order it.</string>
     <key>NSLocationAlwaysUsageDescription</key>
-    <string>his app needs access to location when you are going to create new account.</string>
+    <string>his app needs access to location to make make user know the hotel exact location and the location of  user to deliver the card when he/she order it.</string>
     <key>NSAppTransportSecurity</key>
     <dict>
       <key>NSAllowsArbitraryLoads</key>

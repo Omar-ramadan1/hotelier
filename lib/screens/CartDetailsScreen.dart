@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:hotelier/Model/UserData.dart';
 import 'package:hotelier/widgets/AppBarWidget.dart';
 import 'package:hotelier/widgets/AppDrawerWidget.dart';
 import 'package:hotelier/widgets/CartDetailsWidget.dart';
+import 'package:hotelier/widgets/PaymentAlertDialogMessage.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
@@ -22,23 +24,33 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
     // TODO: implement initState
     super.initState();
     UserData userDataProvider = Provider.of<UserData>(context, listen: false);
-    http.get(
-      '$serverURL/Order/OrderList',
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${userDataProvider.userData["access_token"]}'
-      },
-    ).then((response) => {
-    setState(() {
-      print(response.body);
-      data = jsonDecode(response.body);
-    })
-    });
-
+    if(userDataProvider.userData == null){
+    }else{
+      http.get(
+        '$serverURL/Order/OrderList',
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${userDataProvider.userData["access_token"]}'
+        },
+      ).then((response) => {
+        setState(() {
+          print(response.body);
+          data = jsonDecode(response.body);
+        })
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    UserData userDataProvider = Provider.of<UserData>(context);
+    Timer(Duration(seconds: 1), () {
+      if(userDataProvider.userData == null){
+        PaymentAlertDialogMessage().showInMessageWidget(context,
+            "من فضلك قم بتسجيل الدخول لمتابعة مشترياتك");
+      }
+    });
+
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
