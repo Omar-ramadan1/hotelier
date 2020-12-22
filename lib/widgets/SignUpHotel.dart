@@ -61,9 +61,9 @@ class _SignUpHotelState extends State<SignUpHotel> {
     'confirmPassword': null,
     'latitude': null,
     'longitude': null,
-    'bankName' : null,
-    'bankNumber':null,
-    'bin' : null,
+    // 'bankName' : null,
+    // 'bankNumber':null,
+    // 'bin' : null,
     'isHotel': true,
   };
 
@@ -327,7 +327,7 @@ class _SignUpHotelState extends State<SignUpHotel> {
                   (value) {
                 onChangeFunction(value, "bankNumber");
               }),
-          SingleTextFieldWidget('bin', dataErrorMessage['bin'],
+          SingleTextFieldWidget('الايبان', dataErrorMessage['bin'],
                   (value) {
                 onChangeFunction(value, "bin");
               }),

@@ -24,15 +24,15 @@ class _SignUpUserState extends State<SignUpUser> {
   Map data = {
     'cityName': 1,
     'name': null,
-    'idNumber': null,
+    // 'idNumber': null,
     'district': null,
     'phone1': null,
     'email': null,
     'password': null,
-    'address': null,
+    // 'address': null,
     'confirmPassword': null,
-    'latitude': null,
-    'longitude': null,
+    // 'latitude': null,
+    // 'longitude': null,
     'isHotel': false,
   };
 
