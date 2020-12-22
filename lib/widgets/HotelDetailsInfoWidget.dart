@@ -112,8 +112,8 @@ class HotelDetailsInfoWidget extends StatelessWidget {
             child: Center(child: GoogleMapWidget(data['lat'] , data['lng'])),
           ),
           SizedBox(height: 15),
-          // data["video"] == "" || data["video"] == "null"  || data["video"] == null?
-          // Container() :
+          data["video"] == "" || data["video"] == "null"  || data["video"] == null?
+          Container() :
           Container(
             height: size.height / 5,
             width: size.width / 1.5,
