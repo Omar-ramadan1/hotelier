@@ -14,6 +14,7 @@ class HotelPersonalInformationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     UserData userDataProvider = Provider.of<UserData>(context);
+    print(userDataProvider.userData['IsActive']);
     return Scaffold(
       backgroundColor: Color(0xFFFFFFFF),
       drawerScrimColor: Colors.transparent,
@@ -54,11 +55,10 @@ class HotelPersonalInformationWidget extends StatelessWidget {
                   ),
             SizedBox(height: 20,),
             InformationTextWidget('اسم الفندق:  ' , userDataProvider.userData['name']),
-            userDataProvider.userData['commercialRegistrationNo'] == null ? InformationTextWidget('السجل التجارى:  ' , "") :InformationTextWidget('السجل التجارى:  ' , userDataProvider.userData['commercialRegistrationNo']),
+            // userDataProvider.userData['commercialRegistrationNo'] == null ? InformationTextWidget('السجل التجارى:  ' , "") :InformationTextWidget('السجل التجارى:  ' , userDataProvider.userData['commercialRegistrationNo']),
             InformationTextWidget('عدد النجوم:  ' , userDataProvider.userData['starRating'].toString()),
             InformationTextWidget('نسبة الخصم المقدمة:  ' , '${userDataProvider.userData['discountValue'].toString()} %'),
-            userDataProvider.userData['BankName'] == null ?  InformationTextWidget('اسم البنك المدخل:  ' , "") :InformationTextWidget('اسم البنك المدخل:  ' , userDataProvider.userData['BankName'].toString()),
-            userDataProvider.userData['BankNumber'] == null ?  InformationTextWidget('رقم الحساب:  ' , "") :InformationTextWidget('رقم الحساب:  ' , userDataProvider.userData['BankNumber'].toString()),
+            // InformationTextWidget('هل الحساب مفعل:  ' , userDataProvider.userData['IsActive'] ? "نعم" : "لا"),
             Container(
               height: 200,
                 child: GoogleMapWidget(userDataProvider.userData['latitude'] , userDataProvider.userData['longitude'])

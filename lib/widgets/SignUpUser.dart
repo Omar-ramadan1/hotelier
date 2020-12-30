@@ -74,10 +74,10 @@ class _SignUpUserState extends State<SignUpUser> {
           SingleTextFieldWidget('الاسم', dataErrorMessage['name'], (value) {
             onChangeFunction(value, 'name');
           }),
-          SingleTextFieldWidget(
-              'رقم الهوية/رقم الاقامة', dataErrorMessage['idNumber'], (value) {
-            onChangeFunction(value, 'idNumber');
-          }),
+          // SingleTextFieldWidget(
+          //     'رقم الهوية/رقم الاقامة', dataErrorMessage['idNumber'], (value) {
+          //   onChangeFunction(value, 'idNumber');
+          // }),
           Container(
             width: size.width,
             child: Row(

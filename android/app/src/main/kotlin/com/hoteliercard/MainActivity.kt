@@ -1,4 +1,4 @@
-package com.hotelierCard.hotelier
+package com.hoteliercard
 
 import io.flutter.embedding.android.FlutterActivity
 

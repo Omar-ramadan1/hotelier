@@ -49,7 +49,7 @@ class _SignUpHotelState extends State<SignUpHotel> {
     'starRating': 1,
     'TypeId' : 'categoryId',
     'Name': null,
-    'commercialRegistrationNo': null,
+    // 'commercialRegistrationNo': null,
     'district': null,
     'phone1': null,
     'phone2': "",
@@ -101,11 +101,11 @@ class _SignUpHotelState extends State<SignUpHotel> {
               (value) {
             onChangeFunction(value, "Name");
           }),
-          SingleTextFieldWidget(
-              'رقم السجل التجارى', dataErrorMessage['commercialRegistrationNo'],
-              (value) {
-            onChangeFunction(int.parse(value), "commercialRegistrationNo");
-          }),
+          // SingleTextFieldWidget(
+          //     'رقم السجل التجارى', dataErrorMessage['commercialRegistrationNo'],
+          //     (value) {
+          //   onChangeFunction(int.parse(value), "commercialRegistrationNo");
+          // }),
           Container(
             width: size.width,
             child: Row(
@@ -319,18 +319,18 @@ class _SignUpHotelState extends State<SignUpHotel> {
                   (value) {
                 onChangeFunction(value, "confirmPassword");
               }, obscureText: true),
-          SingleTextFieldWidget('اسم البنك', dataErrorMessage['bankName'],
-                  (value) {
-                onChangeFunction(value, "bankName");
-              }),
-          SingleTextFieldWidget('رقم البنك', dataErrorMessage['bankNumber'],
-                  (value) {
-                onChangeFunction(value, "bankNumber");
-              }),
-          SingleTextFieldWidget('الايبان', dataErrorMessage['bin'],
-                  (value) {
-                onChangeFunction(value, "bin");
-              }),
+          // SingleTextFieldWidget('اسم البنك', dataErrorMessage['bankName'],
+          //         (value) {
+          //       onChangeFunction(value, "bankName");
+          //     }),
+          // SingleTextFieldWidget('رقم البنك', dataErrorMessage['bankNumber'],
+          //         (value) {
+          //       onChangeFunction(value, "bankNumber");
+          //     }),
+          // SingleTextFieldWidget('الايبان', dataErrorMessage['bin'],
+          //         (value) {
+          //       onChangeFunction(value, "bin");
+          //     }),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -549,13 +549,14 @@ class _SignUpHotelState extends State<SignUpHotel> {
   }
 
   isCommercialRegistrationIs10Digits (String data){
-    RegExp regExp = new RegExp(
-      r"^[0-9]{10,10}$",
-      caseSensitive: false,
-      multiLine: false,
-    );
+    // RegExp regExp = new RegExp(
+    //   r"^[0-9]{10,10}$",
+    //   caseSensitive: false,
+    //   multiLine: false,
+    // );
 
-    return regExp.hasMatch(data);
+    // return regExp.hasMatch(data);
+    return true;
   }
   uploadVideo() async {
     final snackBar = SnackBar(content: Text('please wait till video uploads'));

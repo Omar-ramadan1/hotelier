@@ -168,9 +168,9 @@ class _EditHotelDataState extends State<EditHotelData> {
               EditTextFieldWidget(data['name'], (value) {
                 onChangeFunction(value, "name");
               }),
-              EditTextFieldWidget(data['commercialRegistrationNo'] == null ? "رقم السجل التجارى" : data['commercialRegistrationNo'], (value) {
-                onChangeFunction(value.toString(), "commercialRegistrationNo");
-              } , errorText: dataErrorMessage['commercialRegistrationNo'],),
+              // EditTextFieldWidget(data['commercialRegistrationNo'] == null ? "رقم السجل التجارى" : data['commercialRegistrationNo'], (value) {
+              //   onChangeFunction(value.toString(), "commercialRegistrationNo");
+              // } , errorText: dataErrorMessage['commercialRegistrationNo'],),
               Container(
                 width: size.width,
                 child: Row(
@@ -396,30 +396,30 @@ class _EditHotelDataState extends State<EditHotelData> {
               SizedBox(
                 height: 20,
               ),
-              Row(
-                children: [
-                  Text(
-                    '-:تعديل بيانات الحساب البنكى',
-                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
-                  )
-                ],
-                textDirection: TextDirection.rtl,
-              ),
-              EditTextFieldWidget(
-                  data['BankName'] == null ? "اسم البنك" : data['BankName'],
-                  (value) {
-                onChangeFunction(value, "BankName");
-              }),
-              EditTextFieldWidget(
-                  data['BankNumber'] == null
-                      ? "رقم الحساب البنكى"
-                      : data['BankNumber'], (value) {
-                onChangeFunction(value, "BankNumber");
-              }),
-              EditTextFieldWidget(data['Bin'] == null ? "الايبان" : data['Bin'],
-                  (value) {
-                onChangeFunction(value, "Bin");
-              }),
+              // Row(
+              //   children: [
+              //     Text(
+              //       '-:تعديل بيانات الحساب البنكى',
+              //       style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+              //     )
+              //   ],
+              //   textDirection: TextDirection.rtl,
+              // ),
+              // EditTextFieldWidget(
+              //     data['BankName'] == null ? "اسم البنك" : data['BankName'],
+              //     (value) {
+              //   onChangeFunction(value, "BankName");
+              // }),
+              // EditTextFieldWidget(
+              //     data['BankNumber'] == null
+              //         ? "رقم الحساب البنكى"
+              //         : data['BankNumber'], (value) {
+              //   onChangeFunction(value, "BankNumber");
+              // }),
+              // EditTextFieldWidget(data['Bin'] == null ? "الايبان" : data['Bin'],
+              //     (value) {
+              //   onChangeFunction(value, "Bin");
+              // }),
               Container(
                 width: size.width - 20,
                 child: GridView.count(
@@ -583,13 +583,14 @@ class _EditHotelDataState extends State<EditHotelData> {
   }
 
   isCommercialRegistrationIs10Digits (String data){
-    RegExp regExp = new RegExp(
-      r"^[0-9]{10}$",
-      caseSensitive: false,
-      multiLine: false,
-    );
+    // RegExp regExp = new RegExp(
+    //   r"^[0-9]{10}$",
+    //   caseSensitive: false,
+    //   multiLine: false,
+    // );
 
-    return regExp.hasMatch(data);
+    // return regExp.hasMatch(data);
+    return true;
   }
 
   uploadImages() async {

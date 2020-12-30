@@ -9,6 +9,7 @@ import 'package:hotelier/Functions/UploadAssetImages.dart';
 import 'package:hotelier/Model/DataList.dart';
 import 'package:hotelier/Model/UserData.dart';
 import 'package:hotelier/screens/GetLocationScreen.dart';
+import 'package:hotelier/screens/RenewRegistrationScreen.dart';
 import 'package:hotelier/widgets/AppBarWidget.dart';
 import 'package:hotelier/widgets/AppDrawerWidget.dart';
 import 'package:hotelier/widgets/ButtonWidget.dart';
@@ -144,9 +145,9 @@ class _EditUserDataState extends State<EditUserData> {
               EditTextFieldWidget(data['name'], (value) {
                 onChangeFunction(value, "name");
               }),
-              EditTextFieldWidget(data['idNumber'], (value) {
-                onChangeFunction(value, "idNumber");
-              }),
+              // EditTextFieldWidget(data['idNumber'], (value) {
+              //   onChangeFunction(value, "idNumber");
+              // }),
               Container(
                 width: size.width,
                 child: Row(
@@ -293,7 +294,7 @@ class _EditUserDataState extends State<EditUserData> {
               ),
               InkWell(
                 onTap: (){
-
+                  Navigator.of(context).popAndPushNamed(RenewRegistrationScreen.routeName);
                 },
                   child: ButtonChildWidget("تجديد الاشتراك", Color(0xFFF7BB85), 23, 250)),
               SizedBox(

@@ -61,7 +61,7 @@ class UserInformationScreen extends StatelessWidget {
             SizedBox(height: 20,),
             InformationTextWidget('اسم المستخدم:  ' , userDataProvider.userData['name']),
             InformationTextWidget('رقم الهاتف:  ' , userDataProvider.userData['phone']),
-            InformationTextWidget('رقم القومى:  ' , userDataProvider.userData['idNumber'].toString()),
+            // InformationTextWidget('رقم القومى:  ' , userDataProvider.userData['idNumber'].toString()),
             InformationTextWidget('المدينة:  ' , cityName),
           ],
         ),
