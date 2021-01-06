@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hotelier/screens/GoogleMapInfoScreen.dart';
 import 'package:hotelier/widgets/GoogleMapWidget.dart';
 import 'package:hotelier/widgets/VideoPlayerWidget.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
@@ -84,6 +86,60 @@ class HotelDetailsInfoWidget extends StatelessWidget {
               // Text("088564749")
             ],
           ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
+            textDirection: TextDirection.rtl,
+            children: [
+              IconButton(icon: Icon(FontAwesomeIcons.dollarSign), onPressed: null),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 15),
+                child: Text(
+                  data['RoomPrice'].toString(),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ),
+              // Text("088564749")
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
+            textDirection: TextDirection.rtl,
+            children: [
+              IconButton(icon: Icon(Icons.money), onPressed: null),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Text(
+                  data['IsReservationsAvailable'] ? "الحجز متاح" : "الحجز غير متاح",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ),
+              // Text("088564749")
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            textDirection: TextDirection.rtl,
+            children: [
+              IconButton(icon: Icon(Icons.sticky_note_2_outlined), onPressed: null),
+              Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: Container(
+                  width: size.width - 150,
+                  child: Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: Text(
+                      data['Notes'],
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ),
+              // Text("088564749")
+            ],
+          ),
           Divider(
             height: 3,
             thickness: 1,
@@ -93,23 +149,31 @@ class HotelDetailsInfoWidget extends StatelessWidget {
           ),
 
           SizedBox(height: 75),
-          Container(
-            height: size.height / 5,
-            width: size.width / 1.5,
-            margin: EdgeInsets.only(top: 10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(40),
-              color: Colors.greenAccent,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black,
-                  spreadRadius: 0.3,
-                  blurRadius: 5,
-                  offset: Offset(0, 0), // changes position of shadow
-                ),
-              ],
+          InkWell(
+            onTap: (){
+            //  GoogleMapInfoScreen
+               Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (context) => GoogleMapInfoScreen(data['lat'] , data['lng'])));
+            },
+            child: Container(
+              height: size.height / 5,
+              width: size.width / 1.5,
+              margin: EdgeInsets.only(top: 10),
+              decoration: BoxDecoration(
+                color: Colors.greenAccent,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    spreadRadius: 0.3,
+                    blurRadius: 4,
+                    offset: Offset(0, 0), // changes position of shadow
+                  ),
+                ],
+              ),
+              child: Center(child: InkWell(
+                  child: GoogleMapWidget(data['lat'] , data['lng']))),
             ),
-            child: Center(child: GoogleMapWidget(data['lat'] , data['lng'])),
           ),
           SizedBox(height: 15),
           data["video"] == "" || data["video"] == "null"  || data["video"] == null?

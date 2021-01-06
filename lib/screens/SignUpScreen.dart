@@ -36,7 +36,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     });
                   },
                     child: SignUpButtonWidget(
-                        "فندق",
+                        "الشريك",
                         Icons.home_work_outlined,
                         registration == Registration.hotel
                             ? Color(0xFFF7BB85)
@@ -48,7 +48,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     });
                   },
                   child: SignUpButtonWidget(
-                      "مستخدم",
+                      "العضو",
                       Icons.person,
                       registration == Registration.user
                           ? Color(0xFFF7BB85)

@@ -6,6 +6,7 @@ class InformationTextWidget extends StatelessWidget {
   const InformationTextWidget(this.text1, this.text2);
   @override
   Widget build(BuildContext context) {
+
     return Container(
       margin: EdgeInsets.only(right: 15 , top: 10),
       child: Row(
@@ -19,7 +20,7 @@ class InformationTextWidget extends StatelessWidget {
           Text(
             text2,
             textDirection: TextDirection.rtl,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700 , color: Colors.blueGrey),
           ),
         ],
       ),

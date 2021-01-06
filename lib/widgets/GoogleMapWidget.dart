@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hotelier/screens/GoogleMapInfoScreen.dart';
 
 class GoogleMapWidget extends StatelessWidget {
 final double lat , lng;
@@ -37,7 +38,7 @@ final double lat , lng;
         scrollGesturesEnabled: false,
         rotateGesturesEnabled: false,
         compassEnabled: false,
-        mapType: MapType.satellite,
+        mapType: MapType.normal,
         // myLocationButtonEnabled: true,
         initialCameraPosition: _kGooglePlex,
         // myLocationEnabled: true,
@@ -45,6 +46,9 @@ final double lat , lng;
         //   _controller.complete(controller);
         // },
         onTap: (latLang){
+          Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (context) => GoogleMapInfoScreen(lat , lng)));
         },
         markers: Set<Marker>.of(markers.values),
       ),

@@ -25,6 +25,7 @@ class DoubleTextFieldWidget extends StatelessWidget {
                   child: Directionality(
                     textDirection: TextDirection.rtl,
                     child: TextField(
+                      keyboardType: TextInputType.phone,
                       onChanged: (value) {
                         onChangeFunction(value, parameterStringName);
                       },
@@ -48,11 +49,12 @@ class DoubleTextFieldWidget extends StatelessWidget {
                   child: Directionality(
                     textDirection: TextDirection.rtl,
                     child: TextField(
+                      keyboardType: TextInputType.phone,
                       onChanged: (value) {
                         onChangeFunction(value, 'phone2');
                       },
                       decoration: InputDecoration(
-                        labelText: phone2 != null ? phone2 : 'رقم الجوال',
+                        labelText: phone2 != null ? phone2 : 'رقم الهاتف',
                       ),
                     ),
                   ),

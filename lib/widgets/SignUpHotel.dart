@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:crossplat_objectid/crossplat_objectid.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hotelier/Model/UserData.dart';
 import 'package:hotelier/screens/termsOfservice.dart';
 import 'package:hotelier/widgets/DoubleTextFieldWidget.dart';
 import 'package:hotelier/widgets/SingleTextFieldWidget.dart';
@@ -19,7 +20,7 @@ import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-
+import 'package:hotelier/screens/MainScreen.dart';
 import 'DropdownWidget.dart';
 
 class SignUpHotel extends StatefulWidget {
@@ -28,7 +29,8 @@ class SignUpHotel extends StatefulWidget {
 }
 
 class _SignUpHotelState extends State<SignUpHotel> {
-  String cityId , typeId , errorString = '';
+  TextEditingController _controller = new TextEditingController();
+  String cityId , typeId , errorString = '' , IsReservationsAvailable = "متاح";
   bool isVideoLoading = false , isSubmittingRegistration = false;
   List<String> discountList = [
     '10',
@@ -41,7 +43,7 @@ class _SignUpHotelState extends State<SignUpHotel> {
     '80',
     '90',
     '100'
-  ];
+  ] , availableList = ['متاح' , 'غير متاح'];
 
   Map data = {
     'discountValue': '10',
@@ -50,6 +52,8 @@ class _SignUpHotelState extends State<SignUpHotel> {
     'TypeId' : 'categoryId',
     'Name': null,
     // 'commercialRegistrationNo': null,
+    "RoomPrice" : null,
+    'IsReservationsAvailable': true,
     'district': null,
     'phone1': null,
     'phone2': "",
@@ -57,6 +61,7 @@ class _SignUpHotelState extends State<SignUpHotel> {
     'imageURL': [],
     'videoURL': "",
     'password': null,
+    'Notes' : null,
     'address': null,
     'confirmPassword': null,
     'latitude': null,
@@ -92,6 +97,7 @@ class _SignUpHotelState extends State<SignUpHotel> {
   @override
   Widget build(BuildContext context) {
     DataList dataList = Provider.of<DataList>(context);
+    UserData userData = Provider.of<UserData>(context);
     Size size = MediaQuery.of(context).size;
     return Container(
       width: size.width * 80 / 100,
@@ -101,6 +107,10 @@ class _SignUpHotelState extends State<SignUpHotel> {
               (value) {
             onChangeFunction(value, "Name");
           }),
+          SingleTextFieldWidget('سعر الغرفة', dataErrorMessage['RoomPrice'],
+              (value) {
+            onChangeFunction(value, "RoomPrice");
+          } , textInputType: TextInputType.number,),
           // SingleTextFieldWidget(
           //     'رقم السجل التجارى', dataErrorMessage['commercialRegistrationNo'],
           //     (value) {
@@ -188,14 +198,39 @@ class _SignUpHotelState extends State<SignUpHotel> {
           ),
           DoubleTextFieldWidget(dataErrorMessage['phone1'] , (value , mapKeyName){
             onChangeFunction(value, mapKeyName);
-          } , 'phone1',),
-
+          } , 'phone1', ),
           SingleTextFieldWidget(
               'الايميل', dataErrorMessage['email'],
                   (value) {
                 onChangeFunction(value, "email");
               }),
-
+          TextField(
+            controller: _controller,
+            maxLengthEnforced: true,
+            maxLines: 4,
+            maxLength: 2000,
+            keyboardType: TextInputType.text,
+            textAlign: TextAlign.right,
+            onChanged: (value) {
+              if(value.length <= 2000){
+                onChangeFunction(value, 'Notes');
+              }else{
+                // _controller.text = data['Notes'];
+                _controller.value = TextEditingValue(
+                    text: data['Notes'],
+                    selection: TextSelection(isDirectional: false , baseOffset: 4 , extentOffset: 4)
+                );
+              }
+              print(value.length);
+            },
+            decoration: InputDecoration(
+              hintText: "إضافة الباكدج أو الوصف",
+              errorText: dataErrorMessage['Notes'],
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+            ),
+          ),
           Container(
             margin: EdgeInsets.only(top: 25),
             child: Row(
@@ -229,10 +264,36 @@ class _SignUpHotelState extends State<SignUpHotel> {
                 DropdownWidget(
                     typeId,
                     dataList.categoryNames,
-                    60,
+                    85,
                     25, (value) {
                   setState(() {
                     typeId = value;
+                  });
+                }),
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 25),
+            child: Row(
+              textDirection: TextDirection.rtl,
+              children: [
+                Text(
+                  "الحجز",
+                  style: TextStyle(fontWeight: FontWeight.w900),
+                ),
+                DropdownWidget(
+                    IsReservationsAvailable,
+                    availableList,
+                    85,
+                    25, (value) {
+                  setState(() {
+                    IsReservationsAvailable = value;
+                    if( IsReservationsAvailable == 'نعم'){
+                      data["IsReservtionAvailable"] = true;
+                    }else{
+                      data["IsReservtionAvailable"] = false;
+                    }
                   });
                 }),
               ],
@@ -432,7 +493,49 @@ class _SignUpHotelState extends State<SignUpHotel> {
                                                 isSubmittingRegistration = false;
                                               });
                                               if (response.statusCode == 200) {
-                                                Navigator.of(context).pop();
+                                                var response = await http.post(
+                                                  'http://api.hoteliercard.com/api/Account/CustomToken',
+                                                  headers: <String, String>{
+                                                    "Accept": "application/json",
+                                                    "Content-Type": "application/json"
+                                                  },
+                                                  body: jsonEncode({'email' : data['email'] , 'password' : data['password']}),
+                                                );
+                                                Map body = jsonDecode(response.body);
+                                                if(body['IsHotel']){
+                                                  // this handle a server error which may add photo to the hotel with no name
+                                                  print(body["img"]);
+                                                  List imageList = body["img"];
+                                                  List newImageList = [];
+                                                  imageList.forEach((element) {
+                                                    if(element['FileName'] == ''){
+                                                      print('entered');
+                                                      http.post(
+                                                        '$serverURL/Media/DeleatImg?id=${element['PK_MediId']}',
+                                                        headers: <String, String>{
+                                                          'Authorization': 'Bearer ${body["access_token"]}',
+                                                          'Content-Type': 'application/json'
+                                                        },
+                                                      );
+                                                    }else{
+                                                      newImageList.add(element);
+                                                    }
+                                                  });
+                                                  Scaffold.of(context).showSnackBar(
+                                                      SnackBar(content: Text('لقد تم التسجيل بنجاح')));
+                                                  body["img"] = newImageList;
+                                                }
+                                                userData.updateUserInfo(body);
+                                                Navigator.of(context)
+                                                    .popUntil((route) {
+                                                  print(route.settings.name);
+                                                  if(route.settings.name == "null" || route.settings.name == null){
+                                                    print("Trueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+                                                    return true;
+                                                  }else{
+                                                    return false;
+                                                  }
+                                                } );
                                               } else if (response.statusCode == 400) {
                                                 Scaffold.of(context).showSnackBar(
                                                     SnackBar(content: Text('هذا الايميل مستخدم من قبل')));
@@ -469,12 +572,55 @@ class _SignUpHotelState extends State<SignUpHotel> {
                                 );
                                 print(response.statusCode);
                                 print(response.body);
-                                setState(() {
-                                  isSubmittingRegistration = false;
-                                });
                                 if (response.statusCode == 200) {
-                                  Navigator.of(context).pop();
+                                  var response = await http.post(
+                                    'http://api.hoteliercard.com/api/Account/CustomToken',
+                                    headers: <String, String>{
+                                      "Accept": "application/json",
+                                      "Content-Type": "application/json"
+                                    },
+                                    body: jsonEncode({'email' : data['email'] , 'password' : data['password']}),
+                                  );
+                                  Map body = jsonDecode(response.body);
+                                  if(body['IsHotel']){
+                                    // this handle a server error which may add photo to the hotel with no name
+                                    print(body["img"]);
+                                    List imageList = body["img"];
+                                    List newImageList = [];
+                                    imageList.forEach((element) {
+                                      if(element['FileName'] == ''){
+                                        print('entered');
+                                        http.post(
+                                          '$serverURL/Media/DeleatImg?id=${element['PK_MediId']}',
+                                          headers: <String, String>{
+                                            'Authorization': 'Bearer ${body["access_token"]}',
+                                            'Content-Type': 'application/json'
+                                          },
+                                        );
+                                      }else{
+                                        newImageList.add(element);
+                                      }
+                                    });
+                                    Scaffold.of(context).showSnackBar(
+                                        SnackBar(content: Text('لقد تم التسجيل بنجاح')));
+                                    body["img"] = newImageList;
+                                  }
+                                  userData.updateUserInfo(body);
+                                  Navigator.of(context)
+                                      .popUntil((route) {
+                                    print(route.settings.name);
+                                    if(route.settings.name == "null" || route.settings.name == null){
+                                      print("Trueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+                                      return true;
+                                    }else{
+                                      return false;
+                                    }
+
+                                  });
                                 } else if (response.statusCode == 400) {
+                                  setState(() {
+                                    isSubmittingRegistration = false;
+                                  });
                                   Scaffold.of(context).showSnackBar(
                                       SnackBar(content: Text('هذا الايميل مستخدم من قبل')));
                                 }

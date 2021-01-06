@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hotelier/Constant/Constant.dart';
 import 'package:hotelier/widgets/AppBarWidget.dart';
 import 'package:hotelier/widgets/AppDrawerWidget.dart';
-import 'package:hotelier/widgets/ButtonWidget.dart';
-import 'package:hotelier/widgets/DropdownWidget.dart';
+import 'package:http/http.dart' as http;
 import 'package:hotelier/widgets/bottomBarWidget.dart';
 
 class Contact extends StatefulWidget {
@@ -12,22 +16,129 @@ class Contact extends StatefulWidget {
 }
 
 class _ContactState extends State<Contact> {
-  Map data = {
-    'name': null,
-    'email': null,
-    'subject': 'شكوى',
-    'message': null,
-  };
+  String phone1 = "",
+      phone2 = "",
+      whatsApp = "",
+      faceBook = "",
+      twitter = "",
+      snapChat = "";
+  getPhone1() async {
+    Map data;
+    var response = await http.get(
+      '$serverURL/Pages/?id=3',
+      headers: <String, String>{
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+    );
+    setState(() {
+      print(jsonDecode(response.body));
+      data = jsonDecode(response.body);
+      phone1 = data["PageBody"];
+      print(phone1);
+    });
+  }
 
-  Map dataErrorMessage = {
-    'name': null,
-    'email': null,
-    'message': null,
-  };
+  getPhone2() async {
+    Map data;
+    var response = await http.get(
+      '$serverURL/Pages/?id=4',
+      headers: <String, String>{
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+    );
+    setState(() {
+      print(jsonDecode(response.body));
+      data = jsonDecode(response.body);
+      phone2 = data["PageBody"].toString();
+      print(phone2);
+    });
+  }
+
+  getWhatsApp() async {
+    Map data;
+    var response = await http.get(
+      '$serverURL/Pages/?id=5',
+      headers: <String, String>{
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+    );
+    setState(() {
+      print(jsonDecode(response.body));
+      data = jsonDecode(response.body);
+      whatsApp = data["PageBody"].toString();
+      print(whatsApp);
+    });
+  }
+
+  getFaceBook() async {
+    Map data;
+    var response = await http.get(
+      '$serverURL/Pages/?id=6',
+      headers: <String, String>{
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+    );
+    setState(() {
+      print(jsonDecode(response.body));
+      data = jsonDecode(response.body);
+      faceBook = data["PageBody"].toString();
+      print(faceBook);
+    });
+  }
+
+  getTwitter() async {
+    Map data;
+    var response = await http.get(
+      '$serverURL/Pages/?id=7',
+      headers: <String, String>{
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+    );
+    setState(() {
+      print(jsonDecode(response.body));
+      data = jsonDecode(response.body);
+      twitter = data["PageBody"].toString();
+      print(twitter);
+    });
+  }
+
+  getSnapChat() async {
+    Map data;
+    var response = await http.get(
+      '$serverURL/Pages/?id=8',
+      headers: <String, String>{
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+    );
+    setState(() {
+      print(jsonDecode(response.body));
+      data = jsonDecode(response.body);
+      snapChat = data["PageBody"].toString();
+      print(snapChat);
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getPhone1();
+    getPhone2();
+    getFaceBook();
+    getSnapChat();
+    getTwitter();
+    getWhatsApp();
+  }
 
   @override
   //  flexibleSpace: AppBarWidget("assets/ContactAppBarImage.jpg","اتصل بنا"),
   Widget build(BuildContext context) {
+    final _formKey = new GlobalKey<FormState>(),
+        _formKey1 = new GlobalKey<FormState>(),
+        _formKey2 = new GlobalKey<FormState>(),
+        _formKey3 = new GlobalKey<FormState>(),
+        _formKey4 = new GlobalKey<FormState>(),
+        _formKey5 = new GlobalKey<FormState>();
     return Scaffold(
       backgroundColor: Colors.white,
       drawerScrimColor: Colors.transparent,
@@ -43,7 +154,8 @@ class _ContactState extends State<Contact> {
           ],
           backgroundColor: Colors.white,
           shadowColor: Colors.transparent,
-          flexibleSpace: AppBarWidget("assets/ContactAppBarImage.jpg","اتصل بنا"),
+          flexibleSpace:
+              AppBarWidget("assets/ContactAppBarImage.jpg", "اتصل بنا"),
         ),
       ),
       drawerEdgeDragWidth: 200,
@@ -54,159 +166,160 @@ class _ContactState extends State<Contact> {
           child: Column(mainAxisAlignment: MainAxisAlignment.start, children: <
               Widget>[
             Row(
+              key: _formKey,
               children: [
-                IconButton(icon: Icon(Icons.email), onPressed: null),
-                Text("info@Hoteliercard@gmail.com",
-                    style: TextStyle(color: Color(0xFFF7BB85)))
+                InkWell(
+                  onTap: () {
+                    Clipboard.setData(ClipboardData(text: phone1.toString()));
+                    Scaffold.of(_formKey.currentContext).showSnackBar(SnackBar(
+                      content: Text("تم نسخ ${phone1.toString()}"),
+                    ));
+                  },
+                  child: IconButton(icon: Icon(Icons.phone), onPressed: null),
+                ),
+                Text(phone1, style: TextStyle(color: Color(0xFFF7BB85)))
               ],
             ),
             Row(
+              key: _formKey2,
               children: [
-                IconButton(icon: Icon(Icons.phone), onPressed: null),
-                Text("012748534585", style: TextStyle(color: Color(0xFFF7BB85)))
+                InkWell(
+                    onTap: () {
+                      Clipboard.setData(ClipboardData(text: phone2.toString()));
+                      Scaffold.of(_formKey2.currentContext)
+                          .showSnackBar(SnackBar(
+                        content: Text("تم نسخ ${phone2.toString()}"),
+                      ));
+                    },
+                    child: IconButton(
+                        icon: Icon(
+                          Icons.phone,
+                        ),
+                        onPressed: null)),
+                Text(phone2, style: TextStyle(color: Color(0xFFF7BB85)))
               ],
             ),
             Row(
+              key: _formKey3,
               children: [
-                IconButton(icon: Icon(Icons.location_history), onPressed: null),
-                Text("المملكه العربيه السعوديه/جده",
-                    style: TextStyle(color: Color(0xFFF7BB85)))
+                InkWell(
+                  onTap: () {
+                    Clipboard.setData(ClipboardData(text: snapChat.toString()));
+                    Scaffold.of(_formKey3.currentContext).showSnackBar(SnackBar(
+                      content: Text("تم نسخ ${snapChat.toString()}"),
+                    ));
+                  },
+                  child: IconButton(
+                      icon: Icon(FontAwesomeIcons.snapchatGhost,
+                          color: Colors.yellow),
+                      onPressed: null),
+                ),
+                Text(snapChat, style: TextStyle(color: Color(0xFFF7BB85)))
+              ],
+            ),
+            Row(
+              key: _formKey4,
+              children: [
+                InkWell(
+                  onTap: () {
+                    Clipboard.setData(ClipboardData(text: faceBook.toString()));
+                    Scaffold.of(_formKey4.currentContext).showSnackBar(SnackBar(
+                      content: Text("تم نسخ ${faceBook.toString()}"),
+                    ));
+                  },
+                  child: IconButton(
+                      icon: Icon(
+                        FontAwesomeIcons.facebookSquare,
+                        color: Colors.blueAccent,
+                      ),
+                      onPressed: null),
+                ),
+                Text(faceBook, style: TextStyle(color: Color(0xFFF7BB85)))
+              ],
+            ),
+            Row(
+              key: _formKey5,
+              children: [
+                InkWell(
+                  onTap: () {
+                    Clipboard.setData(ClipboardData(text: whatsApp.toString()));
+                    Scaffold.of(_formKey5.currentContext).showSnackBar(SnackBar(
+                      content: Text("تم نسخ ${whatsApp.toString()}"),
+                    ));
+                  },
+                  child: IconButton(
+                      icon: Icon(
+                        FontAwesomeIcons.whatsappSquare,
+                        color: Colors.green,
+                      ),
+                      onPressed: null),
+                ),
+                Text(whatsApp, style: TextStyle(color: Color(0xFFF7BB85)))
+              ],
+            ),
+            Row(
+              key: _formKey1,
+              children: [
+                InkWell(
+                  onTap: () {
+                    Clipboard.setData(ClipboardData(text: twitter.toString()));
+                    Scaffold.of(_formKey1.currentContext).showSnackBar(SnackBar(
+                      content: Text("تم نسخ ${twitter.toString()}"),
+                    ));
+                  },
+                  child: IconButton(
+                      icon: Icon(
+                        FontAwesomeIcons.twitterSquare,
+                        color: Colors.lightBlueAccent,
+                      ),
+                      onPressed: null),
+                ),
+                Text(twitter, style: TextStyle(color: Color(0xFFF7BB85)))
               ],
             ),
             SizedBox(height: 20),
-            Row(
-              children: [
-                Spacer(),
-                Text(
-                  "الاسم",
-                  style: TextStyle(
-                    fontSize: 25,
-                  ),
-                  textAlign: TextAlign.left,
-                ),
-              ],
-            ),
-            TextField(
-              onChanged: (value) {
-                onChangeFunction(value, 'name');
-              },
-              decoration: InputDecoration(
-                errorText: dataErrorMessage['name'],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(45),
-                ),
-              ),
-            ),
-            SizedBox(height: 10),
-            Row(
-              textDirection: TextDirection.rtl,
-              children: [
-                Text(
-                  "الايميل",
-                  style: TextStyle(
-                    fontSize: 25,
-                  ),
-                  textAlign: TextAlign.left,
-                ),
-              ],
-            ),
-            TextField(
-              onChanged: (value) {
-                onChangeFunction(value, 'email');
-              },
-              decoration: InputDecoration(
-                errorText: dataErrorMessage['email'],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(45),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              textDirection: TextDirection.rtl,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(left: 20),
-                  child: Text(
-                    "الموضوع",
-                    style: TextStyle(
-                      fontSize: 25,
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-                DropdownWidget(data['subject'], ["شكوى", 'اقتراح'], 40, 0,
-                        (value) {
-                      setState(() {
-                        data['subject'] = value;
-                      });
-                    }),
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              textDirection: TextDirection.rtl,
-              children: [
-                Text(
-                  "اكتب وصف الرساله",
-                  style: TextStyle(
-                    fontSize: 25,
-                  ),
-                  textAlign: TextAlign.left,
-                ),
-              ],
-            ),
-            TextField(
-              maxLines: 7,
-              onChanged: (value) {
-                onChangeFunction(value, 'message');
-              },
-              decoration: InputDecoration(
-                errorText: dataErrorMessage['message'],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
-            ),
-            SizedBox(height: 20),
-            InkWell(
-              onTap: (){
-                check();
-              },
-              child: ButtonChildWidget("ارسال", Color(0xFFF7BB85), 18, 130),
-            ),
           ]),
         ),
       ),
       bottomNavigationBar: BottomBarWidget(),
     );
   }
+  //
+  // check() {
+  //   bool check = true;
+  //   data.forEach((key, value) {
+  //     if (value == null || value == '') {
+  //       print('$key   $value');
+  //       setState(() {
+  //         dataErrorMessage[key] = "من فضلك اكمل هذه الخانة";
+  //       });
+  //       check = false;
+  //     }
+  //   });
+  //
+  //   return check;
+  // }
 
-  check() {
-    bool check = true;
-    data.forEach((key, value) {
-      if (value == null || value == '') {
-        print('$key   $value');
-        setState(() {
-          dataErrorMessage[key] = "من فضلك اكمل هذه الخانة";
-        });
-        check = false;
-      }
-    });
-
-    return check;
-  }
-
-  onChangeFunction(value, String variableName) {
-    setState(() {
-      data[variableName] = value;
-      dataErrorMessage[variableName] = null;
-    });
-  }
+  // onChangeFunction(value, String variableName) {
+  //   setState(() {
+  //     data[variableName] = value;
+  //     dataErrorMessage[variableName] = null;
+  //   });
+  // }
 
 }
 
+class ScaffoldSnackBar extends StatefulWidget {
+  @override
+  _ScaffoldSnackBarState createState() => _ScaffoldSnackBarState();
+}
+
+class _ScaffoldSnackBarState extends State<ScaffoldSnackBar> {
+  @override
+  Widget build(BuildContext context) {
+    final _formKey = new GlobalKey<FormState>();
+    return Container(
+      key: _formKey,
+    );
+  }
+}

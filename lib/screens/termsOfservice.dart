@@ -61,9 +61,18 @@ class _TermsOfServiceState extends State<TermsOfService> {
       drawer: AppDrawerWidget(),
       body: Container(
         width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          border: Border.all(color: mainAppColor),
+        ),
+        padding: EdgeInsets.all(10),
+        margin: EdgeInsets.only(top: 40 , left: 10 , right: 10),
       child: Directionality(
           textDirection: TextDirection.rtl,
-          child: Text(info==null ? "" : info['PageBody']),
+          child: Text(info==null ? "" : info['PageBody'] ,  style: TextStyle(
+            fontWeight: FontWeight.w700,
+            fontSize: 20,
+          ),),
       ),
       ),
       bottomNavigationBar : BottomBarWidget(),

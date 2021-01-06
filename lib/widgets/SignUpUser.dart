@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hotelier/Model/UserData.dart';
 import 'package:hotelier/screens/termsOfservice.dart';
 import 'package:hotelier/widgets/SingleTextFieldWidget.dart';
 import 'package:http/http.dart' as http;
@@ -66,6 +67,7 @@ class _SignUpUserState extends State<SignUpUser> {
   @override
   Widget build(BuildContext context) {
     DataList dataList = Provider.of<DataList>(context);
+    UserData userData = Provider.of<UserData>(context);
     Size size = MediaQuery.of(context).size;
     return Container(
       width: size.width * 80 / 100,
@@ -162,7 +164,7 @@ class _SignUpUserState extends State<SignUpUser> {
           SingleTextFieldWidget('رقم الجوال', dataErrorMessage['phone1'],
               (value) {
             onChangeFunction(value, 'phone1');
-          }),
+          } , textInputType: TextInputType.phone,),
           SingleTextFieldWidget('الايميل', dataErrorMessage['email'], (value) {
             onChangeFunction(value, 'email');
           }),
@@ -228,7 +230,30 @@ class _SignUpUserState extends State<SignUpUser> {
                       print(response.body);
 
                       if (response.statusCode == 200) {
-                        Navigator.of(context).pop();
+                        var response = await http.post(
+                          'http://api.hoteliercard.com/api/Account/CustomToken',
+                          headers: <String, String>{
+                            "Accept": "application/json",
+                            "Content-Type": "application/json"
+                          },
+                          body: jsonEncode({'email' : data['email'] , 'password' : data['password']}),
+                        );
+                        Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text('تم التسجيل بنجاح')));
+                        Map body = jsonDecode(response.body);
+
+                        userData.updateUserInfo(body);
+                        Navigator.of(context)
+                            .popUntil((route) {
+                        print(route.settings.name);
+                        if(route.settings.name == "null" || route.settings.name == null){
+                          print("Trueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+                          return true;
+                        }else{
+                          return false;
+                        }
+
+                        } );
                       } else if (response.statusCode == 400) {
                         Scaffold.of(context).showSnackBar(SnackBar(
                             content: Text('هذا الايميل مستخدم من قبل')));
@@ -248,8 +273,7 @@ class _SignUpUserState extends State<SignUpUser> {
                   }
                 }
               },
-              child:
-                  ButtonChildWidget("تسجيل حساب", Color(0xFFF7BB85), 18, 150)),
+              child: ButtonChildWidget("تسجيل حساب", Color(0xFFF7BB85), 18, 150)),
           SizedBox(
             height: 35,
           ),

@@ -142,7 +142,7 @@ class _EditUserDataState extends State<EditUserData> {
                         ],
                       ),
               ),
-              EditTextFieldWidget(data['name'], (value) {
+              EditTextFieldWidget("الاسم", (value) {
                 onChangeFunction(value, "name");
               }),
               // EditTextFieldWidget(data['idNumber'], (value) {
@@ -241,7 +241,7 @@ class _EditUserDataState extends State<EditUserData> {
               SizedBox(
                 height: 10,
               ),
-              EditTextFieldWidget(data['phone'], (value) {
+              EditTextFieldWidget("رقم الهاتف", (value) {
                 onChangeFunction(value, "phone");
               }),
               SizedBox(

@@ -44,7 +44,7 @@ class _SignInScreenState extends State<SignInScreen> {
           children: [
             //TextFieldRegistrationWidget takes text String that will appear as hint  and Icon
             TextFieldRegistrationWidget(
-              'بريد الكترونى/رقم عضوية',
+              'البريد الكترونى',
               false ,
               dataErrorMessage['email'],
               Icons.person_outline_sharp,

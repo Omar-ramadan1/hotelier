@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 class UserInformationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     String cityName;
     UserData userDataProvider = Provider.of<UserData>(context);
     DataList dataListProvider = Provider.of<DataList>(context);
@@ -59,10 +60,39 @@ class UserInformationScreen extends StatelessWidget {
               ],
             ),
             SizedBox(height: 20,),
-            InformationTextWidget('اسم المستخدم:  ' , userDataProvider.userData['name']),
-            InformationTextWidget('رقم الهاتف:  ' , userDataProvider.userData['phone']),
-            // InformationTextWidget('رقم القومى:  ' , userDataProvider.userData['idNumber'].toString()),
-            InformationTextWidget('المدينة:  ' , cityName),
+            Center(
+              child: Container(
+                  padding: EdgeInsets.all(5),
+                  width: size.width - 20,
+                  decoration: BoxDecoration(
+                    color: mainAppColor,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10)
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
+                  ),
+                  margin: EdgeInsets.only(top: 20 , bottom: 10),
+                  child: Column(
+                    children: [
+                      InformationTextWidget('اسم المستخدم:  ' , userDataProvider.userData['name']),
+                      InformationTextWidget('رقم الهاتف:  ' , userDataProvider.userData['phone']),
+                      // InformationTextWidget('رقم القومى:  ' , userDataProvider.userData['idNumber'].toString()),
+                      InformationTextWidget('المدينة:  ' , cityName),
+                    ],
+                  )
+              ),
+            ),
+
           ],
         ),
       ),

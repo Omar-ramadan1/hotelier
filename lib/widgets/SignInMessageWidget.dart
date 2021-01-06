@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hotelier/widgets/ButtonWidget.dart';
 
  class SignInMessageWidget {
 
@@ -13,12 +14,12 @@ import 'package:flutter/material.dart';
               child: Text("قم بالتسجيل للدخول لهذه الصفحة"),),
             actions: [
               Container(
-                margin: EdgeInsets.only(right:110),
+                margin: EdgeInsets.only(right:50),
                 child: InkWell(
                   onTap: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text("حسنا", style: TextStyle(fontSize: 20),),
+                  child: ButtonChildWidget("حسنا", Color(0xFFF7BB85), 18, 150),
                 ),
               ),
             ],

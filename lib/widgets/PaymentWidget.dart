@@ -1,13 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hotelier/Constant/Constant.dart';
 import 'package:hotelier/Model/UserData.dart';
+import 'package:hotelier/screens/RenewRegistrationScreen.dart';
 import 'package:hotelier/widgets/AppBarWidget.dart';
 import 'package:hotelier/widgets/AppDrawerWidget.dart';
 import 'package:hotelier/widgets/ButtonWidget.dart';
 import 'package:hotelier/widgets/CreditCardChoiceWidget.dart';
 import 'package:hotelier/widgets/MainScreenCardWidget.dart';
 import 'package:hotelier/widgets/PaymentAlertDialogMessage.dart';
-import 'package:hotelier/widgets/TextFieldWidget.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
@@ -21,13 +23,35 @@ class PaymentWidget extends StatefulWidget {
 }
 
 class _PaymentWidgetState extends State<PaymentWidget> {
-  String cardValue = "";
+  String cardValue = "payAtArrive";
+  Map data = {"PageBody" : 150};
+  int price = 150;
+  getInfoFunction()async{
+    var response = await http.get(
+      '$serverURL/Pages/?id=9',
+      headers: <String, String>{
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+    );
+    setState(() {
+      data = jsonDecode(response.body);
 
+      print(jsonDecode(response.body));
+    });
+    print(response.statusCode);
+    print(response.body);
+  }
   Function changeCardValueFunction(String cardValueParamater) {
     setState(() {
       cardValue = cardValueParamater;
     });
     return null;
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getInfoFunction();
   }
 
   @override
@@ -61,13 +85,13 @@ class _PaymentWidgetState extends State<PaymentWidget> {
             children: <Widget>[
               MainScreenCardWidget("assets/paymentContainer.jpg", null),
               Text(
-                "سعر البطاقه 150 ريال شامل الضريبة التوصيل",
+                " سعر البطاقه ${data["PageBody"]} ريال شامل الضريبة و التوصيل",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
-                "سيتم التواصل معك لتوصيل البطاقة فى اقرب وقت",
+                "وسيتم توصيل البطاقة في خلال 5 أيام عمل",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
@@ -79,37 +103,37 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                 "المتاح الان هو الدفع عند الاستلام",
                 style: TextStyle(fontSize: 17, fontWeight: FontWeight.w800),
               ),
-              TextFieldWidget(
-                "الاسم",
-                double.infinity,
-                TextDirection.rtl,
-                "",
-              ),
-              SizedBox(height: 10),
-              TextFieldWidget(
-                "رقم الكارت",
-                double.infinity,
-                TextDirection.rtl,
-                "0000    0000    0000   0000",
-              ),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextFieldWidget(
-                    "EXPIRY DATE",
-                    140,
-                    TextDirection.ltr,
-                    "MM | YY",
-                  ),
-                  TextFieldWidget(
-                    "Cvv CODE",
-                    140,
-                    TextDirection.ltr,
-                    "000",
-                  ),
-                ],
-              ),
+              // TextFieldWidget(
+              //   "الاسم",
+              //   double.infinity,
+              //   TextDirection.rtl,
+              //   "",
+              // ),
+              // SizedBox(height: 10),
+              // TextFieldWidget(
+              //   "رقم الكارت",
+              //   double.infinity,
+              //   TextDirection.rtl,
+              //   "0000    0000    0000   0000",
+              // ),
+              // SizedBox(height: 20),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     TextFieldWidget(
+              //       "EXPIRY DATE",
+              //       140,
+              //       TextDirection.ltr,
+              //       "MM | YY",
+              //     ),
+              //     TextFieldWidget(
+              //       "Cvv CODE",
+              //       140,
+              //       TextDirection.ltr,
+              //       "000",
+              //     ),
+              //   ],
+              // ),
               SizedBox(
                 height: 20,
               ),
@@ -132,9 +156,9 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                           print(response.statusCode);
                           print(response.body);
                           if (response.statusCode == 200) {
-                            PaymentAlertDialogMessage().showInMessageWidget(
+                            PaymentAlertDialogMessage().showSuccessMessageWidget(
                                 context,
-                                "سيتم التواصل معك للتوصيل من فضلك تاكد من رقم هاتفك فى الاعدادات");
+                                "تمت العملية بنجاح");
                           } else if (response.statusCode == 401) {
                             PaymentAlertDialogMessage().showInMessageWidget(
                                 context, "من فضلك قم بتسجيل الدخول مرة اخرى");
@@ -163,8 +187,9 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                           );
                           print(response.statusCode);
                           if (response.statusCode == 200) {
-                            PaymentAlertDialogMessage().showInMessageWidget(
-                                context, "لقد تمت العملية بنجاح");
+                            PaymentAlertDialogMessage().showSuccessMessageWidget(
+                                context,
+                                "تمت العملية بنجاح");
                           } else if (response.statusCode == 401) {
                             PaymentAlertDialogMessage().showInMessageWidget(
                                 context, "من فضلك قم بتسجيل الدخول مرة اخرى");

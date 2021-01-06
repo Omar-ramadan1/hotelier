@@ -6,8 +6,8 @@ class HotelHeaderDropDownWidget extends StatelessWidget {
   final  String text , dropDownValue;
   final List<String> dropDownList;
   final Function onChangeFunction;
-
-  const HotelHeaderDropDownWidget(this.text , this.dropDownValue, this.dropDownList , this.onChangeFunction);
+  final double size;
+  const HotelHeaderDropDownWidget(this.text , this.dropDownValue, this.dropDownList , this.onChangeFunction , this.size);
   @override
   Widget build(BuildContext context) {
 
@@ -17,7 +17,7 @@ class HotelHeaderDropDownWidget extends StatelessWidget {
           text,
           style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
         ),
-        DropdownWidget(dropDownValue, dropDownList, 60, 20, (value) {
+        DropdownWidget(dropDownValue, dropDownList, size, 20, (value) {
           onChangeFunction(value);
         }),
       ],

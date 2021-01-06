@@ -19,10 +19,18 @@ class CreditCardChoiceWidget extends StatelessWidget {
               height: width / 9,
               width: width / 6,
               padding: EdgeInsets.all(5),
-              decoration: BoxDecoration(
+              // decoration: BoxDecoration(
+              //   color: cardValue == "visa"
+              //       ? Color(0xFFFBDBBF)
+              //       : Colors.transparent,
+              //   border: cardValue == "visa"
+              //       ? Border.all(width: 0.8, color: Color(0xFFB29368))
+              //       : null,
+              // ),
+              foregroundDecoration: BoxDecoration(
                 color: cardValue == "visa"
                     ? Color(0xFFFBDBBF)
-                    : Colors.transparent,
+                    : Colors.grey.shade300.withOpacity(0.7),
                 border: cardValue == "visa"
                     ? Border.all(width: 0.8, color: Color(0xFFB29368))
                     : null,
@@ -46,11 +54,19 @@ class CreditCardChoiceWidget extends StatelessWidget {
           child: Container(
               width: width / 6,
               padding: EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                color: cardValue == "master"
+              // decoration: BoxDecoration(
+              //   color: cardValue == "master"
+              //       ? Color(0xFFFBDBBF)
+              //       : Colors.transparent,
+              //   border: cardValue == "master"
+              //       ? Border.all(width: 0.8, color: Color(0xFFB29368))
+              //       : null,
+              // ),
+              foregroundDecoration: BoxDecoration(
+                color: cardValue == "visa"
                     ? Color(0xFFFBDBBF)
-                    : Colors.transparent,
-                border: cardValue == "master"
+                    : Colors.grey.shade300.withOpacity(0.7),
+                border: cardValue == "visa"
                     ? Border.all(width: 0.8, color: Color(0xFFB29368))
                     : null,
               ),
@@ -74,14 +90,22 @@ class CreditCardChoiceWidget extends StatelessWidget {
               width: width / 6,
               height: width / 9,
               padding: EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                color: cardValue == "mada"
-                    ? Color(0xFFFBDBBF)
-                    : Colors.transparent,
-                border: cardValue == "mada"
-                    ? Border.all(width: 0.8, color: Color(0xFFB29368))
-                    : null,
-              ),
+              // decoration: BoxDecoration(
+              //   color: cardValue == "mada"
+              //       ? Color(0xFFFBDBBF)
+              //       : Colors.transparent,
+              //   border: cardValue == "mada"
+              //       ? Border.all(width: 0.8, color: Color(0xFFB29368))
+              //       : null,
+              // ),
+            foregroundDecoration: BoxDecoration(
+              color: cardValue == "visa"
+                  ? Color(0xFFFBDBBF)
+                  : Colors.grey.shade300.withOpacity(0.7),
+              border: cardValue == "visa"
+                  ? Border.all(width: 0.8, color: Color(0xFFB29368))
+                  : null,
+            ),
               child: Image.asset(
                 "assets/mada_logo.png",
               ),),
@@ -107,8 +131,9 @@ class CreditCardChoiceWidget extends StatelessWidget {
                 //     ? Color(0xFFFBDBBF)
                 //     : Colors.transparent,
                 border: cardValue == "payAtArrive"
-                    ? Border.all(width: 0.8, color: Color(0xFFB29368))
+                    ? Border.all(width: 2, color: Color(0xFFB29368) )
                     : null,
+              //  Color(0xFFB29368)
               ),
               child: Image.asset(
                 "assets/cash-01.png",

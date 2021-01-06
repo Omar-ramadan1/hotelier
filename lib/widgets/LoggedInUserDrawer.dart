@@ -5,6 +5,7 @@ import 'package:hotelier/Model/UserData.dart';
 import 'package:hotelier/screens/About.dart';
 import 'package:hotelier/screens/CartDetailsScreen.dart';
 import 'package:hotelier/screens/Complaining.dart';
+import 'package:hotelier/screens/Contact.dart';
 import 'package:hotelier/screens/EditUserData.dart';
 import 'package:hotelier/screens/BuyCardScreen.dart';
 import 'package:hotelier/screens/PersonalInformationScreen.dart';
@@ -128,9 +129,15 @@ class LoggedInUserDrawer extends StatelessWidget {
               SizedBox(
                 height: 5,
               ),
+              DrawerTabsWidget(Icons.phone, "اتصل بنا", () {
+                Navigator.of(context).popAndPushNamed(Contact.routeName);
+              }),
+              SizedBox(
+                height: 10,
+              ),
               InkWell(
                 child: DrawerTabsWidget(
-                    CupertinoIcons.phone, "للشكاوى و المقترحات", () {
+                    Icons.send_to_mobile, "للشكاوى و المقترحات", () {
                   Navigator.of(context).popAndPushNamed(Complaining.routeName);
                 }),
               ),

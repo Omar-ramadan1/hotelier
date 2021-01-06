@@ -10,7 +10,6 @@ final bool isSearchAvailable;
   const AppBarWidget(this.imageName,this.text , {this.isSearchAvailable});
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
     return  ClipPath(
       clipper: AppBarClipper(),
         child: Container(

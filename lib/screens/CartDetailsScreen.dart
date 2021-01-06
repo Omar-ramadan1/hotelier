@@ -79,11 +79,14 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             textDirection: TextDirection.rtl,
             children: [
-              Directionality(
-                textDirection: TextDirection.rtl,
-                child: Text(
-                  "لقد قمت بالعمليات الشرائية التالية",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+              Container(
+                padding: EdgeInsets.all(5),
+                child: Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: Text(
+                    "لقد قمت بالعمليات الشرائية التالية:",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                  ),
                 ),
               ),
               for(int i = 0 ; i < data.length ; i++) CartDetailsWidget(data[i]),

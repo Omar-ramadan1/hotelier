@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class EditTextFieldWidget extends StatelessWidget {
   final String text , errorText;
   final Function onChangeFunction;
-
-  const EditTextFieldWidget(this.text, this.onChangeFunction , {this.errorText});
+  final TextInputType textInputType;
+  const EditTextFieldWidget(this.text, this.onChangeFunction , {this.errorText , this.textInputType});
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -16,6 +16,7 @@ class EditTextFieldWidget extends StatelessWidget {
           child: Directionality(
             textDirection: TextDirection.rtl,
             child: TextField(
+              keyboardType: textInputType == null ? TextInputType.text : textInputType,
               onChanged: (value){onChangeFunction(value);},
               decoration: InputDecoration(
                 labelText: text,

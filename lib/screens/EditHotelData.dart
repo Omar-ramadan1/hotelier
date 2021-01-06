@@ -36,8 +36,10 @@ class EditHotelData extends StatefulWidget {
 }
 
 class _EditHotelDataState extends State<EditHotelData> {
-  String discountValue = '10', cityId = 'الرياض', typeId , imageName;
+  TextEditingController _controller = new TextEditingController();
+  String discountValue = '10', cityId = 'الرياض', typeId , imageName ,  IsReservationsAvailable;
   int allowedImageNumberToBeUploaded = 10;
+  List<String> availableList = ['متاح' , 'غير متاح'];
   Key keyValue = ValueKey(new Random().nextInt(100));
   bool checkBoxValue = false, isVideoLoading = false , isSubmittingRegistration = false;
   Map data, dataClone = {}, dataErrorMessage = {};
@@ -76,6 +78,12 @@ class _EditHotelDataState extends State<EditHotelData> {
       allowedImageNumberToBeUploaded =
           allowedImageNumberToBeUploaded - data['img'].length;
     });
+    print(data['IsReservationsAvailable']);
+    if(data['IsReservationsAvailable']  == true){
+      IsReservationsAvailable = 'متاح';
+    }else{
+      IsReservationsAvailable = 'غير متاح';
+    }
   }
 
   @override
@@ -165,9 +173,42 @@ class _EditHotelDataState extends State<EditHotelData> {
                         ],
                       ),
               ),
-              EditTextFieldWidget(data['name'], (value) {
+              EditTextFieldWidget("اسم الفندق", (value) {
                 onChangeFunction(value, "name");
               }),
+              EditTextFieldWidget("سعر الغرفة".toString(), (value) {
+                onChangeFunction(value, "RoomPrice");
+              } , textInputType: TextInputType.number,),
+              SizedBox(height: 30,),
+              TextField(
+                controller: _controller,
+                maxLengthEnforced: true,
+
+                maxLines: 4,
+                maxLength: 2000,
+                keyboardType: TextInputType.text,
+                textAlign: TextAlign.right,
+                onChanged: (value) {
+                  if(value.length <= 2000){
+                    onChangeFunction(value, 'Notes');
+                  }else{
+                    // _controller.text = data['Notes'];
+                    _controller.value = TextEditingValue(
+                        text: data['Notes'],
+                        selection: TextSelection(isDirectional: false , baseOffset: 4 , extentOffset: 4)
+                    );
+                  }
+                  print(value.length);
+                },
+                decoration: InputDecoration(
+                  hintText: "الوصف او الباكدج",
+                  errorText: dataErrorMessage['Notes'],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+              ),
+
               // EditTextFieldWidget(data['commercialRegistrationNo'] == null ? "رقم السجل التجارى" : data['commercialRegistrationNo'], (value) {
               //   onChangeFunction(value.toString(), "commercialRegistrationNo");
               // } , errorText: dataErrorMessage['commercialRegistrationNo'],),
@@ -216,7 +257,7 @@ class _EditHotelDataState extends State<EditHotelData> {
                                 onChangeFunction(value, "district");
                               },
                               decoration: InputDecoration(
-                                labelText: data['district'],
+                                labelText: "الحى",
                               ),
                             ),
                           ),
@@ -267,8 +308,8 @@ class _EditHotelDataState extends State<EditHotelData> {
                   onChangeFunction(value, mapKeyName);
                 },
                 'phone',
-                phone1: data['phone'],
-                phone2: data['PhoneNumber2'],
+                phone1: "رقم الجوال",
+                phone2: "رقم الهاتف",
                 isEditWidget: true,
               ),
               Container(
@@ -277,7 +318,7 @@ class _EditHotelDataState extends State<EditHotelData> {
                   textDirection: TextDirection.rtl,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(left: 30),
+                      margin: EdgeInsets.only(left: 00),
                       child: Text(
                         "نسبة الخصم المقدمة",
                         style: TextStyle(fontWeight: FontWeight.w900),
@@ -297,8 +338,8 @@ class _EditHotelDataState extends State<EditHotelData> {
                           '90',
                           '100'
                         ],
-                        30,
-                        0, (value) {
+                       55,
+                        25, (value) {
                       setState(() {
                         dataClone['discountValue'] = int.parse(value);
                       });
@@ -352,10 +393,38 @@ class _EditHotelDataState extends State<EditHotelData> {
                       style: TextStyle(fontWeight: FontWeight.w900),
                     ),
                     DropdownWidget(
-                        typeId, dataListProvider.categoryNames, 60, 25,
+                        typeId, dataListProvider.categoryNames, 80, 25,
                         (value) {
                       setState(() {
                         typeId = value;
+                      });
+                    }),
+                  ],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 25),
+                child: Row(
+                  textDirection: TextDirection.rtl,
+                  children: [
+                    Text(
+                      "الحجز",
+                      style: TextStyle(fontWeight: FontWeight.w900),
+                    ),
+                    DropdownWidget(
+                        IsReservationsAvailable,
+                        availableList,
+                        80,
+                        25, (value) {
+                      setState(() {
+                        IsReservationsAvailable = value;
+                        if( IsReservationsAvailable == 'متاح'){
+                          dataClone["IsReservationsAvailable"] = true;
+                          print(dataClone["IsReservationsAvailable"]);
+                        }else{
+                          dataClone["IsReservationsAvailable"] = false;
+                          print(dataClone["IsReservationsAvailable"]);
+                        }
                       });
                     }),
                   ],
@@ -449,13 +518,13 @@ class _EditHotelDataState extends State<EditHotelData> {
                         citiesListClone.forEach((e) => {
                               if (e["Name"] == cityId)
                                 {
-                                  data["CityId"] = e["id"],
+                                  dataClone["CityId"] = e["id"],
                                 }
                             });
                         categoryListClone.forEach((e) => {
                               if (e["Name"] == typeId)
                                 {
-                                  data["TypeId"] = e["id"],
+                                  dataClone["TypeId"] = e["id"],
                                 }
                             });
                         data.forEach((key, value) {
@@ -489,11 +558,14 @@ class _EditHotelDataState extends State<EditHotelData> {
                           if (body['Message'] == null) {
                             dataClone["access_token"] = data['access_token'];
                             userDataProvider.userData = dataClone;
-                              PaymentAlertDialogMessage().showInMessageWidget(context,
-                                  "من فضلك قم بتسجيل الدخول مرة اخرى");
-                              userDataProvider.userData = null;
-                            }
-                          Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                            }else{
+                            PaymentAlertDialogMessage().showInMessageWidget(context,
+                                "من فضلك قم بتسجيل الدخول مرة اخرى");
+                            userDataProvider.userData = null;
+                            Navigator.of(context).pop();
+                          }
+
                         }else{
                           setState(() {
                             dataErrorMessage['commercialRegistrationNo'] = 'من فضلك  لابد من ادخال عشر ارقام';

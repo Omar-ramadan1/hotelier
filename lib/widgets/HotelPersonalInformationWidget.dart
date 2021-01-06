@@ -13,6 +13,7 @@ class HotelPersonalInformationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     UserData userDataProvider = Provider.of<UserData>(context);
     print(userDataProvider.userData['IsActive']);
     return Scaffold(
@@ -53,12 +54,54 @@ class HotelPersonalInformationWidget extends StatelessWidget {
                       ),
                     ],
                   ),
+            SizedBox(height: 5,),
+            Container(
+              decoration: BoxDecoration(
+
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 1,
+                    blurRadius: 5,
+                    offset: Offset(0,0), // changes position of shadow
+                  ),
+                ],
+              ),
+              child: CircleAvatar(
+                backgroundColor: userDataProvider.userData['IsActive']  ?  Colors.lightGreenAccent : Colors.redAccent,
+                radius: 10,
+              ),
+            ),
             SizedBox(height: 20,),
-            InformationTextWidget('اسم الفندق:  ' , userDataProvider.userData['name']),
-            // userDataProvider.userData['commercialRegistrationNo'] == null ? InformationTextWidget('السجل التجارى:  ' , "") :InformationTextWidget('السجل التجارى:  ' , userDataProvider.userData['commercialRegistrationNo']),
-            InformationTextWidget('عدد النجوم:  ' , userDataProvider.userData['starRating'].toString()),
-            InformationTextWidget('نسبة الخصم المقدمة:  ' , '${userDataProvider.userData['discountValue'].toString()} %'),
-            // InformationTextWidget('هل الحساب مفعل:  ' , userDataProvider.userData['IsActive'] ? "نعم" : "لا"),
+            Container(
+                padding: EdgeInsets.all(5),
+                width: size.width - 20,
+                decoration: BoxDecoration(
+                  color: mainAppColor,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10)
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),
+                margin: EdgeInsets.only(top: 20 , bottom: 10),
+                child: Column(
+              children: [
+                InformationTextWidget('اسم الفندق:  ' , userDataProvider.userData['name']),
+                InformationTextWidget('الحساب:  ' , userDataProvider.userData['IsActive'] ? "مفعل" : "غير مفعل و سيفعل قريبا"),
+                InformationTextWidget('عدد النجوم:  ' , userDataProvider.userData['starRating'].toString()),
+                InformationTextWidget('نسبة الخصم المقدمة:  ' , '${userDataProvider.userData['discountValue'].toString()} %'),
+              ],
+            )),
             Container(
               height: 200,
                 child: GoogleMapWidget(userDataProvider.userData['latitude'] , userDataProvider.userData['longitude'])

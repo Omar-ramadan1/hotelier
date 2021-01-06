@@ -64,8 +64,13 @@ class _AboutState extends State<About> {
 
       ),
         child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+              border: Border.all(color: mainAppColor),
+          ),
           width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.only(top: 40 , left: 20 , right: 20),
+          padding: EdgeInsets.all(10),
+          margin: EdgeInsets.only(top: 40 , left: 10 , right: 10),
           child: Directionality(
             textDirection: TextDirection.rtl,
             child: Text("تطبيق متميز في تقديم خدمة ترفيهيه لرواد الفنادق والمنتجعات حيث يقدم بطاقة خصم مباشرة للعميل يقدر يستفيد من خلالها بخصومات ويحصل على تخفيض عند الحجز طوال السنة ويستطيع تجديدها بكل سهولة عند انتهاء فترة الاشتراك وذلك على كافة فنادق - منتجعات - اجنحة فندقية شاليهات شقق مفروشة - استراحات المسجلة في انحاء المملكة داخل التطبيق" ,

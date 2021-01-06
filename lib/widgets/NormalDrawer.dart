@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:hotelier/screens/About.dart';
 import 'package:hotelier/screens/Complaining.dart';
 import 'package:hotelier/screens/BuyCardScreen.dart';
+import 'package:hotelier/screens/Contact.dart';
 import 'package:hotelier/screens/RegistrationScreen.dart';
 import 'package:hotelier/screens/RenewRegistrationScreen.dart';
 import 'package:hotelier/screens/termsOfservice.dart';
-import 'package:hotelier/widgets/SignInMessageWidget.dart';
 
 import 'DrawerTabsWidget.dart';
 import '../Clippers/AppBarClipper.dart';
@@ -68,7 +68,7 @@ class NormalDrawer extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              DrawerTabsWidget(Icons.person, "تسجيل حساب جديد", () {
+              DrawerTabsWidget(Icons.person_add, "تسجيل حساب جديد", () {
                 Navigator.of(context).popAndPushNamed(RegistrationScreen.routeName ,arguments: "signUp");
               }),
               SizedBox(
@@ -86,7 +86,13 @@ class NormalDrawer extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              DrawerTabsWidget(Icons.phone, "للشكاوى و المقترحات", () {
+              DrawerTabsWidget(Icons.phone, "اتصل بنا", () {
+                Navigator.of(context).popAndPushNamed(Contact.routeName);
+              }),
+              SizedBox(
+                height: 10,
+              ),
+              DrawerTabsWidget(Icons.send_to_mobile, "للشكاوى و المقترحات", () {
                 Navigator.of(context).popAndPushNamed(Complaining.routeName);
               }),
               SizedBox(

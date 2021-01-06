@@ -121,7 +121,6 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
 
   Widget build(BuildContext context) {
     DataList dataList = Provider.of<DataList>(context);
-    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       // the appbar part -------------------->>>>
       // the appbar part -------------------->>>>
@@ -218,9 +217,9 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
                       cityId = value;
                       hotelDataList = [];
                       data["pageNumber"] = 1;
-                    });
+                    } );
                     refreshIndicatorFunction(true);
-                  }),
+                  } , 60),
                   HotelHeaderDropDownWidget("نسبه الخصم",
                       data["discountValue"].toString(), discountList, (value) {
                     setState(() {
@@ -229,16 +228,16 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
                       data["pageNumber"] = 1;
                     });
                     refreshIndicatorFunction(true);
-                  }),
+                  },50),
                   HotelHeaderDropDownWidget(
                       "التصنيف", typeId, dataList.categoryNames, (value) {
                     setState(() {
                       typeId = value;
                       hotelDataList = [];
                       data["pageNumber"] = 1;
-                    });
+                    } );
                     refreshIndicatorFunction(true);
-                  }),
+                  },80),
                   HotelHeaderDropDownWidget(
                       "عدد النجوم",
                       data["starRating"].toString(),
@@ -249,7 +248,7 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
                       data["pageNumber"] = 1;
                     });
                     refreshIndicatorFunction(true);
-                  }),
+                  } , 35),
                 ],
               ),
 
