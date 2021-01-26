@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hotelier/Model/UserData.dart';
+import 'package:hotelier/screens/PersonalInformationScreen.dart';
 import 'package:hotelier/screens/termsOfservice.dart';
 import 'package:hotelier/widgets/SingleTextFieldWidget.dart';
 import 'package:http/http.dart' as http;
@@ -49,7 +51,7 @@ class _SignUpUserState extends State<SignUpUser> {
     'latitude': null,
     'longitude': null
   };
-
+  bool isSubmittingRegistration = false;
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
@@ -205,75 +207,103 @@ class _SignUpUserState extends State<SignUpUser> {
           SizedBox(
             height: 35,
           ),
-          InkWell(
-              onTap: () async {
-                var citiesListClone = dataList.citiesList;
-                print(dataList.citiesList);
-                citiesListClone.forEach((e) => {
-                      if (e["Name"] == cityName)
-                        {
-                          data["cityName"] = e["id"],
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            textDirection: TextDirection.rtl,
+            children: [
+              InkWell(
+                  onTap: () async {
+                    var citiesListClone = dataList.citiesList;
+                    print(dataList.citiesList);
+                    citiesListClone.forEach((e) => {
+                          if (e["Name"] == cityName)
+                            {
+                              data["cityName"] = e["id"],
+                            }
+                        });
+                    if (check()) {
+                      if (regularExpressionCheck(data["password"])) {
+                        if (data["password"] == data["confirmPassword"]) {
+                          if(data["email"].contains(" ")){
+                            setState(() {
+                              dataErrorMessage["email"] = "من فضلك تاكد تاكد من عدم وجود مسافات بيضاء";
+                              isSubmittingRegistration = false;
+                            });
+                          }else{
+                            print(jsonEncode(data));
+                            setState(() {
+                              isSubmittingRegistration = true;
+                            });
+                            var response = await http.post(
+                              '$serverURL/User/Register',
+                              headers: <String, String>{
+                                'Content-Type': 'application/json',
+                              },
+                              body: jsonEncode(data),
+                            );
+                            print(response.statusCode);
+                            print(response.body);
+
+                            if (response.statusCode == 200) {
+                              var response = await http.post(
+                                'http://api.hoteliercard.com/api/Account/CustomToken',
+                                headers: <String, String>{
+                                  "Accept": "application/json",
+                                  "Content-Type": "application/json"
+                                },
+                                body: jsonEncode({'email' : data['email'] , 'password' : data['password']}),
+                              );
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text('تم التسجيل بنجاح')));
+                              Map body = jsonDecode(response.body);
+
+                              userData.updateUserInfo(body);
+                              Navigator.of(context)
+                                  .popUntil((route) {
+                                print(route.settings.name);
+                                if(route.settings.name == "null" || route.settings.name == null){
+                                  return true;
+                                }else{
+                                  return false;
+                                }
+
+                              } );
+                              Navigator.of(context).pushNamed(PersonalInformationScreen.routeName);
+                            } else if (response.statusCode == 400) {
+                              setState(() {
+                                isSubmittingRegistration = false;
+                              });
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text('هذا الايميل مستخدم من قبل')));
+                            }
+                          }
+                        } else {
+                          setState(() {
+                            dataErrorMessage["password"] =
+                                "من فضلك تاكد من تطابق كلمة المرور و تاكيدها";
+                            dataErrorMessage["confirmPassword"] =
+                                "من فضلك تاكد من تطابق كلمة المرور و تاكيدها";
+                            isSubmittingRegistration = false;
+                          });
                         }
-                    });
-                if (check()) {
-                  if (regularExpressionCheck(data["password"])) {
-                    if (data["password"] == data["confirmPassword"]) {
-                      print(jsonEncode(data));
-                      var response = await http.post(
-                        '$serverURL/User/Register',
-                        headers: <String, String>{
-                          'Content-Type': 'application/json',
-                        },
-                        body: jsonEncode(data),
-                      );
-                      print(response.statusCode);
-                      print(response.body);
-
-                      if (response.statusCode == 200) {
-                        var response = await http.post(
-                          'http://api.hoteliercard.com/api/Account/CustomToken',
-                          headers: <String, String>{
-                            "Accept": "application/json",
-                            "Content-Type": "application/json"
-                          },
-                          body: jsonEncode({'email' : data['email'] , 'password' : data['password']}),
-                        );
-                        Scaffold.of(context).showSnackBar(SnackBar(
-                            content: Text('تم التسجيل بنجاح')));
-                        Map body = jsonDecode(response.body);
-
-                        userData.updateUserInfo(body);
-                        Navigator.of(context)
-                            .popUntil((route) {
-                        print(route.settings.name);
-                        if(route.settings.name == "null" || route.settings.name == null){
-                          print("Trueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-                          return true;
-                        }else{
-                          return false;
-                        }
-
-                        } );
-                      } else if (response.statusCode == 400) {
-                        Scaffold.of(context).showSnackBar(SnackBar(
-                            content: Text('هذا الايميل مستخدم من قبل')));
+                      } else {
+                        setState(() {
+                          dataErrorMessage["password"] = " يجب ادخال ست مدخلات";
+                          isSubmittingRegistration = false;
+                        });
                       }
-                    } else {
-                      setState(() {
-                        dataErrorMessage["password"] =
-                            "من فضلك تاكد من تطابق كلمة المرور و تاكيدها";
-                        dataErrorMessage["confirmPassword"] =
-                            "من فضلك تاكد من تطابق كلمة المرور و تاكيدها";
-                      });
                     }
-                  } else {
-                    setState(() {
-                      dataErrorMessage["password"] = " يجب ادخال ست مدخلات";
-                    });
-                  }
-                }
-              },
-              child: ButtonChildWidget("تسجيل حساب", Color(0xFFF7BB85), 18, 150)),
+                  },
+                  child: ButtonChildWidget("تسجيل حساب", Color(0xFFF7BB85), 18, 150)),
+              isSubmittingRegistration ? Container(
+                margin: EdgeInsets.only(top: 20),
+                child: SpinKitFadingCircle(
+                  color: Colors.lightBlueAccent,
+                  size: 20.0,
+                ),
+              ) : Container(),
+            ],
+          ),
           SizedBox(
             height: 35,
           ),

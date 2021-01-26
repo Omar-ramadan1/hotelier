@@ -86,58 +86,65 @@ class _SignInScreenState extends State<SignInScreen> {
                 InkWell(
                   onTap: () async {
                     if (check()) {
-                      setState(() {
-                        isSubmittingRegistration = true;
-                      });
-                      print(jsonEncode(data));
-                      var response = await http.post(
-                        'http://api.hoteliercard.com/api/Account/CustomToken',
-                        headers: <String, String>{
-                          "Accept": "application/json",
-                          "Content-Type": "application/json"
-                        },
-                        body: jsonEncode(data),
-                      );
-                      print(response.statusCode);
-                      print(response.body);
-                      Map body = jsonDecode(response.body);
-                      setState(() {
-                        isSubmittingRegistration = false;
-                      });
-                      if (response.statusCode == 200) {
-
-                    if(body['IsHotel']){
-                      print(body["img"]);
-                      List imageList = body["img"];
-                      List newImageList = [];
-                      imageList.forEach((element) {
-                        if(element['FileName'] == ''){
-                          print('entered');
-                          http.post(
-                            '$serverURL/Media/DeleatImg?id=${element['PK_MediId']}',
-                            headers: <String, String>{
-                              'Authorization': 'Bearer ${body["access_token"]}',
-                              'Content-Type': 'application/json'
-                            },
-                          );
-                        }else{
-                          newImageList.add(element);
-                        }
-                      });
-                      body["img"] = newImageList;
-                    }
-                        if(checkBoxValue){
-                          userData.updateUserInfo(body);
-                           Navigator.of(context).pop();
-                        }else{
-                          userData.userData =  body;
-                         Navigator.of(context).pop();
-                        }
-                      } else if(response.statusCode == 400) {
-                        print(response.body);
+                      if(data["email"].contains(" ")){
                         setState(() {
-                          dataErrorMessage['serverError'] = 'يوجد خطا فى الحساب او كلمة المرور';
+                          dataErrorMessage["email"] = "من فضلك تاكد تاكد من عدم وجود مسافات بيضاء";
+                          isSubmittingRegistration = false;
                         });
+                      }else{
+                        setState(() {
+                          isSubmittingRegistration = true;
+                        });
+                        print(jsonEncode(data));
+                        var response = await http.post(
+                          'http://api.hoteliercard.com/api/Account/CustomToken',
+                          headers: <String, String>{
+                            "Accept": "application/json",
+                            "Content-Type": "application/json"
+                          },
+                          body: jsonEncode(data),
+                        );
+                        print(response.statusCode);
+                        print(response.body);
+                        Map body = jsonDecode(response.body);
+                        setState(() {
+                          isSubmittingRegistration = false;
+                        });
+                        if (response.statusCode == 200) {
+
+                          if(body['IsHotel']){
+                            print(body["img"]);
+                            List imageList = body["img"];
+                            List newImageList = [];
+                            imageList.forEach((element) {
+                              if(element['FileName'] == ''){
+                                print('entered');
+                                http.post(
+                                  '$serverURL/Media/DeleatImg?id=${element['PK_MediId']}',
+                                  headers: <String, String>{
+                                    'Authorization': 'Bearer ${body["access_token"]}',
+                                    'Content-Type': 'application/json'
+                                  },
+                                );
+                              }else{
+                                newImageList.add(element);
+                              }
+                            });
+                            body["img"] = newImageList;
+                          }
+                          if(checkBoxValue){
+                            userData.updateUserInfo(body);
+                            Navigator.of(context).pop();
+                          }else{
+                            userData.userData =  body;
+                            Navigator.of(context).pop();
+                          }
+                        } else if(response.statusCode == 400) {
+                          print(response.body);
+                          setState(() {
+                            dataErrorMessage['serverError'] = 'يوجد خطا فى الحساب او كلمة المرور';
+                          });
+                        }
                       }
                     }
                   },

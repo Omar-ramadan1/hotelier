@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hotelier/screens/HotelDetailsScreen.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
@@ -25,11 +27,32 @@ class HotelDetailsWidget extends StatelessWidget {
 
             Container(
               width: size.width / 2.0,
-              height: 100,
               child: Directionality(
                 textDirection: TextDirection.rtl,
                 child: Text(
                   data["Address"].toString(),
+                  style: TextStyle(fontSize: 16 ),
+                ),
+              ),
+            ),
+            SizedBox(height: 10,),
+            Container(
+              width: size.width / 2.0,
+              child: Directionality(
+                textDirection: TextDirection.rtl,
+                child: Text(
+                  "${data["RoomPrice"].toString()}\$",
+                  style: TextStyle(fontSize: 16 ),
+                ),
+              ),
+            ),
+            SizedBox(height: 10,),
+            Container(
+              width: size.width / 2.0,
+              child: Directionality(
+                textDirection: TextDirection.rtl,
+                child: Text(
+                  data['IsReservationsAvailable'] ? "الحجز متاح" : "الحجز غير متاح",
                   style: TextStyle(fontSize: 16 ),
                 ),
               ),

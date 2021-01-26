@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:hotelier/Constant/Constant.dart';
+import 'package:hotelier/Model/ImportantInformationModel.dart';
 import 'package:hotelier/Model/UserData.dart';
-import 'package:hotelier/screens/RenewRegistrationScreen.dart';
 import 'package:hotelier/widgets/AppBarWidget.dart';
 import 'package:hotelier/widgets/AppDrawerWidget.dart';
 import 'package:hotelier/widgets/ButtonWidget.dart';
@@ -12,6 +12,7 @@ import 'package:hotelier/widgets/MainScreenCardWidget.dart';
 import 'package:hotelier/widgets/PaymentAlertDialogMessage.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PaymentWidget extends StatefulWidget {
   final bool isItBuyScreen;
@@ -24,23 +25,8 @@ class PaymentWidget extends StatefulWidget {
 
 class _PaymentWidgetState extends State<PaymentWidget> {
   String cardValue = "payAtArrive";
-  Map data = {"PageBody" : 150};
-  int price = 150;
-  getInfoFunction()async{
-    var response = await http.get(
-      '$serverURL/Pages/?id=9',
-      headers: <String, String>{
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-    );
-    setState(() {
-      data = jsonDecode(response.body);
+  Map data ;
 
-      print(jsonDecode(response.body));
-    });
-    print(response.statusCode);
-    print(response.body);
-  }
   Function changeCardValueFunction(String cardValueParamater) {
     setState(() {
       cardValue = cardValueParamater;
@@ -51,7 +37,10 @@ class _PaymentWidgetState extends State<PaymentWidget> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getInfoFunction();
+    ImportantInformationModel importantInformationModel =
+    Provider.of<ImportantInformationModel>(context, listen: false);
+    data = importantInformationModel.importantInformationMap;
+
   }
 
   @override
@@ -85,13 +74,13 @@ class _PaymentWidgetState extends State<PaymentWidget> {
             children: <Widget>[
               MainScreenCardWidget("assets/paymentContainer.jpg", null),
               Text(
-                " سعر البطاقه ${data["PageBody"]} ريال شامل الضريبة و التوصيل",
+                " سعر البطاقه ${data["Price"]} ريال شامل الضريبة و التوصيل",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
-                "وسيتم توصيل البطاقة في خلال 5 أيام عمل",
+                "وسيتم توصيل البطاقة في خلال ${data["Days"]} أيام عمل",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
@@ -99,41 +88,6 @@ class _PaymentWidgetState extends State<PaymentWidget> {
               SizedBox(height: 20),
               CreditCardChoiceWidget(cardValue, changeCardValueFunction),
               SizedBox(height: 20),
-              Text(
-                "المتاح الان هو الدفع عند الاستلام",
-                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w800),
-              ),
-              // TextFieldWidget(
-              //   "الاسم",
-              //   double.infinity,
-              //   TextDirection.rtl,
-              //   "",
-              // ),
-              // SizedBox(height: 10),
-              // TextFieldWidget(
-              //   "رقم الكارت",
-              //   double.infinity,
-              //   TextDirection.rtl,
-              //   "0000    0000    0000   0000",
-              // ),
-              // SizedBox(height: 20),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     TextFieldWidget(
-              //       "EXPIRY DATE",
-              //       140,
-              //       TextDirection.ltr,
-              //       "MM | YY",
-              //     ),
-              //     TextFieldWidget(
-              //       "Cvv CODE",
-              //       140,
-              //       TextDirection.ltr,
-              //       "000",
-              //     ),
-              //   ],
-              // ),
               SizedBox(
                 height: 20,
               ),
@@ -145,25 +99,13 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                               context,
                               "من فضلك قم بتسجيل الدخول لاتمام العملية");
                         } else {
-                          var response = await http.post(
-                            '$serverURL/Order/AddOrder/?isMinorRenewal=false',
-                            headers: <String, String>{
-                              'Content-Type': 'application/json',
-                              'Authorization':
-                                  'Bearer ${userDataProvider.userData["access_token"]}'
-                            },
-                          );
-                          print(response.statusCode);
-                          print(response.body);
-                          if (response.statusCode == 200) {
-                            PaymentAlertDialogMessage().showSuccessMessageWidget(
-                                context,
-                                "تمت العملية بنجاح");
-                          } else if (response.statusCode == 401) {
-                            PaymentAlertDialogMessage().showInMessageWidget(
-                                context, "من فضلك قم بتسجيل الدخول مرة اخرى");
-                            userDataProvider.userData = null;
-                          }
+                           String url = 'https://hoteliercard.com/Checkout.html?id=${userDataProvider.userData["userId"]}&firstTime=true';
+                           if (await canLaunch(url)) {
+                          await launch(url);
+                           }else{
+                           Scaffold.of(context).showSnackBar(SnackBar(
+                           content: Text('من فضلك تاكد من وجود جوجل كروم على الهاتف')));
+                           }
                         }
                       },
                       child: ButtonChildWidget(
@@ -175,27 +117,13 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                               context,
                               "من فضلك قم بتسجيل الدخول لاتمام العملية");
                         } else {
-                          print(
-                              'Bearer ${userDataProvider.userData["access_token"]}');
-                          var response = await http.post(
-                            '$serverURL/Order/AddOrder/?isMinorRenewal=true',
-                            headers: <String, String>{
-                              'Content-Type': 'application/json',
-                              'Authorization':
-                                  'Bearer ${userDataProvider.userData["access_token"]}'
-                            },
-                          );
-                          print(response.statusCode);
-                          if (response.statusCode == 200) {
-                            PaymentAlertDialogMessage().showSuccessMessageWidget(
-                                context,
-                                "تمت العملية بنجاح");
-                          } else if (response.statusCode == 401) {
-                            PaymentAlertDialogMessage().showInMessageWidget(
-                                context, "من فضلك قم بتسجيل الدخول مرة اخرى");
-                            userDataProvider.userData = null;
+                          String url = 'https://hoteliercard.com/Checkout.html?id=${userDataProvider.userData["userId"]}&firstTime=false';
+                          if (await canLaunch(url)) {
+                            await launch(url);
+                          }else{
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                                content: Text('من فضلك تاكد من وجود جوجل كروم على الهاتف')));
                           }
-                          print(response.body);
                         }
                       },
                       child: ButtonChildWidget(

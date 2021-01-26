@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:crossplat_objectid/crossplat_objectid.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hotelier/Model/UserData.dart';
+import 'package:hotelier/screens/PersonalInformationScreen.dart';
 import 'package:hotelier/screens/termsOfservice.dart';
 import 'package:hotelier/widgets/DoubleTextFieldWidget.dart';
 import 'package:hotelier/widgets/SingleTextFieldWidget.dart';
@@ -456,174 +457,191 @@ class _SignUpHotelState extends State<SignUpHotel> {
                                     'من فضلك قم بارفاق على الاقل صورة واحدة'),),);
                           } else {
                             if(isCommercialRegistrationIs10Digits(data['commercialRegistrationNo'].toString())){
-                              print("entered");
-                              print("jsonEncode(data)");
-                              if(isVideoLoading){
-                                print("entered");
-                                return showDialog(
-                                  context: context,
-                                  builder: (BuildContext context1) {
-                                    return AlertDialog(
-                                      title: Text("AlertDialog"),
-                                      content: Directionality(
-                                        textDirection: TextDirection.rtl,
-                                        child: Text("الفديو مازال يرفع هل ترغب فى المتابعة و رفع الفديو لاحقا"),),
+                              if(emailCheck(data['email'])){
+                                if(data['email'].contains(" ")){
+                                  setState(() {
+                                    dataErrorMessage["email"] = "من فضلك تاكد تاكد من عدم وجود مسافات بيضاء";
+                                    errorString = "من فضلك تاكد من ادخال الايميل لا يوجد مسافات بيضاء تماما";
+                                  });
+                                }else{
+                                  print("entered");
+                                  print("jsonEncode(data)");
+                                  if(isVideoLoading){
+                                    print("entered");
+                                    return showDialog(
+                                      context: context,
+                                      builder: (BuildContext context1) {
+                                        return AlertDialog(
+                                          title: Text("AlertDialog"),
+                                          content: Directionality(
+                                            textDirection: TextDirection.rtl,
+                                            child: Text("الفديو مازال يرفع هل ترغب فى المتابعة و رفع الفديو لاحقا"),),
 
-                                      actions:
-                                      [
-                                        Container(
-                                          margin: EdgeInsets.only(right: 70),
-                                          child: InkWell(
-                                            onTap: ()async{
-                                              Navigator.of(context1).pop();
-                                              setState(() {
-                                                isSubmittingRegistration = true;
-                                              });
-                                              print(data["imageURL"]);
-                                              var response = await http.post(
-                                                '$serverURL/User/RegisterHotel',
-                                                headers: <String, String>{
-                                                  'Content-Type': 'application/json',
-                                                },
-                                                body: jsonEncode(data),
-                                              );
-                                              print(response.statusCode);
-                                              print(response.body);
-                                              setState(() {
-                                                isSubmittingRegistration = false;
-                                              });
-                                              if (response.statusCode == 200) {
-                                                var response = await http.post(
-                                                  'http://api.hoteliercard.com/api/Account/CustomToken',
-                                                  headers: <String, String>{
-                                                    "Accept": "application/json",
-                                                    "Content-Type": "application/json"
-                                                  },
-                                                  body: jsonEncode({'email' : data['email'] , 'password' : data['password']}),
-                                                );
-                                                Map body = jsonDecode(response.body);
-                                                if(body['IsHotel']){
-                                                  // this handle a server error which may add photo to the hotel with no name
-                                                  print(body["img"]);
-                                                  List imageList = body["img"];
-                                                  List newImageList = [];
-                                                  imageList.forEach((element) {
-                                                    if(element['FileName'] == ''){
-                                                      print('entered');
-                                                      http.post(
-                                                        '$serverURL/Media/DeleatImg?id=${element['PK_MediId']}',
-                                                        headers: <String, String>{
-                                                          'Authorization': 'Bearer ${body["access_token"]}',
-                                                          'Content-Type': 'application/json'
-                                                        },
-                                                      );
-                                                    }else{
-                                                      newImageList.add(element);
-                                                    }
+                                          actions:
+                                          [
+                                            Container(
+                                              margin: EdgeInsets.only(right: 70),
+                                              child: InkWell(
+                                                onTap: ()async{
+                                                  Navigator.of(context1).pop();
+                                                  setState(() {
+                                                    isSubmittingRegistration = true;
                                                   });
-                                                  Scaffold.of(context).showSnackBar(
-                                                      SnackBar(content: Text('لقد تم التسجيل بنجاح')));
-                                                  body["img"] = newImageList;
-                                                }
-                                                userData.updateUserInfo(body);
-                                                Navigator.of(context)
-                                                    .popUntil((route) {
-                                                  print(route.settings.name);
-                                                  if(route.settings.name == "null" || route.settings.name == null){
-                                                    print("Trueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-                                                    return true;
-                                                  }else{
-                                                    return false;
+                                                  print(data["imageURL"]);
+                                                  var response = await http.post(
+                                                    '$serverURL/User/RegisterHotel',
+                                                    headers: <String, String>{
+                                                      'Content-Type': 'application/json',
+                                                    },
+                                                    body: jsonEncode(data),
+                                                  );
+                                                  print(response.statusCode);
+                                                  print(response.body);
+                                                  setState(() {
+                                                    isSubmittingRegistration = false;
+                                                  });
+                                                  if (response.statusCode == 200) {
+                                                    var response = await http.post(
+                                                      'http://api.hoteliercard.com/api/Account/CustomToken',
+                                                      headers: <String, String>{
+                                                        "Accept": "application/json",
+                                                        "Content-Type": "application/json"
+                                                      },
+                                                      body: jsonEncode({'email' : data['email'] , 'password' : data['password']}),
+                                                    );
+                                                    Map body = jsonDecode(response.body);
+                                                    if(body['IsHotel']){
+                                                      // this handle a server error which may add photo to the hotel with no name
+                                                      print(body["img"]);
+                                                      List imageList = body["img"];
+                                                      List newImageList = [];
+                                                      imageList.forEach((element) {
+                                                        if(element['FileName'] == ''){
+                                                          print('entered');
+                                                          http.post(
+                                                            '$serverURL/Media/DeleatImg?id=${element['PK_MediId']}',
+                                                            headers: <String, String>{
+                                                              'Authorization': 'Bearer ${body["access_token"]}',
+                                                              'Content-Type': 'application/json'
+                                                            },
+                                                          );
+                                                        }else{
+                                                          newImageList.add(element);
+                                                        }
+                                                      });
+                                                      Scaffold.of(context).showSnackBar(
+                                                          SnackBar(content: Text('لقد تم التسجيل بنجاح')));
+                                                      body["img"] = newImageList;
+                                                    }
+                                                    Scaffold.of(context).showSnackBar(
+                                                        SnackBar(content: Text('لقد تم التسجيل بنجاح')));
+                                                    userData.updateUserInfo(body);
+                                                    Navigator.of(context)
+                                                        .popUntil((route) {
+                                                      print(route.settings.name);
+                                                      if(route.settings.name == "null" || route.settings.name == null){
+                                                        return true;
+                                                      }else{
+                                                        return false;
+                                                      }
+                                                    });
+                                                    Navigator.of(context).pushNamed(PersonalInformationScreen.routeName);
+                                                  } else if (response.statusCode == 400) {
+                                                    Scaffold.of(context).showSnackBar(
+                                                        SnackBar(content: Text('هذا الايميل مستخدم من قبل')));
                                                   }
-                                                } );
-                                              } else if (response.statusCode == 400) {
-                                                Scaffold.of(context).showSnackBar(
-                                                    SnackBar(content: Text('هذا الايميل مستخدم من قبل')));
-                                              }
-                                            },
-                                            child: Text("نعم" , style: TextStyle(fontSize: 20),),
-                                          ),
-                                        ),
-                                        Container(
-                                          margin: EdgeInsets.only(right: 70),
-                                          child: InkWell(
-                                            onTap: (){
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: Text("لا"  , style: TextStyle(fontSize: 20),),
-                                          ),
-                                        ),
-                                      ],
+                                                },
+                                                child: Text("نعم" , style: TextStyle(fontSize: 20),),
+                                              ),
+                                            ),
+                                            Container(
+                                              margin: EdgeInsets.only(right: 70),
+                                              child: InkWell(
+                                                onTap: (){
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: Text("لا"  , style: TextStyle(fontSize: 20),),
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },
                                     );
-                                  },
-                                );
 
+                                  }
+                                  else{
+                                    setState(() {
+                                      isSubmittingRegistration = true;
+                                    });
+                                    print(data["imageURL"]);
+                                    var response = await http.post(
+                                      '$serverURL/User/RegisterHotel',
+                                      headers: <String, String>{
+                                        'Content-Type': 'application/json',
+                                      },
+                                      body: jsonEncode(data),
+                                    );
+                                    print(response.statusCode);
+                                    print(response.body);
+                                    if (response.statusCode == 200) {
+                                      var response = await http.post(
+                                        'http://api.hoteliercard.com/api/Account/CustomToken',
+                                        headers: <String, String>{
+                                          "Accept": "application/json",
+                                          "Content-Type": "application/json"
+                                        },
+                                        body: jsonEncode({'email' : data['email'] , 'password' : data['password']}),
+                                      );
+                                      Map body = jsonDecode(response.body);
+                                      if(body['IsHotel']){
+                                        // this handle a server error which may add photo to the hotel with no name
+                                        print(body["img"]);
+                                        List imageList = body["img"];
+                                        List newImageList = [];
+                                        imageList.forEach((element) {
+                                          if(element['FileName'] == ''){
+                                            print('entered');
+                                            http.post(
+                                              '$serverURL/Media/DeleatImg?id=${element['PK_MediId']}',
+                                              headers: <String, String>{
+                                                'Authorization': 'Bearer ${body["access_token"]}',
+                                                'Content-Type': 'application/json'
+                                              },
+                                            );
+                                          }else{
+                                            newImageList.add(element);
+                                          }
+                                        });
+                                        Scaffold.of(context).showSnackBar(
+                                            SnackBar(content: Text('لقد تم التسجيل بنجاح')));
+                                        body["img"] = newImageList;
+                                      }
+                                      userData.updateUserInfo(body);
+                                      Navigator.of(context)
+                                          .popUntil((route) {
+                                        print(route.settings.name);
+                                        if(route.settings.name == "null" || route.settings.name == null){
+                                          return true;
+                                        }else{
+                                          return false;
+                                        }
+
+                                      });
+                                      Navigator.of(context).pushNamed(PersonalInformationScreen.routeName);
+                                    } else if (response.statusCode == 400) {
+                                      setState(() {
+                                        isSubmittingRegistration = false;
+                                      });
+                                      Scaffold.of(context).showSnackBar(
+                                          SnackBar(content: Text('هذا الايميل مستخدم من قبل')));
+                                    }
+                                  }
+                                }
                               }else{
                                 setState(() {
-                                  isSubmittingRegistration = true;
+                                  dataErrorMessage["email"] = "من فضلك تاكد من ادخال الايميل بشكل صحيح";
+                                  errorString = "من فضلك تاكد من ادخال الايميل بهذا الشكل test@gmail.com";
                                 });
-                                print(data["imageURL"]);
-                                var response = await http.post(
-                                  '$serverURL/User/RegisterHotel',
-                                  headers: <String, String>{
-                                    'Content-Type': 'application/json',
-                                  },
-                                  body: jsonEncode(data),
-                                );
-                                print(response.statusCode);
-                                print(response.body);
-                                if (response.statusCode == 200) {
-                                  var response = await http.post(
-                                    'http://api.hoteliercard.com/api/Account/CustomToken',
-                                    headers: <String, String>{
-                                      "Accept": "application/json",
-                                      "Content-Type": "application/json"
-                                    },
-                                    body: jsonEncode({'email' : data['email'] , 'password' : data['password']}),
-                                  );
-                                  Map body = jsonDecode(response.body);
-                                  if(body['IsHotel']){
-                                    // this handle a server error which may add photo to the hotel with no name
-                                    print(body["img"]);
-                                    List imageList = body["img"];
-                                    List newImageList = [];
-                                    imageList.forEach((element) {
-                                      if(element['FileName'] == ''){
-                                        print('entered');
-                                        http.post(
-                                          '$serverURL/Media/DeleatImg?id=${element['PK_MediId']}',
-                                          headers: <String, String>{
-                                            'Authorization': 'Bearer ${body["access_token"]}',
-                                            'Content-Type': 'application/json'
-                                          },
-                                        );
-                                      }else{
-                                        newImageList.add(element);
-                                      }
-                                    });
-                                    Scaffold.of(context).showSnackBar(
-                                        SnackBar(content: Text('لقد تم التسجيل بنجاح')));
-                                    body["img"] = newImageList;
-                                  }
-                                  userData.updateUserInfo(body);
-                                  Navigator.of(context)
-                                      .popUntil((route) {
-                                    print(route.settings.name);
-                                    if(route.settings.name == "null" || route.settings.name == null){
-                                      print("Trueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-                                      return true;
-                                    }else{
-                                      return false;
-                                    }
-
-                                  });
-                                } else if (response.statusCode == 400) {
-                                  setState(() {
-                                    isSubmittingRegistration = false;
-                                  });
-                                  Scaffold.of(context).showSnackBar(
-                                      SnackBar(content: Text('هذا الايميل مستخدم من قبل')));
-                                }
                               }
                             }else{
                               setState(() {
@@ -692,6 +710,16 @@ class _SignUpHotelState extends State<SignUpHotel> {
     });
 
     return check;
+  }
+
+  emailCheck(data) {
+    RegExp regExp = new RegExp(
+      r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.com",
+      caseSensitive: false,
+      multiLine: false,
+    );
+
+    return regExp.hasMatch(data);
   }
 
   isCommercialRegistrationIs10Digits (String data){

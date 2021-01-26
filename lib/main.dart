@@ -21,6 +21,7 @@ import 'package:hotelier/screens/EditHotelData.dart';
 import 'package:hotelier/screens/SpecialOfferScreen.dart';
 import 'package:hotelier/screens/Congratulation.dart';
 import 'package:hotelier/screens/termsOfservice.dart';
+import 'package:hotelier/Model/ImportantInformationModel.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -29,8 +30,15 @@ void main() {
     /// can use [MyApp] while mocking the providers
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => DataList(),),
-        ChangeNotifierProvider(create: (_) => UserData(),),
+        ChangeNotifierProvider(
+          create: (_) => DataList(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => UserData(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ImportantInformationModel(),
+        ),
       ],
       child: Hotelier(),
     ),
@@ -56,22 +64,20 @@ class Hotelier extends StatelessWidget {
         BuyCardScreen.routeName: (ctx) => BuyCardScreen(),
         CartDetailsScreen.routeName: (ctx) => CartDetailsScreen(),
         RenewRegistrationScreen.routeName: (ctx) => RenewRegistrationScreen(),
-        Congratulation.routeName:(ctx)=>Congratulation(),
-        SendSuccessfully.routeName:(ctx)=>SendSuccessfully(),
-        HotelDetailsScreen.routeName:(ctx)=>HotelDetailsScreen(),
-        Error_404.routeName:(ctx)=>Error_404(),
-        EditUserData.routeName:(ctx)=>EditUserData(),
-        EditHotelData.routeName:(ctx)=>EditHotelData(),
-        SpecialOfferScreen.routeName:(ctx)=>SpecialOfferScreen(),
-        HotelScreen.routeName:(ctx)=>HotelScreen(),
-        TermsOfService.routeName:(ctx)=>TermsOfService(),
-        GetLocationScreen.routeName:(ctx)=>GetLocationScreen(),
-        PersonalInformationScreen.routeName:(ctx)=>PersonalInformationScreen(),
-        About.routeName:(ctx)=>About(),
+        Congratulation.routeName: (ctx) => Congratulation(),
+        SendSuccessfully.routeName: (ctx) => SendSuccessfully(),
+        HotelDetailsScreen.routeName: (ctx) => HotelDetailsScreen(),
+        Error_404.routeName: (ctx) => Error_404(),
+        EditUserData.routeName: (ctx) => EditUserData(),
+        EditHotelData.routeName: (ctx) => EditHotelData(),
+        SpecialOfferScreen.routeName: (ctx) => SpecialOfferScreen(),
+        HotelScreen.routeName: (ctx) => HotelScreen(),
+        TermsOfService.routeName: (ctx) => TermsOfService(),
+        GetLocationScreen.routeName: (ctx) => GetLocationScreen(),
+        PersonalInformationScreen.routeName: (ctx) =>
+            PersonalInformationScreen(),
+        About.routeName: (ctx) => About(),
       },
     );
   }
 }
-
-
-

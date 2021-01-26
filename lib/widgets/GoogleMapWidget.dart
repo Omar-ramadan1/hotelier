@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hotelier/screens/GoogleMapInfoScreen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class GoogleMapWidget extends StatelessWidget {
 final double lat , lng;
@@ -17,6 +18,7 @@ final double lat , lng;
       target: LatLng(lat, lng),
       zoom: 16,
     );// ,
+
     // final Completer<GoogleMapController> _controller = Completer();
     final Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
     final MarkerId markerId = MarkerId("50");
@@ -45,10 +47,17 @@ final double lat , lng;
         // onMapCreated: (GoogleMapController controller) {
         //   _controller.complete(controller);
         // },
-        onTap: (latLang){
-          Navigator.of(context).push(
-              MaterialPageRoute(
-                  builder: (context) => GoogleMapInfoScreen(lat , lng)));
+        onTap: (latLang)async{
+          String url = 'https://www.google.com/maps/search/?api=1&query=$lat,$lng';
+          if (await canLaunch(url)) {
+          await launch(url);
+          }else{
+            Scaffold.of(context).showSnackBar(SnackBar(
+                content: Text('من فضلك تاكد من وجود جوجل مابس على الهاتف')));
+          }
+          // Navigator.of(context).push(
+          //     MaterialPageRoute(
+          //         builder: (context) => GoogleMapInfoScreen(lat , lng)));
         },
         markers: Set<Marker>.of(markers.values),
       ),

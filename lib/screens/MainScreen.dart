@@ -24,7 +24,7 @@ class _MainScreenState extends State<MainScreen> {
         child: AppBar(
           backgroundColor: Colors.white,
           shadowColor: Colors.transparent,
-          flexibleSpace: AppBarWidget("assets/hotel-bell.jpg",""),
+          flexibleSpace: AppBarWidget("assets/hotel-bell.jpg","الرئيسية"),
         ),
       ),
       drawerEdgeDragWidth: 200,

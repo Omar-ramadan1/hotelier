@@ -62,6 +62,21 @@ class NormalDrawer extends StatelessWidget {
                   )
                 ],
               ),
+              DrawerTabsWidget(Icons.home, "الرئيسية", () {
+                Navigator.of(context)
+                    .popUntil((route) {
+                  print(route.settings.name);
+                  if(route.settings.name == "null" || route.settings.name == null){
+                    return true;
+                  }else{
+                    return false;
+                  }
+
+                });
+              }),
+              SizedBox(
+                height: 10,
+              ),
               DrawerTabsWidget(Icons.person, "تسجيل الدخول", () {
                 Navigator.of(context).popAndPushNamed(RegistrationScreen.routeName ,arguments: "signIn");
               }),
