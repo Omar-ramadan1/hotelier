@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hotelier/Constant/Constant.dart';
 import 'package:hotelier/Model/UserData.dart';
+import 'package:hotelier/screens/ForgetPasswordScreen.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:hotelier/widgets/ButtonWidget.dart';
@@ -97,7 +98,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         });
                         print(jsonEncode(data));
                         var response = await http.post(
-                          'http://api.hoteliercard.com/api/Account/CustomToken',
+                          '$serverURL/Account/CustomToken',
                           headers: <String, String>{
                             "Accept": "application/json",
                             "Content-Type": "application/json"
@@ -160,6 +161,14 @@ class _SignInScreenState extends State<SignInScreen> {
                 ) : Container(),
               ],
             ),
+            SizedBox(height: 40,),
+            InkWell(
+              onTap: (){
+                Navigator.of(context)
+                    .popAndPushNamed(ForgetPasswordScreen.routeName);
+              },
+              child: Text("نسيت كلمة المرور؟" , style: TextStyle(fontSize: 25),),
+            )
           ],
         ),
       ),

@@ -16,8 +16,10 @@ class PaymentAlertDialogMessage  {
                 margin: EdgeInsets.only(right:70),
                 child: InkWell(
                   onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).pop();
+                    Navigator.of(context)
+                        .pop();
+                    Navigator.of(context)
+                        .pop();
                   },
                   child:ButtonChildWidget(
           "حسنا", Color(0xFFF7BB85), 18, 140),

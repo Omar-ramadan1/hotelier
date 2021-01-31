@@ -81,7 +81,7 @@ class _ContactState extends State<Contact> {
                   child: IconButton(icon: Icon(Icons.email_rounded), onPressed: null),
                 ),
                 Text(data["Email"].toString(),
-                    style: TextStyle(color: Color(0xFFF7BB85)))
+                    style: TextStyle(color: Colors.black87))
               ],
             ),
             Row(
@@ -98,7 +98,7 @@ class _ContactState extends State<Contact> {
                   child: IconButton(icon: Icon(Icons.phone), onPressed: null),
                 ),
                 Text(data["phone1"].toString(),
-                    style: TextStyle(color: Color(0xFFF7BB85)))
+                    style: TextStyle(color: Colors.black87))
               ],
             ),
             Row(
@@ -119,7 +119,7 @@ class _ContactState extends State<Contact> {
                         ),
                         onPressed: null)),
                 Text(data["phone2"].toString(),
-                    style: TextStyle(color: Color(0xFFF7BB85)))
+                    style: TextStyle(color: Colors.black87))
               ],
             ),
             Row(
@@ -137,7 +137,7 @@ class _ContactState extends State<Contact> {
                       onPressed: null),
                 ),
                 Text(data["snapChat"].toString(),
-                    style: TextStyle(color: Color(0xFFF7BB85)))
+                    style: TextStyle(color: Colors.black87))
               ],
             ),
             Row(
@@ -156,7 +156,7 @@ class _ContactState extends State<Contact> {
                   child: IconButton(icon: Icon(FontAwesomeIcons.instagramSquare , color: Colors.purple.shade400,), onPressed: null),
                 ),
                 Text(data["Instagram"].toString(),
-                    style: TextStyle(color: Color(0xFFF7BB85)))
+                    style: TextStyle(color: Colors.black87))
               ],
             ),
             Row(
@@ -180,7 +180,7 @@ class _ContactState extends State<Contact> {
                       onPressed: null),
                 ),
                 Text(data["FaceBook"].toString(),
-                    style: TextStyle(color: Color(0xFFF7BB85)))
+                    style: TextStyle(color: Colors.black87))
               ],
             ),
             Row(
@@ -204,7 +204,7 @@ class _ContactState extends State<Contact> {
                       onPressed: null),
                 ),
                 Text(data["WhatsApp"].toString(),
-                    style: TextStyle(color: Color(0xFFF7BB85)))
+                    style: TextStyle(color: Colors.black87))
               ],
             ),
             Row(
@@ -228,7 +228,7 @@ class _ContactState extends State<Contact> {
                       onPressed: null),
                 ),
                 Text(data["Twitter"].toString(),
-                    style: TextStyle(color: Color(0xFFF7BB85)))
+                    style: TextStyle(color: Colors.black87))
               ],
             ),
             SizedBox(height: 20),

@@ -6,6 +6,7 @@ import 'package:hotelier/screens/CartDetailsScreen.dart';
 import 'package:hotelier/screens/Complaining.dart';
 import 'package:hotelier/screens/Contact.dart';
 import 'package:hotelier/screens/Error_404.dart';
+import 'package:hotelier/screens/ForgetPasswordScreen.dart';
 import 'package:hotelier/screens/GetLocationScreen.dart';
 import 'package:hotelier/screens/HotelScreen.dart';
 import 'package:hotelier/screens/MainScreen.dart';
@@ -20,6 +21,7 @@ import 'package:hotelier/screens/EditUserData.dart';
 import 'package:hotelier/screens/EditHotelData.dart';
 import 'package:hotelier/screens/SpecialOfferScreen.dart';
 import 'package:hotelier/screens/Congratulation.dart';
+import 'package:hotelier/screens/SuccessScreen.dart';
 import 'package:hotelier/screens/termsOfservice.dart';
 import 'package:hotelier/Model/ImportantInformationModel.dart';
 import 'package:provider/provider.dart';
@@ -74,6 +76,8 @@ class Hotelier extends StatelessWidget {
         HotelScreen.routeName: (ctx) => HotelScreen(),
         TermsOfService.routeName: (ctx) => TermsOfService(),
         GetLocationScreen.routeName: (ctx) => GetLocationScreen(),
+        SuccessScreen.routeName: (ctx) => SuccessScreen(),
+        ForgetPasswordScreen.routeName: (ctx) => ForgetPasswordScreen(),
         PersonalInformationScreen.routeName: (ctx) =>
             PersonalInformationScreen(),
         About.routeName: (ctx) => About(),

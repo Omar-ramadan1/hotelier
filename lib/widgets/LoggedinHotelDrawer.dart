@@ -133,14 +133,7 @@ class LoggedInHotelDrawer extends StatelessWidget {
               InkWell(
                 child: DrawerTabsWidget(Icons.credit_card, "شراء بطاقة", () async{
                   Navigator.of(context)
-                      .popAndPushNamed(RenewRegistrationScreen.routeName);
-                 //  String url = 'https://hoteliercard.com/Checkout.html?id=${userData["userId"]}&firstTime=true';
-                 //  if (await canLaunch(url)) {
-                 // await launch(url);
-                 //  }else{
-                 //  Scaffold.of(context).showSnackBar(SnackBar(
-                 //  content: Text('من فضلك تاكد من وجود جوجل كروم على الهاتف')));
-                 //  }
+                      .popAndPushNamed(BuyCardScreen.routeName);
                 }),
               ),
               SizedBox(
@@ -149,14 +142,7 @@ class LoggedInHotelDrawer extends StatelessWidget {
               InkWell(
                 child: DrawerTabsWidget(Icons.autorenew, "تجديد الاشتراك", () async{
                   Navigator.of(context)
-                      .popAndPushNamed(BuyCardScreen.routeName);
-                  String url = 'https://hoteliercard.com/Checkout.html?id=${userData["userId"]}&firstTime=false';
-                  if (await canLaunch(url)) {
-                  await launch(url);
-                  }else{
-                  Scaffold.of(context).showSnackBar(SnackBar(
-                  content: Text('من فضلك تاكد من وجود جوجل كروم على الهاتف')));
-                  }
+                      .popAndPushNamed(RenewRegistrationScreen.routeName);
                 }),
               ),
               SizedBox(
@@ -196,6 +182,16 @@ class LoggedInHotelDrawer extends StatelessWidget {
               DrawerTabsWidget(Icons.logout, "تسجيل الخروج", () {
                 userDataProvider.updateUserInfo(null);
                 Navigator.of(context).pop();
+                Navigator.of(context)
+                    .popUntil((route) {
+                  print(route.settings.name);
+                  if(route.settings.name == "null" || route.settings.name == null){
+                    return true;
+                  }else{
+                    return false;
+                  }
+
+                });
               }),
               SizedBox(
                 height: 10,

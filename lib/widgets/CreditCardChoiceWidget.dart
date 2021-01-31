@@ -12,103 +12,25 @@ class CreditCardChoiceWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         InkWell(
-          // onTap: () {
-          //   changeCardValueFunction("visa");
-          // },
-          child: Container(
-              height: width / 9,
-              width: width / 6,
-              padding: EdgeInsets.all(5),
-              // decoration: BoxDecoration(
-              //   color: cardValue == "visa"
-              //       ? Color(0xFFFBDBBF)
-              //       : Colors.transparent,
-              //   border: cardValue == "visa"
-              //       ? Border.all(width: 0.8, color: Color(0xFFB29368))
-              //       : null,
-              // ),
-              foregroundDecoration: BoxDecoration(
-                color: cardValue == "visa"
-                    ? Color(0xFFFBDBBF)
-                    : Colors.grey.shade300.withOpacity(0.7),
-                border: cardValue == "visa"
-                    ? Border.all(width: 0.8, color: Color(0xFFB29368))
-                    : null,
-              ),
-              child: Image.asset(
-                "assets/visa_logo.png",
-              )),
-        ),
-        Container(
-          height: 30,
-          margin: EdgeInsets.only(left: 5, right: 5),
-          decoration: BoxDecoration(
-            color: Colors.black12,
-            border: Border.all(width: 1.0, color: Colors.black12),
-          ),
-        ),
-        InkWell(
-          // onTap: () {
-          //   changeCardValueFunction("master");
-          // },
-          child: Container(
-              width: width / 6,
-              padding: EdgeInsets.all(5),
-              // decoration: BoxDecoration(
-              //   color: cardValue == "master"
-              //       ? Color(0xFFFBDBBF)
-              //       : Colors.transparent,
-              //   border: cardValue == "master"
-              //       ? Border.all(width: 0.8, color: Color(0xFFB29368))
-              //       : null,
-              // ),
-              foregroundDecoration: BoxDecoration(
-                color: cardValue == "visa"
-                    ? Color(0xFFFBDBBF)
-                    : Colors.grey.shade300.withOpacity(0.7),
-                border: cardValue == "visa"
-                    ? Border.all(width: 0.8, color: Color(0xFFB29368))
-                    : null,
-              ),
-              child: Image.asset(
-                "assets/mastercard_logo.jpg",
-              )),
-        ),
-        Container(
-          height: 30,
-          margin: EdgeInsets.only(left: 5, right: 5),
-          decoration: BoxDecoration(
-            color: Colors.black12,
-            border: Border.all(width: 1.0, color: Colors.black12),
-          ),
-        ),
-        InkWell(
-          // onTap: () {
-          //   changeCardValueFunction("mada");
-          // },
+          onTap: () {
+            changeCardValueFunction("mastercard");
+          },
           child: Container(
               width: width / 6,
               height: width / 9,
               padding: EdgeInsets.all(5),
-              // decoration: BoxDecoration(
-              //   color: cardValue == "mada"
-              //       ? Color(0xFFFBDBBF)
-              //       : Colors.transparent,
-              //   border: cardValue == "mada"
-              //       ? Border.all(width: 0.8, color: Color(0xFFB29368))
-              //       : null,
-              // ),
-            foregroundDecoration: BoxDecoration(
-              color: cardValue == "visa"
-                  ? Color(0xFFFBDBBF)
-                  : Colors.grey.shade300.withOpacity(0.7),
-              border: cardValue == "visa"
-                  ? Border.all(width: 0.8, color: Color(0xFFB29368))
-                  : null,
-            ),
+              decoration: BoxDecoration(
+                color: cardValue == "mastercard"
+                    ? Color(0xFFFBDBBF)
+                    : Colors.transparent,
+                border: cardValue == "mastercard"
+                    ? Border.all(width: 3, color: Color(0xFFB29368))
+                    : null,
+              ),
               child: Image.asset(
-                "assets/mada_logo.png",
-              ),),
+                "assets/mastercard_logo.jpg", fit: BoxFit.fill,
+              )
+          ),
         ),
         Container(
           height: 30,
@@ -119,17 +41,74 @@ class CreditCardChoiceWidget extends StatelessWidget {
           ),
         ),
         InkWell(
-          // onTap: () {
-          //   changeCardValueFunction("payAtArrive");
-          // },
+          onTap: () {
+            changeCardValueFunction("visa");
+          },
+          child: Container(
+              width: width / 6,
+              height: width / 9,
+              padding: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                color: cardValue == "visa"
+                    ? Color(0xFFFBDBBF)
+                    : Colors.transparent,
+                border: cardValue == "visa"
+                    ? Border.all(width: 3, color: Color(0xFFB29368))
+                    : null,
+              ),
+              child: Image.asset(
+                "assets/visa_logo.png", fit: BoxFit.fill,
+              )
+          ),
+        ),
+        Container(
+          height: 30,
+          margin: EdgeInsets.only(left: 5, right: 5),
+          decoration: BoxDecoration(
+            color: Colors.black12,
+            border: Border.all(width: 1.0, color: Colors.black12),
+          ),
+        ),
+        InkWell(
+          onTap: () {
+            changeCardValueFunction("mada");
+          },
+          child: Container(
+              width: width / 6,
+              height: width / 9,
+              padding: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                color: cardValue == "mada"
+                    ? Color(0xFFFBDBBF)
+                    : Colors.transparent,
+                border: cardValue == "mada"
+                    ? Border.all(width: 3, color: Color(0xFFB29368))
+                    : null,
+              ),
+              child: Image.asset(
+                "assets/mada_logo.png", fit: BoxFit.fill,
+              )
+          ),
+        ),
+        Container(
+          height: 30,
+          margin: EdgeInsets.only(left: 5, right: 5),
+          decoration: BoxDecoration(
+            color: Colors.black12,
+            border: Border.all(width: 1.0, color: Colors.black12),
+          ),
+        ),
+        InkWell(
+          onTap: () {
+            changeCardValueFunction("payAtArrive");
+          },
           child: Container(
               width: width / 6,
               padding: EdgeInsets.all(2),
               decoration: BoxDecoration(
-                color: Color(0xFFFBDBBF),
-                // cardValue == "payAtArrive"
-                //     ? Color(0xFFFBDBBF)
-                //     : Colors.transparent,
+                color: cardValue == "payAtArrive"
+                    ? Color(0xFFFBDBBF)
+                    : Colors.transparent,
                 border: cardValue == "payAtArrive"
                     ? Border.all(width: 2, color: Color(0xFFB29368) )
                     : null,

@@ -28,7 +28,12 @@ class DataList extends ChangeNotifier{
     citiesList = jsonDecode(response.body);
     print(citiesList);
     _citiesList.forEach((e) => {
-      citiesNamesClone.add(e["Name"]),
+      if(e["Name"] == "الكل"){
+
+      }else{
+        citiesNamesClone.add(e["Name"]),
+      }
+
     });
     print(citiesNamesClone);
     citiesNames = citiesNamesClone;
@@ -56,7 +61,11 @@ class DataList extends ChangeNotifier{
     print(_categoryList);
 
     _categoryList.forEach((e) => {
-      categoryNamesClone.add(e["Name"]),
+      if(e["Name"] == "الكل"){
+
+      }else{
+        categoryNamesClone.add(e["Name"]),
+      }
     });
     print(categoryNamesClone);
     categoryNames = categoryNamesClone;

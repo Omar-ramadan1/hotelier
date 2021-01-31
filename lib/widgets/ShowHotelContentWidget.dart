@@ -21,14 +21,15 @@ class ShowHotelContentWidget extends StatefulWidget {
 
 class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
   var _scrollController = new ScrollController();
-  String cityId, typeId, star;
-  var citiesListClone;
-  var categoryListClone;
+  String cityId = "الكل", typeId = "الكل", star = "الكل";
+  List<String> citiesListClone = ["الكل"];
+  List<String> categoryListClone = ["الكل"];
   var refreshKey = GlobalKey<RefreshIndicatorState>();
   double lastOffset;
   List hotelDataList = [];
   int pageNumber = 0;
   List<String> discountList = [
+    'الكل',
     '10',
     '20',
     '30',
@@ -41,27 +42,22 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
     '100'
   ];
   Map data;
-  // Map data = {
-  //   'access_token': 'String',
-  // };
 
   @override
   initState() {
     super.initState();
     DataList dataList = Provider.of<DataList>(context, listen: false);
     setState(() {
-      cityId = dataList.citiesNames[0];
-      typeId = dataList.categoryNames[0];
-      citiesListClone = dataList.citiesList;
-      categoryListClone = dataList.categoryList;
+      citiesListClone.addAll(dataList.citiesNames);
+      categoryListClone.addAll(dataList.categoryNames);
       data = {
-        'cityId': cityId,
-        'discountValue': 10,
-        'typeId': typeId,
-        'starRating': 1,
+        'cityId': "",
+        'discountValue': "",
+        'typeId': "",
+        'starRating': "",
         'pageNumber': 1,
         'isSpecialOffer': widget.isSpecialOfferScreen,
-        'searchWord' : ''
+        'searchWord': ''
       };
     });
 
@@ -81,20 +77,29 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
   }
 
   refreshIndicatorFunction(bool isTrue) async {
+    DataList dataList = Provider.of<DataList>(context, listen: false);
     refreshKey.currentState?.show(atTop: isTrue);
     print(data);
-    citiesListClone.forEach((e) => {
-          if (e["Name"] == cityId)
-            {
-              data["cityId"] = e["id"],
-            }
-        });
-    categoryListClone.forEach((e) => {
-          if (e["Name"] == typeId)
-            {
-              data["typeId"] = e["id"],
-            }
-        });
+    if (cityId == "الكل") {
+      data["cityId"] = "";
+    } else {
+      dataList.citiesList.forEach((e) => {
+            if (e["Name"] == cityId.toString())
+              {
+                data["cityId"] = e["id"].toString(),
+              }
+          });
+    }
+    if (typeId == "الكل") {
+      data["typeId"] = "";
+    } else {
+      dataList.categoryList.forEach((e) => {
+            if (e["Name"] == typeId)
+              {
+                data["typeId"] = e["id"],
+              }
+          });
+    }
 
     print(data);
     var response = await http.post(
@@ -109,11 +114,10 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
     print(response.body);
     setState(() {
       hotelDataList.addAll(jsonDecode(response.body));
-      if(jsonDecode(response.body).length == 0){
-
-      }else{
+      if (jsonDecode(response.body).length == 0) {
+      } else {
         setState(() {
-          data["pageNumber"] ++;
+          data["pageNumber"]++;
         });
       }
     });
@@ -154,7 +158,6 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
         displacement: 20,
         onRefresh: () async {
           refreshKey.currentState.show(atTop: false);
-          print("hello");
         },
         child: SingleChildScrollView(
           controller: _scrollController,
@@ -193,14 +196,14 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
                       child: Directionality(
                         textDirection: TextDirection.rtl,
                         child: TextField(
-                          onChanged: (value){
+                          onChanged: (value) {
                             data['searchWord'] = value;
                           },
-                            textDirection: TextDirection.rtl,
-                            decoration: InputDecoration(
-                              hintText: 'ادخل اسم المكان للبحث عنه',
-                            ),
-                           ),
+                          textDirection: TextDirection.rtl,
+                          decoration: InputDecoration(
+                            hintText: 'ادخل اسم المكان للبحث عنه',
+                          ),
+                        ),
                       ),
                     ),
                   ],
@@ -211,44 +214,60 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
                 textDirection: TextDirection.rtl,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  HotelHeaderDropDownWidget(
-                      "المدينة", cityId, dataList.citiesNames, (value) {
+                  HotelHeaderDropDownWidget("المدينة",
+                      cityId, citiesListClone, (value) {
                     setState(() {
                       cityId = value;
                       hotelDataList = [];
                       data["pageNumber"] = 1;
-                    } );
+                    });
                     refreshIndicatorFunction(true);
-                  } , 60),
-                  HotelHeaderDropDownWidget("نسبه الخصم",
-                      data["discountValue"].toString(), discountList, (value) {
+                  }, 70),
+                  HotelHeaderDropDownWidget(
+                      "نسبه الخصم",
+                      data["discountValue"].toString() == ""
+                          ? "الكل"
+                          : data["discountValue"].toString(),
+                      discountList, (value) {
                     setState(() {
-                      data["discountValue"] = int.parse(value);
+                      if (value == "الكل") {
+                        data["discountValue"] = "";
+                      } else {
+                        data["discountValue"] = int.parse(value);
+                      }
                       hotelDataList = [];
                       data["pageNumber"] = 1;
                     });
                     refreshIndicatorFunction(true);
-                  },50),
+                  }, 50),
                   HotelHeaderDropDownWidget(
-                      "التصنيف", typeId, dataList.categoryNames, (value) {
+                      "التصنيف",
+                      typeId,
+                      categoryListClone, (value) {
                     setState(() {
-                      typeId = value;
+                      typeId = value.toString();
                       hotelDataList = [];
                       data["pageNumber"] = 1;
-                    } );
+                    });
                     refreshIndicatorFunction(true);
-                  },80),
+                  }, 80),
                   HotelHeaderDropDownWidget(
                       "عدد النجوم",
-                      data["starRating"].toString(),
-                      ['1', '2', '3', '4', '5'], (value) {
+                      data["starRating"].toString() == ""
+                          ? "الكل"
+                          : data["starRating"].toString(),
+                      ["الكل", '1', '2', '3', '4', '5'], (value) {
                     setState(() {
-                      data["starRating"] = int.parse(value);
+                      if (value == "الكل") {
+                        data["starRating"] = "";
+                      } else {
+                        data["starRating"] = value.toString();
+                      }
                       hotelDataList = [];
                       data["pageNumber"] = 1;
                     });
                     refreshIndicatorFunction(true);
-                  } , 35),
+                  }, 50),
                 ],
               ),
 

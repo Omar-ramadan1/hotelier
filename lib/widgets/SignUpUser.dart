@@ -270,11 +270,18 @@ class _SignUpUserState extends State<SignUpUser> {
                               } );
                               Navigator.of(context).pushNamed(PersonalInformationScreen.routeName);
                             } else if (response.statusCode == 400) {
+                              print(response.body);
                               setState(() {
                                 isSubmittingRegistration = false;
                               });
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                  content: Text('هذا الايميل مستخدم من قبل')));
+                              if(response.body != ""){
+                                Map body = jsonDecode(response.body);
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                    content: Text(body["Phone"] , style: TextStyle(fontSize: 22 ,),),),);
+                              }else{
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                    content: Text('هذا الايميل مستخدم من قبل' , style: TextStyle(fontSize: 22 ,))));
+                              }
                             }
                           }
                         } else {

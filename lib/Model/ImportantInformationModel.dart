@@ -11,7 +11,9 @@ class ImportantInformationModel extends ChangeNotifier {
   // and the appearance of information
 
   Map _importantInformationModelMap;
+
   Map get importantInformationMap => _importantInformationModelMap;
+
   set importantInformationMap(Map contactUsDataParameter) {
     _importantInformationModelMap = contactUsDataParameter;
     notifyListeners();
@@ -22,52 +24,46 @@ class ImportantInformationModel extends ChangeNotifier {
     httpContactDataRequest(3).then((String data) {
       newContactUsDataMap["phone1"] = data;
       importantInformationMap = newContactUsDataMap;
-      print(_importantInformationModelMap);
     });
     httpContactDataRequest(4).then((String data) {
       newContactUsDataMap["phone2"] = data;
       importantInformationMap = newContactUsDataMap;
-      print(_importantInformationModelMap);
     });
     httpContactDataRequest(5).then((String data) {
       newContactUsDataMap["WhatsApp"] = data;
       importantInformationMap = newContactUsDataMap;
-      print(_importantInformationModelMap);
     });
     httpContactDataRequest(6).then((String data) {
       newContactUsDataMap["FaceBook"] = data;
       importantInformationMap = newContactUsDataMap;
-      print(_importantInformationModelMap);
     });
     httpContactDataRequest(7).then((String data) {
       newContactUsDataMap["Twitter"] = data;
       importantInformationMap = newContactUsDataMap;
-      print(_importantInformationModelMap);
     });
     httpContactDataRequest(8).then((String data) {
       newContactUsDataMap["snapChat"] = data;
       importantInformationMap = newContactUsDataMap;
-      print(_importantInformationModelMap);
     });
     httpContactDataRequest(9).then((String data) {
       newContactUsDataMap["Price"] = data;
       importantInformationMap = newContactUsDataMap;
-      print(_importantInformationModelMap);
     });
     httpContactDataRequest(10).then((String data) {
       newContactUsDataMap["Days"] = data;
       importantInformationMap = newContactUsDataMap;
-      print(_importantInformationModelMap);
     });
     httpContactDataRequest(11).then((String data) {
       newContactUsDataMap["Email"] = data;
       importantInformationMap = newContactUsDataMap;
-      print(_importantInformationModelMap);
     });
     httpContactDataRequest(12).then((String data) {
       newContactUsDataMap["Instagram"] = data;
       importantInformationMap = newContactUsDataMap;
-      print(_importantInformationModelMap);
+    });
+    httpContactDataRequest(13).then((String data) {
+      newContactUsDataMap["Price2"] = data;
+      importantInformationMap = newContactUsDataMap;
     });
     // contactUsDataList = citiesNamesClone;
     // notifyListeners();
@@ -83,58 +79,7 @@ class ImportantInformationModel extends ChangeNotifier {
       },
     );
     data = jsonDecode(response.body);
-    print(jsonDecode(response.body));
-     print(data["PageBody"].toString());
     return data["PageBody"].toString();
   }
 
-  getPhone2() async {
-    Map data;
-    var response = await http.get(
-      '$serverURL/Pages/?id=4',
-      headers: <String, String>{
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-    );
-  }
-
-  getWhatsApp() async {
-    Map data;
-    var response = await http.get(
-      '$serverURL/Pages/?id=5',
-      headers: <String, String>{
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-    );
-  }
-
-  getFaceBook() async {
-    Map data;
-    var response = await http.get(
-      '$serverURL/Pages/?id=6',
-      headers: <String, String>{
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-    );
-  }
-
-  getTwitter() async {
-    Map data;
-    var response = await http.get(
-      '$serverURL/Pages/?id=7',
-      headers: <String, String>{
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-    );
-  }
-
-  getSnapChat() async {
-    Map data;
-    var response = await http.get(
-      '$serverURL/Pages/?id=8',
-      headers: <String, String>{
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-    );
-  }
 }

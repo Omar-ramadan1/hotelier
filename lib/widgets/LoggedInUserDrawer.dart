@@ -180,6 +180,16 @@ class LoggedInUserDrawer extends StatelessWidget {
               DrawerTabsWidget(Icons.logout, "تسجيل الخروج", () {
                 userDataProvider.updateUserInfo(null);
                 Navigator.of(context).pop();
+                Navigator.of(context)
+                    .popUntil((route) {
+                  print(route.settings.name);
+                  if(route.settings.name == "null" || route.settings.name == null){
+                    return true;
+                  }else{
+                    return false;
+                  }
+
+                });
               }),
               SizedBox(
                 height: 10,

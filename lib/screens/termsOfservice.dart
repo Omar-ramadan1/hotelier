@@ -39,6 +39,8 @@ class _TermsOfServiceState extends State<TermsOfService> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
+      extendBodyBehindAppBar: true,
       backgroundColor: Colors.white,
       drawerScrimColor: Colors.transparent,
       appBar: PreferredSize(
@@ -51,7 +53,7 @@ class _TermsOfServiceState extends State<TermsOfService> {
               onPressed: () => Navigator.of(context).pop(),
             ),
           ],
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
           flexibleSpace:
           AppBarWidget("assets/hotelAppBarImage.jpg", info == null ? "" : info['PageName']),
@@ -59,21 +61,23 @@ class _TermsOfServiceState extends State<TermsOfService> {
       ),
       drawerEdgeDragWidth: 200,
       drawer: AppDrawerWidget(),
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          border: Border.all(color: mainAppColor),
+      body: SingleChildScrollView(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            border: Border.all(color: mainAppColor),
+          ),
+          padding: EdgeInsets.all(10),
+          margin: EdgeInsets.only(top: 160 , left: 10 , right: 10 , bottom: 80),
+        child: Directionality(
+            textDirection: TextDirection.rtl,
+            child: Text(info==null ? "" : info['PageBody'] ,  style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 20,
+            ),),
         ),
-        padding: EdgeInsets.all(10),
-        margin: EdgeInsets.only(top: 40 , left: 10 , right: 10),
-      child: Directionality(
-          textDirection: TextDirection.rtl,
-          child: Text(info==null ? "" : info['PageBody'] ,  style: TextStyle(
-            fontWeight: FontWeight.w700,
-            fontSize: 20,
-          ),),
-      ),
+        ),
       ),
       bottomNavigationBar : BottomBarWidget(),
 

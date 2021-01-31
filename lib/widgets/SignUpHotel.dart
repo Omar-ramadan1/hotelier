@@ -21,7 +21,6 @@ import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:hotelier/screens/MainScreen.dart';
 import 'DropdownWidget.dart';
 
 class SignUpHotel extends StatefulWidget {
@@ -502,7 +501,7 @@ class _SignUpHotelState extends State<SignUpHotel> {
                                                   });
                                                   if (response.statusCode == 200) {
                                                     var response = await http.post(
-                                                      'http://api.hoteliercard.com/api/Account/CustomToken',
+                                                      '$serverURL/Account/CustomToken',
                                                       headers: <String, String>{
                                                         "Accept": "application/json",
                                                         "Content-Type": "application/json"
@@ -547,8 +546,14 @@ class _SignUpHotelState extends State<SignUpHotel> {
                                                     });
                                                     Navigator.of(context).pushNamed(PersonalInformationScreen.routeName);
                                                   } else if (response.statusCode == 400) {
-                                                    Scaffold.of(context).showSnackBar(
-                                                        SnackBar(content: Text('هذا الايميل مستخدم من قبل')));
+                                                    Map body = jsonDecode(response.body);
+                                                    if(body["Phone"] != null){
+                                                      Scaffold.of(context).showSnackBar(SnackBar(
+                                                        content: Text(body["Phone"] , style: TextStyle(fontSize: 22 ,),),),);
+                                                    }else{
+                                                      Scaffold.of(context).showSnackBar(SnackBar(
+                                                          content: Text('هذا الايميل مستخدم من قبل' , style: TextStyle(fontSize: 22 ,))));
+                                                    }
                                                   }
                                                 },
                                                 child: Text("نعم" , style: TextStyle(fontSize: 20),),
@@ -585,7 +590,7 @@ class _SignUpHotelState extends State<SignUpHotel> {
                                     print(response.body);
                                     if (response.statusCode == 200) {
                                       var response = await http.post(
-                                        'http://api.hoteliercard.com/api/Account/CustomToken',
+                                        '$serverURL/Account/CustomToken',
                                         headers: <String, String>{
                                           "Accept": "application/json",
                                           "Content-Type": "application/json"
@@ -632,8 +637,14 @@ class _SignUpHotelState extends State<SignUpHotel> {
                                       setState(() {
                                         isSubmittingRegistration = false;
                                       });
-                                      Scaffold.of(context).showSnackBar(
-                                          SnackBar(content: Text('هذا الايميل مستخدم من قبل')));
+                                      Map body = jsonDecode(response.body);
+                                      if(body["Phone"] != null){
+                                        Scaffold.of(context).showSnackBar(SnackBar(
+                                          content: Text(body["Phone"] , style: TextStyle(fontSize: 22 ,),),),);
+                                      }else{
+                                        Scaffold.of(context).showSnackBar(SnackBar(
+                                            content: Text('هذا الايميل مستخدم من قبل' , style: TextStyle(fontSize: 22 ,))));
+                                      }
                                     }
                                   }
                                 }

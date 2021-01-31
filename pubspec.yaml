@@ -107,6 +107,8 @@ flutter:
     - assets/loading.gif
     - assets/iconPhoto.png
     - assets/cash-01.png
+    - assets/crediteCard.jpg
+    - assets/rightIconImage.jpg
 
 
 module:

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hotelier/Constant/Constant.dart';
 import 'package:hotelier/Model/ImportantInformationModel.dart';
 import 'package:hotelier/Model/UserData.dart';
+import 'package:hotelier/screens/SuccessScreen.dart';
 import 'package:hotelier/widgets/AppBarWidget.dart';
 import 'package:hotelier/widgets/AppDrawerWidget.dart';
 import 'package:hotelier/widgets/ButtonWidget.dart';
@@ -24,12 +25,17 @@ class PaymentWidget extends StatefulWidget {
 }
 
 class _PaymentWidgetState extends State<PaymentWidget> {
-  String cardValue = "payAtArrive";
+  String cardValue = "payAtArrive" , price;
   Map data ;
 
   Function changeCardValueFunction(String cardValueParamater) {
     setState(() {
       cardValue = cardValueParamater;
+      if(cardValueParamater == "payAtArrive"){
+        price = data["Price2"];
+      }else{
+        price = data["Price"];
+      }
     });
     return null;
   }
@@ -40,6 +46,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
     ImportantInformationModel importantInformationModel =
     Provider.of<ImportantInformationModel>(context, listen: false);
     data = importantInformationModel.importantInformationMap;
+    price = data["Price2"];
 
   }
 
@@ -74,7 +81,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
             children: <Widget>[
               MainScreenCardWidget("assets/paymentContainer.jpg", null),
               Text(
-                " سعر البطاقه ${data["Price"]} ريال شامل الضريبة و التوصيل",
+                " سعر البطاقه $price ريال شامل الضريبة و التوصيل",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
@@ -99,13 +106,31 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                               context,
                               "من فضلك قم بتسجيل الدخول لاتمام العملية");
                         } else {
-                           String url = 'https://hoteliercard.com/Checkout.html?id=${userDataProvider.userData["userId"]}&firstTime=true';
-                           if (await canLaunch(url)) {
-                          await launch(url);
-                           }else{
-                           Scaffold.of(context).showSnackBar(SnackBar(
-                           content: Text('من فضلك تاكد من وجود جوجل كروم على الهاتف')));
-                           }
+                          if(cardValue == "mastercard" || cardValue == "mada" || cardValue == "visa"){
+                            String url = 'https://hoteliercard.com/Checkout.html?id=${userDataProvider.userData["userId"]}&firstTime=true';
+                            if (await canLaunch(url)) {
+                              await launch(url);
+                            }else{
+                              PaymentAlertDialogMessage().showInMessageWidget(
+                                  context,
+                                  'من فضلك تاكد من وجود جوجل كروم على الهاتف');
+                            }
+                          }else{
+                            var response  = await http.post(
+                              '$serverURL/Order/AddOrder?isMinorRenewal=false',
+                              headers: <String, String>{
+                                'Authorization': 'Bearer ${userDataProvider.userData["access_token"]}',
+                                'Content-Type': 'application/json'
+                              },
+                            );
+                            if(response.statusCode >= 200 && response.statusCode < 300){
+                              Navigator.of(context).popAndPushNamed(SuccessScreen.routeName);
+                            }else{
+                              PaymentAlertDialogMessage().showInMessageWidget(
+                                  context,
+                                  'لقد حدث خطا ما');
+                            }
+                          }
                         }
                       },
                       child: ButtonChildWidget(
@@ -117,12 +142,29 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                               context,
                               "من فضلك قم بتسجيل الدخول لاتمام العملية");
                         } else {
-                          String url = 'https://hoteliercard.com/Checkout.html?id=${userDataProvider.userData["userId"]}&firstTime=false';
-                          if (await canLaunch(url)) {
-                            await launch(url);
+                          if(cardValue == "mastercard" || cardValue == "mada" || cardValue == "visa"){
+                            String url = 'https://hoteliercard.com/Checkout.html?id=${userDataProvider.userData["userId"]}&firstTime=false';
+                            if (await canLaunch(url)) {
+                              await launch(url);
+                            }else{
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text('من فضلك تاكد من وجود جوجل كروم على الهاتف')));
+                            }
                           }else{
-                            Scaffold.of(context).showSnackBar(SnackBar(
-                                content: Text('من فضلك تاكد من وجود جوجل كروم على الهاتف')));
+                            var response  = await http.post(
+                              '$serverURL/Order/AddOrder?isMinorRenewal=true',
+                              headers: <String, String>{
+                                'Authorization': 'Bearer ${userDataProvider.userData["access_token"]}',
+                                'Content-Type': 'application/json'
+                              },
+                            );
+                            if(response.statusCode >= 200 && response.statusCode < 300){
+                              Navigator.of(context).popAndPushNamed(SuccessScreen.routeName);
+                            }else{
+                              PaymentAlertDialogMessage().showInMessageWidget(
+                                  context,
+                                  'لقد حدث خطا ما');
+                            }
                           }
                         }
                       },
