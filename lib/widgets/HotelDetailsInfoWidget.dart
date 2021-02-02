@@ -91,9 +91,12 @@ class HotelDetailsInfoWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             textDirection: TextDirection.rtl,
             children: [
-              IconButton(icon: Icon(FontAwesomeIcons.dollarSign), onPressed: null),
               Padding(
-                padding: const EdgeInsets.only(bottom: 15),
+                padding: const EdgeInsets.only(right: 15 , bottom: 7),
+                child: Image.asset("assets/Riyal-512.png" , width: 20,),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: Text(
                   data['RoomPrice'].toString(),
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),

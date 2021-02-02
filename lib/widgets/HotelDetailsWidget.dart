@@ -38,12 +38,15 @@ class HotelDetailsWidget extends StatelessWidget {
             SizedBox(height: 10,),
             Container(
               width: size.width / 2.0,
-              child: Directionality(
-                textDirection: TextDirection.rtl,
-                child: Text(
-                  "${data["RoomPrice"].toString()}\$",
-                  style: TextStyle(fontSize: 16 ),
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    "${data["RoomPrice"].toString()}",
+                    style: TextStyle(fontSize: 16 ),
+                  ),
+                  Image.asset("assets/Riyal-512.png" , width: 20,)
+                ],
               ),
             ),
             SizedBox(height: 10,),
