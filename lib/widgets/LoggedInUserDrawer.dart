@@ -11,6 +11,7 @@ import 'package:hotelier/screens/BuyCardScreen.dart';
 import 'package:hotelier/screens/PersonalInformationScreen.dart';
 import 'package:hotelier/screens/RenewRegistrationScreen.dart';
 import 'package:hotelier/screens/termsOfservice.dart';
+import 'package:hotelier/widgets/DrawerTabSpecialForMoney.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -120,7 +121,7 @@ class LoggedInUserDrawer extends StatelessWidget {
                 height: 5,
               ),
               InkWell(
-                child: DrawerTabsWidget(Icons.attach_money_rounded, "المدفوعات",
+                child: DrawerTabSpecialForMoney( "المدفوعات",
                     () {
                  Navigator.of(context).popAndPushNamed(CartDetailsScreen.routeName);
                 }),

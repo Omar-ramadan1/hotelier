@@ -25,13 +25,14 @@ class PaymentWidget extends StatefulWidget {
 }
 
 class _PaymentWidgetState extends State<PaymentWidget> {
-  String cardValue = "payAtArrive" , price;
+  String cardValue = "payAtArrive" , price , paymentText = "عند الاستلام";
   Map data ;
 
-  Function changeCardValueFunction(String cardValueParamater) {
+  Function changeCardValueFunction(String cardValueParameter , String paymentTextParameter) {
     setState(() {
-      cardValue = cardValueParamater;
-      if(cardValueParamater == "payAtArrive"){
+      cardValue = cardValueParameter;
+      paymentText = paymentTextParameter;
+      if(cardValueParameter == "payAtArrive"){
         price = data["Price2"];
       }else{
         price = data["Price"];
@@ -95,6 +96,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
               SizedBox(height: 20),
               CreditCardChoiceWidget(cardValue, changeCardValueFunction),
               SizedBox(height: 20),
+              Text("الدفع $paymentText" , style: TextStyle(fontSize: 25),),
               SizedBox(
                 height: 20,
               ),

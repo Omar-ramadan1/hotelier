@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hotelier/Constant/Constant.dart';
 import 'package:hotelier/Model/UserData.dart';
@@ -8,9 +10,42 @@ import 'package:hotelier/widgets/GoogleMapWidget.dart';
 import 'package:hotelier/widgets/InformationTextWidget.dart';
 import 'package:hotelier/widgets/SignUpButtonWidget.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
-class HotelPersonalInformationWidget extends StatelessWidget {
+class HotelPersonalInformationWidget extends StatefulWidget {
+  @override
+  _HotelPersonalInformationWidgetState createState() => _HotelPersonalInformationWidgetState();
+}
 
+class _HotelPersonalInformationWidgetState extends State<HotelPersonalInformationWidget> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getIsUserActive();
+  }
+  getIsUserActive()async{
+    UserData userDataProvider = Provider.of<UserData>(context , listen: false);
+    Map data = userDataProvider.userData;
+    var request = await http.get(
+      '$serverURL/User/IsActive',
+      headers: <String, String>{
+        'Authorization': 'Bearer ${userDataProvider.userData["access_token"]}',
+        'Content-Type': 'application/json'
+      },
+    );
+    print(request.body);
+    if(request.statusCode < 300){
+      print("request.body");
+      print(request.body);
+      Map body = jsonDecode(request.body);
+      data["IsActive"] = body["IsActive"];
+      userDataProvider.userData = data;
+      print("userDataProvider.userData[IsActive]");
+      print(userDataProvider.userData["IsActive"]);
+    }
+  }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -40,20 +75,20 @@ class HotelPersonalInformationWidget extends StatelessWidget {
         child: Column(
           children: [
             userDataProvider.userData['userImg'] == '' ||
-                    userDataProvider.userData['userImg'] == null
+                userDataProvider.userData['userImg'] == null
                 ? SignUpButtonWidget(userDataProvider.userData['name'],
-                    Icons.home_work_rounded, Color(0xFFF7BB85))
+                Icons.home_work_rounded, Color(0xFFF7BB85))
                 : Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CircleAvatar(
-                        backgroundImage: Image.network(
-                                '${anotherServerURL}Content/Images/${userDataProvider.userData['userImg']}')
-                            .image,
-                        radius: 50,
-                      ),
-                    ],
-                  ),
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  backgroundImage: Image.network(
+                      '${anotherServerURL}Content/Images/${userDataProvider.userData['userImg']}')
+                      .image,
+                  radius: 50,
+                ),
+              ],
+            ),
             SizedBox(height: 5,),
             Container(
               decoration: BoxDecoration(
@@ -68,7 +103,7 @@ class HotelPersonalInformationWidget extends StatelessWidget {
                 ],
               ),
               child: CircleAvatar(
-                backgroundColor: userDataProvider.userData['IsActive']  ?  Colors.lightGreenAccent : Colors.redAccent,
+                backgroundColor: userDataProvider.userData['IsActive'] ?  Colors.lightGreenAccent : Colors.redAccent,
                 radius: 10,
               ),
             ),
@@ -95,16 +130,16 @@ class HotelPersonalInformationWidget extends StatelessWidget {
                 ),
                 margin: EdgeInsets.only(top: 20 , bottom: 10),
                 child: Column(
-              children: [
-                InformationTextWidget('اسم الفندق:  ' , userDataProvider.userData['name']),
-                InformationTextWidget('الحساب:  ' , userDataProvider.userData['IsActive'] ? "مفعل" : "غير مفعل و سيفعل قريبا"),
-                InformationTextWidget('عدد النجوم:  ' , userDataProvider.userData['starRating'].toString()),
-                InformationTextWidget('نسبة الخصم المقدمة:  ' , '${userDataProvider.userData['discountValue'].toString()} %'),
-              ],
-            )),
+                  children: [
+                    InformationTextWidget('اسم الفندق:  ' , userDataProvider.userData['name']),
+                    InformationTextWidget('الحساب:  ' , userDataProvider.userData['IsActive'] ? "مفعل" : "غير مفعل و سيفعل قريبا"),
+                    InformationTextWidget('عدد النجوم:  ' , userDataProvider.userData['starRating'].toString()),
+                    InformationTextWidget('نسبة الخصم المقدمة:  ' , '${userDataProvider.userData['discountValue'].toString()} %'),
+                  ],
+                )),
             Container(
               height: 200,
-                child: GoogleMapWidget(userDataProvider.userData['latitude'] , userDataProvider.userData['longitude'])
+              child: GoogleMapWidget(userDataProvider.userData['latitude'] , userDataProvider.userData['longitude'])
               ,),
             SizedBox(height: 30,),
             InformationImageViewer(userDataProvider.userData['img']),
@@ -115,3 +150,4 @@ class HotelPersonalInformationWidget extends StatelessWidget {
     );
   }
 }
+

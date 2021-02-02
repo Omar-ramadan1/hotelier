@@ -36,7 +36,7 @@ class BottomBarWidget extends StatelessWidget {
                 margin: EdgeInsets.only(top: 5),
                 child: Column(
                   children: [
-                    Icon(Icons.monetization_on_outlined),
+                    Image.asset("assets/Riyal-512.png" , width: 20,),
                     Text("المدفوعات" , style: TextStyle(fontWeight: FontWeight.w900),
                     )
 

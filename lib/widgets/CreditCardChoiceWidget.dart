@@ -13,7 +13,7 @@ class CreditCardChoiceWidget extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
-            changeCardValueFunction("mastercard");
+            changeCardValueFunction("mastercard" , "بماستر كارد");
           },
           child: Container(
               width: width / 6,
@@ -42,7 +42,7 @@ class CreditCardChoiceWidget extends StatelessWidget {
         ),
         InkWell(
           onTap: () {
-            changeCardValueFunction("visa");
+            changeCardValueFunction("visa"  , "بفيزا كارد");
           },
           child: Container(
               width: width / 6,
@@ -71,7 +71,7 @@ class CreditCardChoiceWidget extends StatelessWidget {
         ),
         InkWell(
           onTap: () {
-            changeCardValueFunction("mada");
+            changeCardValueFunction("mada"  , "بمدى كارد");
           },
           child: Container(
               width: width / 6,
@@ -100,7 +100,7 @@ class CreditCardChoiceWidget extends StatelessWidget {
         ),
         InkWell(
           onTap: () {
-            changeCardValueFunction("payAtArrive");
+            changeCardValueFunction("payAtArrive" , "عند الاستلام");
           },
           child: Container(
               width: width / 6,

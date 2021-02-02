@@ -35,10 +35,12 @@ class _ComplainingState extends State<Complaining> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawerScrimColor: Colors.transparent,
+      extendBodyBehindAppBar: true,
+      extendBody: true,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(125.0),
         child: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
           flexibleSpace:
               AppBarWidget("assets/complainAppBarImage.jpg", "شكاوى و مقترحات"),
@@ -55,7 +57,7 @@ class _ComplainingState extends State<Complaining> {
       body: SingleChildScrollView(
         child: Container(
           color: Colors.white,
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.only(left: 20 , right: 20 , top: 170 , bottom: 100),
           child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -172,16 +174,17 @@ class _ComplainingState extends State<Complaining> {
                 InkWell(
                   onTap: ()async{
                     if(check()){
+                      print(data);
                       var response = await http.post(
                         '$serverURL/Comlains',
                         headers: <String, String>{
-                          'Content-Type': 'application/x-www-form-urlencoded'
+                          'Content-Type': 'application/json'
                         },
                         body: jsonEncode(data),
                       );
                       print(response.statusCode);
                       print(response.body);
-                      if(response.statusCode == 201){
+                      if(response.statusCode < 300){
                             Navigator.of(context).popAndPushNamed(SendSuccessfully.routeName);
                       }
                     }
