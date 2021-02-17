@@ -18,10 +18,6 @@ uploadAssetImages(Asset image , String name) async {
 // send
   var response = await request.send();
   print(response.statusCode);
-
-  // response.stream.transform(utf8.decoder).listen((value) {
-  //   print(value);
-  //   print(jsonDecode(value));
-  // });
+  
   return response;
 }

@@ -27,7 +27,6 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
   var refreshKey = GlobalKey<RefreshIndicatorState>();
   double lastOffset;
   List hotelDataList = [];
-  int pageNumber = 0;
   List<String> discountList = [
     'الكل',
     '10',
@@ -51,29 +50,29 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
       citiesListClone.addAll(dataList.citiesNames);
       categoryListClone.addAll(dataList.categoryNames);
       data = {
-        'cityId': "",
-        'discountValue': "",
-        'typeId': "",
-        'starRating': "",
-        'pageNumber': 1,
+        'cityId': null,
+        'discountValue': null,
+        'typeId': null,
+        'starRating': null,
+        'pageNumber': null,
         'isSpecialOffer': widget.isSpecialOfferScreen,
-        'searchWord': ''
+        'searchWord': null,
       };
     });
 
     refreshIndicatorFunction(true);
 
-    _scrollController.addListener(() {
-      if (_scrollController.position.atEdge) {
-        if (_scrollController.position.pixels == 0) {
-        }
-        // you are at top position
-        else {
-          refreshIndicatorFunction(false);
-        }
-        // you are at bottom position
-      }
-    });
+    // _scrollController.addListener(() {
+    //   if (_scrollController.position.atEdge) {
+    //     if (_scrollController.position.pixels == 0) {
+    //     }
+    //     // you are at top position
+    //     else {
+    //       refreshIndicatorFunction(false);
+    //     }
+    //     // you are at bottom position
+    //   }
+    // });
   }
 
   refreshIndicatorFunction(bool isTrue) async {
@@ -81,7 +80,7 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
     refreshKey.currentState?.show(atTop: isTrue);
     print(data);
     if (cityId == "الكل") {
-      data["cityId"] = "";
+      data["cityId"] = null;
     } else {
       dataList.citiesList.forEach((e) => {
             if (e["Name"] == cityId.toString())
@@ -91,7 +90,7 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
           });
     }
     if (typeId == "الكل") {
-      data["typeId"] = "";
+      data["typeId"] = null;
     } else {
       dataList.categoryList.forEach((e) => {
             if (e["Name"] == typeId)
@@ -116,9 +115,9 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
       hotelDataList.addAll(jsonDecode(response.body));
       if (jsonDecode(response.body).length == 0) {
       } else {
-        setState(() {
-          data["pageNumber"]++;
-        });
+        // setState(() {
+        //   data["pageNumber"]++;
+        // });
       }
     });
   }
@@ -180,7 +179,7 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
                       onTap: () {
                         setState(() {
                           hotelDataList = [];
-                          data["pageNumber"] = 1;
+                          // data["pageNumber"] = 1;
                         });
                         refreshIndicatorFunction(true);
                       },
@@ -214,57 +213,55 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
                 textDirection: TextDirection.rtl,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  HotelHeaderDropDownWidget("المدينة",
-                      cityId, citiesListClone, (value) {
+                  HotelHeaderDropDownWidget("المدينة", cityId, citiesListClone,
+                      (value) {
                     setState(() {
                       cityId = value;
                       hotelDataList = [];
-                      data["pageNumber"] = 1;
+                      // data["pageNumber"] = 1;
                     });
                     refreshIndicatorFunction(true);
                   }, 70),
                   HotelHeaderDropDownWidget(
                       "نسبه الخصم",
-                      data["discountValue"].toString() == ""
+                      data["discountValue"] == null
                           ? "الكل"
                           : data["discountValue"].toString(),
                       discountList, (value) {
                     setState(() {
                       if (value == "الكل") {
-                        data["discountValue"] = "";
+                        data["discountValue"] = null;
                       } else {
                         data["discountValue"] = int.parse(value);
                       }
                       hotelDataList = [];
-                      data["pageNumber"] = 1;
+                      // data["pageNumber"] = 1;
                     });
                     refreshIndicatorFunction(true);
                   }, 50),
                   HotelHeaderDropDownWidget(
-                      "التصنيف",
-                      typeId,
-                      categoryListClone, (value) {
+                      "التصنيف", typeId, categoryListClone, (value) {
                     setState(() {
                       typeId = value.toString();
                       hotelDataList = [];
-                      data["pageNumber"] = 1;
+                      // data["pageNumber"] = 1;
                     });
                     refreshIndicatorFunction(true);
                   }, 80),
                   HotelHeaderDropDownWidget(
                       "عدد النجوم",
-                      data["starRating"].toString() == ""
+                      data["starRating"] == null
                           ? "الكل"
                           : data["starRating"].toString(),
                       ["الكل", '1', '2', '3', '4', '5'], (value) {
                     setState(() {
                       if (value == "الكل") {
-                        data["starRating"] = "";
+                        data["starRating"] = null;
                       } else {
                         data["starRating"] = value.toString();
                       }
                       hotelDataList = [];
-                      data["pageNumber"] = 1;
+                      // data["pageNumber"] = 1;
                     });
                     refreshIndicatorFunction(true);
                   }, 50),

@@ -86,10 +86,10 @@ class _SignUpHotelState extends State<SignUpHotel> {
   };
   bool checkBoxValue = false;
   @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-    DataList dataList = Provider.of<DataList>(context);
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    DataList dataList = Provider.of<DataList>(context , listen: false);
     cityId = dataList.citiesNames[0];
     typeId = dataList.categoryNames[0];
   }

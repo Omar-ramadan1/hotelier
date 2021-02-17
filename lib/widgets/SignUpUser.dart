@@ -52,10 +52,11 @@ class _SignUpUserState extends State<SignUpUser> {
     'longitude': null
   };
   bool isSubmittingRegistration = false;
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-    DataList dataList = Provider.of<DataList>(context);
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    DataList dataList = Provider.of<DataList>(context , listen: false);
     cityName = dataList.citiesNames[0];
   }
 
