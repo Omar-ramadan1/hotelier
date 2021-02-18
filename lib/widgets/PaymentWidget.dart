@@ -25,7 +25,7 @@ class PaymentWidget extends StatefulWidget {
 }
 
 class _PaymentWidgetState extends State<PaymentWidget> {
-  String cardValue = "payAtArrive" , price , paymentText = "عند الاستلام";
+  String cardValue = "visa" , price , paymentText = "بفيزا كارد";
   Map data ;
 
   Function changeCardValueFunction(String cardValueParameter , String paymentTextParameter) {
@@ -47,7 +47,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
     ImportantInformationModel importantInformationModel =
     Provider.of<ImportantInformationModel>(context, listen: false);
     data = importantInformationModel.importantInformationMap;
-    price = data["Price2"];
+    price = data["Price"];
 
   }
 
