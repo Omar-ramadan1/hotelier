@@ -26,7 +26,7 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
   List<String> categoryListClone = ["الكل"];
   var refreshKey = GlobalKey<RefreshIndicatorState>();
   double lastOffset;
-  List hotelDataList = [];
+  List hotelDataList = [] , hotelAd = [];
   List<String> discountList = [
     'الكل',
     '10',
@@ -45,6 +45,7 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
   @override
   initState() {
     super.initState();
+    adsHotels();
     DataList dataList = Provider.of<DataList>(context, listen: false);
     setState(() {
       citiesListClone.addAll(dataList.citiesNames);
@@ -73,6 +74,23 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
     //     // you are at bottom position
     //   }
     // });
+  }
+  adsHotels()async{
+    var response = await http.post(
+      '$serverURL/Hotels/V2/HotelsAd',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(data),
+    );
+
+    print(response.statusCode);
+    List body = jsonDecode(response.body);
+    Map data1 = body[0];
+    setState(() {
+      print(data1["Address"]);
+      hotelAd = body;
+    });
   }
 
   refreshIndicatorFunction(bool isTrue) async {
@@ -123,7 +141,6 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
   }
 
   Widget build(BuildContext context) {
-    DataList dataList = Provider.of<DataList>(context);
     return Scaffold(
       // the appbar part -------------------->>>>
       // the appbar part -------------------->>>>
@@ -274,6 +291,13 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
               // the body part --------------------------->>>>>
               // the body part --------------------------->>>>>
 
+              // VIP ad Hotels
+              for (var data in hotelAd)
+                Container(
+                  margin: EdgeInsets.only(top: 10),
+                  child: HotelContainerWidget(data),
+                ),
+              // normal Hotels
               for (var data in hotelDataList)
                 Container(
                   margin: EdgeInsets.only(top: 10),

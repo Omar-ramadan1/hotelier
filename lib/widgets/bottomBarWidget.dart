@@ -33,11 +33,14 @@ class BottomBarWidget extends StatelessWidget {
              },
 
               child: Container(
-                margin: EdgeInsets.only(top: 5),
+                margin: EdgeInsets.only(top: 10),
                 child: Column(
                   children: [
-                    Image.asset("assets/Riyal-512.png" , width: 20,),
-                    Text("المدفوعات" , style: TextStyle(fontWeight: FontWeight.w900),
+                    Image.asset("assets/Riyal-512.png" , width: 40,),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 6),
+                      child: Text("المدفوعات" , style: TextStyle(fontWeight: FontWeight.w900),
+                      ),
                     )
 
                   ],

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hotelier/screens/HotelDetailsScreen.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
@@ -30,7 +29,7 @@ class HotelDetailsWidget extends StatelessWidget {
               child: Directionality(
                 textDirection: TextDirection.rtl,
                 child: Text(
-                  data["Address"].toString(),
+                data["Address"] == null ? data["Address"].toString(): data["Address"].toString().substring(0 , 20),
                   style: TextStyle(fontSize: 16 ),
                 ),
               ),
@@ -42,10 +41,16 @@ class HotelDetailsWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
-                    "${data["RoomPrice"].toString()}",
-                    style: TextStyle(fontSize: 16 ),
+                    "${data["netPrice"]}",
+                    style: TextStyle(fontSize: 18 , fontWeight: FontWeight.w600),
                   ),
-                  Image.asset("assets/Riyal-512.png" , width: 20,)
+                  SizedBox(width: 5,),
+                  Text(
+                    "${data["RoomPrice"].toString()}",
+                    style: TextStyle(fontSize: 17  , color: Colors.red , fontWeight: FontWeight.w600 ,decoration: TextDecoration.lineThrough),
+                  ),
+                  SizedBox(width: 5,),
+                  Image.asset("assets/Riyal-512.png" , width: 30,)
                 ],
               ),
             ),

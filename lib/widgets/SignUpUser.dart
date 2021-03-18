@@ -27,7 +27,7 @@ class _SignUpUserState extends State<SignUpUser> {
   Map data = {
     'cityName': 1,
     'name': null,
-    // 'idNumber': null,
+    'idNumber': null,
     'district': null,
     'phone1': null,
     'email': null,
@@ -76,13 +76,13 @@ class _SignUpUserState extends State<SignUpUser> {
       width: size.width * 80 / 100,
       child: Column(
         children: [
-          SingleTextFieldWidget('الاسم', dataErrorMessage['name'], (value) {
+          SingleTextFieldWidget('الاسم الثلاثى', dataErrorMessage['name'], (value) {
             onChangeFunction(value, 'name');
           }),
-          // SingleTextFieldWidget(
-          //     'رقم الهوية/رقم الاقامة', dataErrorMessage['idNumber'], (value) {
-          //   onChangeFunction(value, 'idNumber');
-          // }),
+          SingleTextFieldWidget(
+              'رقم الهوية/رقم الاقامة', dataErrorMessage['idNumber'], (value) {
+            onChangeFunction(value, 'idNumber');
+          }),
           Container(
             width: size.width,
             child: Row(

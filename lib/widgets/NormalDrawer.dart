@@ -6,6 +6,7 @@ import 'package:hotelier/screens/BuyCardScreen.dart';
 import 'package:hotelier/screens/Contact.dart';
 import 'package:hotelier/screens/RegistrationScreen.dart';
 import 'package:hotelier/screens/RenewRegistrationScreen.dart';
+import 'package:hotelier/screens/SponsorsScreen.dart';
 import 'package:hotelier/screens/termsOfservice.dart';
 
 import 'DrawerTabsWidget.dart';
@@ -85,6 +86,12 @@ class NormalDrawer extends StatelessWidget {
               ),
               DrawerTabsWidget(Icons.person_add, "تسجيل حساب جديد", () {
                 Navigator.of(context).popAndPushNamed(RegistrationScreen.routeName ,arguments: "signUp");
+              }),
+              SizedBox(
+                height: 10,
+              ),
+              DrawerTabsWidget(Icons.home_work, "شركاء النجاح", () {
+                Navigator.of(context).popAndPushNamed(SponsorsScreen.routeName);
               }),
               SizedBox(
                 height: 10,

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hotelier/Model/DataList.dart';
+import 'package:hotelier/Model/EnableAddingNewHotel.dart';
+import 'package:hotelier/Model/HotelData.dart';
 import 'package:hotelier/Model/UserData.dart';
 import 'package:hotelier/screens/About.dart';
 import 'package:hotelier/screens/CartDetailsScreen.dart';
 import 'package:hotelier/screens/Complaining.dart';
 import 'package:hotelier/screens/Contact.dart';
+import 'package:hotelier/screens/ControllingNumberOfHotelSSettingScreen.dart';
 import 'package:hotelier/screens/Error_404.dart';
 import 'package:hotelier/screens/ForgetPasswordScreen.dart';
 import 'package:hotelier/screens/GetLocationScreen.dart';
@@ -21,6 +24,7 @@ import 'package:hotelier/screens/EditUserData.dart';
 import 'package:hotelier/screens/EditHotelData.dart';
 import 'package:hotelier/screens/SpecialOfferScreen.dart';
 import 'package:hotelier/screens/Congratulation.dart';
+import 'package:hotelier/screens/SponsorsScreen.dart';
 import 'package:hotelier/screens/SuccessScreen.dart';
 import 'package:hotelier/screens/termsOfservice.dart';
 import 'package:hotelier/Model/ImportantInformationModel.dart';
@@ -40,6 +44,12 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (_) => ImportantInformationModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => EnableAddingNewHotel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => HotelData(),
         ),
       ],
       child: Hotelier(),
@@ -71,7 +81,6 @@ class Hotelier extends StatelessWidget {
         HotelDetailsScreen.routeName: (ctx) => HotelDetailsScreen(),
         Error_404.routeName: (ctx) => Error_404(),
         EditUserData.routeName: (ctx) => EditUserData(),
-        EditHotelData.routeName: (ctx) => EditHotelData(),
         SpecialOfferScreen.routeName: (ctx) => SpecialOfferScreen(),
         HotelScreen.routeName: (ctx) => HotelScreen(),
         TermsOfService.routeName: (ctx) => TermsOfService(),
@@ -81,6 +90,8 @@ class Hotelier extends StatelessWidget {
         PersonalInformationScreen.routeName: (ctx) =>
             PersonalInformationScreen(),
         About.routeName: (ctx) => About(),
+        SponsorsScreen.routeName: (ctx) => SponsorsScreen(),
+        ControllingNumberOfHotelSSettingScreen.routeName: (ctx) => ControllingNumberOfHotelSSettingScreen(),
       },
     );
   }

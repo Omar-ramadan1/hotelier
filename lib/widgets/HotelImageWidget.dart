@@ -16,7 +16,7 @@ class HotelImageWidget extends StatelessWidget {
         children: [
           Container(
             width: size.width / 2.65,
-            height : size.width /1.4,
+            height : size.width /1.2,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(topRight: Radius.circular(17) , bottomRight: Radius.circular(17)),
                  image: DecorationImage(image:NetworkImage("${anotherServerURL}Content/Images/${images[0]}"),
@@ -34,7 +34,7 @@ class HotelImageWidget extends StatelessWidget {
               
               ),
              // image: NetworkImage(""),
-              color: Colors.yellow,
+              color: Colors.red,
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.7),

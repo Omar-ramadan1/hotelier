@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hotelier/Constant/Constant.dart';
+import 'package:hotelier/main.dart';
 import 'package:hotelier/screens/GoogleMapInfoScreen.dart';
 import 'package:hotelier/widgets/GoogleMapWidget.dart';
 import 'package:hotelier/widgets/VideoPlayerWidget.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HotelDetailsInfoWidget extends StatelessWidget {
   final Map data;
@@ -76,8 +78,14 @@ class HotelDetailsInfoWidget extends StatelessWidget {
             textDirection: TextDirection.rtl,
             children: [
               IconButton(icon: Icon(Icons.phone), onPressed: null),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 15),
+              MaterialButton(
+                splashColor: mainAppColor,
+                onPressed: ()async{
+                  String url = 'tel://${data['PhoneNumber']}';
+                  if (await canLaunch(url)) {
+                  await launch(url);
+                  }
+                },
                 child: Text(
                   data['PhoneNumber'],
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -92,8 +100,8 @@ class HotelDetailsInfoWidget extends StatelessWidget {
             textDirection: TextDirection.rtl,
             children: [
               Padding(
-                padding: const EdgeInsets.only(right: 15 , bottom: 7),
-                child: Image.asset("assets/Riyal-512.png" , width: 20,),
+                padding: const EdgeInsets.only(right: 15 , bottom: 12),
+                child: Image.asset("assets/Riyal-512.png" , width: 30,),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),

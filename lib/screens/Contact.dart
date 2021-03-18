@@ -1,13 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:hotelier/Constant/Constant.dart';
 import 'package:hotelier/Model/ImportantInformationModel.dart';
 import 'package:hotelier/widgets/AppBarWidget.dart';
 import 'package:hotelier/widgets/AppDrawerWidget.dart';
-import 'package:http/http.dart' as http;
 import 'package:hotelier/widgets/bottomBarWidget.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';

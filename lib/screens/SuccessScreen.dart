@@ -1,8 +1,8 @@
-import 'dart:convert';
+
 
 import 'package:flutter/material.dart';
 import 'package:hotelier/Model/ImportantInformationModel.dart';
-import 'package:hotelier/Model/UserData.dart';
+
 import 'package:hotelier/widgets/AppBarWidget.dart';
 import 'package:hotelier/widgets/AppDrawerWidget.dart';
 import 'package:provider/provider.dart';
@@ -36,7 +36,6 @@ class _SuccessScreenState extends State<SuccessScreen> {
 
   @override
   Widget build(BuildContext context) {
-    UserData userDataProvider = Provider.of<UserData>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       drawerScrimColor: Colors.transparent,

@@ -1,15 +1,12 @@
 import 'dart:convert';
-import 'package:hotelier/Constant/Constant.dart';
 import 'package:hotelier/widgets/PaymentAlertDialogMessage.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:hotelier/Model/UserData.dart';
 import 'package:hotelier/widgets/AppBarWidget.dart';
 import 'package:hotelier/widgets/AppDrawerWidget.dart';
 import 'package:hotelier/widgets/ButtonWidget.dart';
 import 'package:hotelier/widgets/TextFieldRegistrationWidget.dart';
-import 'package:provider/provider.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
   static const routeName = '/ForgetPasswordScreen';
@@ -38,7 +35,6 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    UserData userDataProvider = Provider.of<UserData>(context);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,

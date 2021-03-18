@@ -10,10 +10,11 @@ import 'package:hotelier/screens/EditUserData.dart';
 import 'package:hotelier/screens/BuyCardScreen.dart';
 import 'package:hotelier/screens/PersonalInformationScreen.dart';
 import 'package:hotelier/screens/RenewRegistrationScreen.dart';
+import 'package:hotelier/screens/SponsorsScreen.dart';
 import 'package:hotelier/screens/termsOfservice.dart';
 import 'package:hotelier/widgets/DrawerTabSpecialForMoney.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 
 import 'DrawerTabsWidget.dart';
 import '../Clippers/AppBarClipper.dart';
@@ -120,6 +121,9 @@ class LoggedInUserDrawer extends StatelessWidget {
               SizedBox(
                 height: 5,
               ),
+              DrawerTabsWidget(Icons.home_work, "شركاء النجاح", () {
+                Navigator.of(context).popAndPushNamed(SponsorsScreen.routeName);
+              }),
               InkWell(
                 child: DrawerTabSpecialForMoney( "المدفوعات",
                     () {

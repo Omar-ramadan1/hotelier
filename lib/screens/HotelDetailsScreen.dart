@@ -33,7 +33,7 @@ class HotelDetailsScreenState extends State<HotelDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     setState(() {
-      data = ModalRoute.of(context ).settings.arguments;
+      data = ModalRoute.of(context).settings.arguments;
     });
 print("data[video]");
 print(data["video"]);

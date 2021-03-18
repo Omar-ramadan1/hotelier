@@ -7,9 +7,10 @@ import 'package:hotelier/screens/BuyCardScreen.dart';
 import 'package:hotelier/screens/CartDetailsScreen.dart';
 import 'package:hotelier/screens/Complaining.dart';
 import 'package:hotelier/screens/Contact.dart';
-import 'package:hotelier/screens/EditHotelData.dart';
+import 'package:hotelier/screens/ControllingNumberOfHotelSSettingScreen.dart';
 import 'package:hotelier/screens/PersonalInformationScreen.dart';
 import 'package:hotelier/screens/RenewRegistrationScreen.dart';
+import 'package:hotelier/screens/SponsorsScreen.dart';
 import 'package:hotelier/screens/termsOfservice.dart';
 import 'package:hotelier/widgets/DrawerTabSpecialForMoney.dart';
 import 'package:provider/provider.dart';
@@ -114,12 +115,15 @@ class LoggedInHotelDrawer extends StatelessWidget {
               InkWell(
                 child: DrawerTabsWidget(Icons.settings, "الاعدادات", () {
                   Navigator.of(context)
-                      .popAndPushNamed(EditHotelData.routeName);
+                      .popAndPushNamed(ControllingNumberOfHotelSSettingScreen.routeName);
                 }),
               ),
               SizedBox(
                 height: 5,
               ),
+              DrawerTabsWidget(Icons.home_work, "شركاء النجاح", () {
+                Navigator.of(context).popAndPushNamed(SponsorsScreen.routeName);
+              }),
               InkWell(
                 child: DrawerTabSpecialForMoney( "المدفوعات",
                     () {

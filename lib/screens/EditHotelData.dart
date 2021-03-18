@@ -29,15 +29,18 @@ import 'package:provider/provider.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class EditHotelData extends StatefulWidget {
-  static const routeName = '/EditHotel';
+  final Map data;
 
+  static const routeName = '/EditHotelData';
+
+  const EditHotelData(this.data);
   @override
   _EditHotelDataState createState() => _EditHotelDataState();
 }
 
 class _EditHotelDataState extends State<EditHotelData> {
   TextEditingController _controller = new TextEditingController();
-  String discountValue = '10', cityId = 'الرياض', typeId , imageName ,  IsReservationsAvailable;
+  String Discount = '10', cityId = 'الرياض', typeId , imageName ,  IsReservationsAvailable = 'متاح';
   int allowedImageNumberToBeUploaded = 10;
   List<String> availableList = ['متاح' , 'غير متاح'];
   Key keyValue = ValueKey(new Random().nextInt(100));
@@ -56,28 +59,29 @@ class _EditHotelDataState extends State<EditHotelData> {
     super.initState();
     UserData userDataProvider = Provider.of<UserData>(context, listen: false);
     DataList dataListProvider = Provider.of<DataList>(context, listen: false);
-    setState(() {
-      data = userDataProvider.userData;
-      print(userDataProvider.userData);
-      dataListProvider.citiesList.forEach((element) {
-        print(element);
-        if (data["cityName"] == element["id"]) {
-          cityId = element["Name"];
-        }
+      setState(() {
+        data = widget.data;
+        // print(ModalRoute.of(context).settings.arguments);
+        dataListProvider.citiesList.forEach((element) {
+          // print(element);
+          if (data["cityName"] == element["id"]) {
+            cityId = element["Name"];
+          }
+        });
+        dataListProvider.categoryList.forEach((element) {
+          print(element);
+          if (data["typeId"] == element["id"]) {
+            typeId = element["Name"];
+          }
+        });
+        dataClone['Discount'] = data['Discount'];
+        dataClone['starRating'] = data['starRating'];
+        dataClone['address'] = data['address'];
+        imageName = data['userImg'];
+        allowedImageNumberToBeUploaded =
+            allowedImageNumberToBeUploaded - data['img'].length;
       });
-      dataListProvider.categoryList.forEach((element) {
-        print(element);
-        if (data["TypeId"] == element["id"]) {
-          typeId = element["Name"];
-        }
-      });
-      dataClone['discountValue'] = data['discountValue'];
-      dataClone['starRating'] = data['starRating'];
-      dataClone['address'] = data['address'];
-      imageName = data['userImg'];
-      allowedImageNumberToBeUploaded =
-          allowedImageNumberToBeUploaded - data['img'].length;
-    });
+
     print(data['IsReservationsAvailable']);
     if(data['IsReservationsAvailable']  == true){
       IsReservationsAvailable = 'متاح';
@@ -88,7 +92,7 @@ class _EditHotelDataState extends State<EditHotelData> {
 
   @override
   Widget build(BuildContext context) {
-    print(keyValue);
+  print(ModalRoute.of(context).settings.arguments);
     UserData userDataProvider = Provider.of<UserData>(context);
     DataList dataListProvider = Provider.of<DataList>(context);
     Size size = MediaQuery.of(context).size;
@@ -159,7 +163,7 @@ class _EditHotelDataState extends State<EditHotelData> {
                   });
                 },
                 child: imageName == '' || imageName == null
-                    ? SignUpButtonWidget(data['name'], Icons.home_work_rounded,
+                    ? SignUpButtonWidget(data['Name'], Icons.home_work_rounded,
                         Color(0xFFF7BB85))
                     : Column(
                         children: [
@@ -325,7 +329,7 @@ class _EditHotelDataState extends State<EditHotelData> {
                       ),
                     ),
                     DropdownWidget(
-                        dataClone['discountValue'].toString(),
+                        dataClone['Discount'].toString(),
                         [
                           '10',
                           '20',
@@ -341,7 +345,7 @@ class _EditHotelDataState extends State<EditHotelData> {
                        55,
                         25, (value) {
                       setState(() {
-                        dataClone['discountValue'] = int.parse(value);
+                        dataClone['Discount'] = int.parse(value);
                       });
                     }),
                   ],
@@ -465,30 +469,6 @@ class _EditHotelDataState extends State<EditHotelData> {
               SizedBox(
                 height: 20,
               ),
-              // Row(
-              //   children: [
-              //     Text(
-              //       '-:تعديل بيانات الحساب البنكى',
-              //       style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
-              //     )
-              //   ],
-              //   textDirection: TextDirection.rtl,
-              // ),
-              // EditTextFieldWidget(
-              //     data['BankName'] == null ? "اسم البنك" : data['BankName'],
-              //     (value) {
-              //   onChangeFunction(value, "BankName");
-              // }),
-              // EditTextFieldWidget(
-              //     data['BankNumber'] == null
-              //         ? "رقم الحساب البنكى"
-              //         : data['BankNumber'], (value) {
-              //   onChangeFunction(value, "BankNumber");
-              // }),
-              // EditTextFieldWidget(data['Bin'] == null ? "الايبان" : data['Bin'],
-              //     (value) {
-              //   onChangeFunction(value, "Bin");
-              // }),
               Container(
                 width: size.width - 20,
                 child: GridView.count(
@@ -497,7 +477,7 @@ class _EditHotelDataState extends State<EditHotelData> {
                   scrollDirection: Axis.vertical,
                   crossAxisCount: 3,
                   children: [
-                    for (var imageBody in data['img'])
+                    for (var imageBody in widget.data['img'])
                       Container(
                         margin: EdgeInsets.only(top: 10),
                         child: HotelImageEditWidget(imageBody, (pkMediaId) {
@@ -543,7 +523,7 @@ class _EditHotelDataState extends State<EditHotelData> {
                           var response = await http.post(
                             '$serverURL/User/EditHotel',
                             headers: <String, String>{
-                              'Authorization': 'Bearer ${data["access_token"]}',
+                              'Authorization': 'Bearer ${userDataProvider.userData["access_token"]}',
                               'Content-Type': 'application/json'
                             },
                             body: jsonEncode(dataClone),
@@ -620,9 +600,6 @@ class _EditHotelDataState extends State<EditHotelData> {
 
   uploadVideo() async {
     String name;
-    final snackBar = SnackBar(content: Text('please wait till video uploads'));
-    final snackBar1 = SnackBar(content: Text('video uploaded'));
-    final snackBar2 = SnackBar(content: Text('your video size is too large'));
     final picker = ImagePicker();
     PickedFile pickedFile = await picker.getVideo(source: ImageSource.gallery);
     // Scaffold.of(context).showSnackBar(snackBar);
@@ -667,7 +644,6 @@ class _EditHotelDataState extends State<EditHotelData> {
 
   uploadImages() async {
     List images = [];
-    final snackBar = SnackBar(content: Text('please wait till image uploads'));
     // final snackBar1 = SnackBar(content: Text('images uploaded'));
     List<Asset> resultList = List<Asset>();
 
@@ -687,7 +663,7 @@ class _EditHotelDataState extends State<EditHotelData> {
     resultList.forEach((element) async {
       var response = await uploadAssetImages(
           element, "image${ObjectId().toHexString()}.jpg");
-
+      UserData userDataProvider = Provider.of<UserData>(context , listen: false);
       response.stream.transform(utf8.decoder).listen((value) async {
         Map respondedData = jsonDecode(value);
         print(jsonDecode(value));
@@ -697,7 +673,7 @@ class _EditHotelDataState extends State<EditHotelData> {
         var response = await http.post(
           '$serverURL/Media/AddImg?imgName=${imgNameArray[0]}',
           headers: <String, String>{
-            'Authorization': 'Bearer ${data["access_token"]}',
+            'Authorization': 'Bearer ${userDataProvider.userData["access_token"]}',
             'Content-Type': 'application/json'
           },
         );
@@ -719,6 +695,7 @@ class _EditHotelDataState extends State<EditHotelData> {
   }
 
   void deleteImageFunction(pkMediaId) async {
+    UserData userDataProvider = Provider.of<UserData>(context , listen: false);
     List filter = [];
     print(pkMediaId);
     data['img'].forEach((element) {
@@ -735,7 +712,7 @@ class _EditHotelDataState extends State<EditHotelData> {
     var response = await http.post(
       '$serverURL/Media/DeleatImg?id=$pkMediaId',
       headers: <String, String>{
-        'Authorization': 'Bearer ${data["access_token"]}',
+        'Authorization': 'Bearer ${userDataProvider.userData["access_token"]}',
         'Content-Type': 'application/json'
       },
     );
