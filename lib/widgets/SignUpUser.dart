@@ -247,7 +247,7 @@ class _SignUpUserState extends State<SignUpUser> {
 
                             if (response.statusCode == 200) {
                               var response = await http.post(
-                                'http://api.hoteliercard.com/api/Account/CustomToken',
+                                '$serverURL/Account/CustomToken',
                                 headers: <String, String>{
                                   "Accept": "application/json",
                                   "Content-Type": "application/json"
@@ -256,9 +256,12 @@ class _SignUpUserState extends State<SignUpUser> {
                               );
                               Scaffold.of(context).showSnackBar(SnackBar(
                                   content: Text('تم التسجيل بنجاح')));
-                              Map body = jsonDecode(response.body);
+                              if(response.statusCode == 200){
+                                Map body = jsonDecode(response.body);
 
-                              userData.updateUserInfo(body);
+                                userData.updateUserInfo(body);
+                              }
+
                               Navigator.of(context)
                                   .popUntil((route) {
                                 print(route.settings.name);

@@ -44,12 +44,12 @@ class _ContactState extends State<Contact> {
         preferredSize: Size.fromHeight(125.0),
         child: AppBar(
           automaticallyImplyLeading: true,
-          actions: [
-            IconButton(
-              icon: Icon(Icons.arrow_forward_rounded, color: Colors.white),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ],
+          // actions: [
+          //   IconButton(
+          //     icon: Icon(Icons.arrow_forward_rounded, color: Colors.white),
+          //     onPressed: () => Navigator.of(context).pop(),
+          //   ),
+          // ],
           backgroundColor: Colors.white,
           shadowColor: Colors.transparent,
           flexibleSpace:
@@ -57,7 +57,7 @@ class _ContactState extends State<Contact> {
         ),
       ),
       drawerEdgeDragWidth: 200,
-      drawer: AppDrawerWidget(),
+      endDrawer: AppDrawerWidget(),
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.all(20),

@@ -70,12 +70,12 @@ class _EditUserDataState extends State<EditUserData> {
         preferredSize: Size.fromHeight(125.0),
         child: AppBar(
           automaticallyImplyLeading: true,
-          actions: [
-            IconButton(
-              icon: Icon(Icons.arrow_forward_rounded, color: Colors.white),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ],
+          // actions: [
+          //   IconButton(
+          //     icon: Icon(Icons.arrow_forward_rounded, color: Colors.white),
+          //     onPressed: () => Navigator.of(context).pop(),
+          //   ),
+          // ],
           backgroundColor: Colors.white,
           shadowColor: Colors.transparent,
           flexibleSpace:
@@ -83,7 +83,7 @@ class _EditUserDataState extends State<EditUserData> {
         ),
       ),
       drawerEdgeDragWidth: 200,
-      drawer: AppDrawerWidget(),
+      endDrawer: AppDrawerWidget(),
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: Container(
@@ -142,7 +142,7 @@ class _EditUserDataState extends State<EditUserData> {
                         ],
                       ),
               ),
-              EditTextFieldWidget("الاسم", (value) {
+              EditTextFieldWidget("الاسم" , data["name"], (value) {
                 onChangeFunction(value, "name");
               }),
               // EditTextFieldWidget(data['idNumber'], (value) {
@@ -241,7 +241,7 @@ class _EditUserDataState extends State<EditUserData> {
               SizedBox(
                 height: 10,
               ),
-              EditTextFieldWidget("رقم الهاتف", (value) {
+              EditTextFieldWidget("رقم الهاتف" , data["phone"], (value) {
                 onChangeFunction(value, "phone");
               }),
               SizedBox(

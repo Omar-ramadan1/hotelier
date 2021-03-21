@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hotelier/Constant/Constant.dart';
 import 'package:hotelier/Model/ImportantInformationModel.dart';
 import 'package:hotelier/Model/UserData.dart';
-import 'package:hotelier/screens/SuccessScreen.dart';
+import 'package:hotelier/screens/Congratulation.dart';
 import 'package:hotelier/widgets/AppBarWidget.dart';
 import 'package:hotelier/widgets/AppDrawerWidget.dart';
 import 'package:hotelier/widgets/ButtonWidget.dart';
@@ -61,19 +61,19 @@ class _PaymentWidgetState extends State<PaymentWidget> {
         preferredSize: Size.fromHeight(125.0),
         child: AppBar(
           automaticallyImplyLeading: true,
-          actions: [
-            IconButton(
-              icon: Icon(Icons.arrow_forward_rounded, color: Colors.white),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ],
+          // actions: [
+          //   IconButton(
+          //     icon: Icon(Icons.arrow_forward_rounded, color: Colors.white),
+          //     onPressed: () => Navigator.of(context).pop(),
+          //   ),
+          // ],
           backgroundColor: Colors.white,
           shadowColor: Colors.transparent,
           flexibleSpace: AppBarWidget("assets/paymentAppBarImage.jpg", ""),
         ),
       ),
       drawerEdgeDragWidth: 200,
-      drawer: AppDrawerWidget(),
+      endDrawer: AppDrawerWidget(),
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.all(20),
@@ -109,7 +109,15 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                               "من فضلك قم بتسجيل الدخول لاتمام العملية");
                         } else {
                           if(cardValue == "mastercard" || cardValue == "mada" || cardValue == "visa"){
-                            String url = 'https://hoteliercard.com/Checkout.html?id=${userDataProvider.userData["userId"]}&firstTime=true';
+                            var response  = await http.post(
+                              '$serverURL/Order/AddOrder?isMinorRenewal=false&IsOnlinePayment=true',
+                              headers: <String, String>{
+                                'Authorization': 'Bearer ${userDataProvider.userData["access_token"]}',
+                                'Content-Type': 'application/json'
+                              },
+                            );
+                            print(response.statusCode);
+                            String url = 'https://hoteliercard.com/Checkout.html?id=${userDataProvider.userData["userId"]}&firstTime=true&IsOnlinePayment=true';
                             if (await canLaunch(url)) {
                               await launch(url);
                             }else{
@@ -119,14 +127,14 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                             }
                           }else{
                             var response  = await http.post(
-                              '$serverURL/Order/AddOrder?isMinorRenewal=false',
+                              '$serverURL/Order/AddOrder?isMinorRenewal=false&IsOnlinePayment=false',
                               headers: <String, String>{
                                 'Authorization': 'Bearer ${userDataProvider.userData["access_token"]}',
                                 'Content-Type': 'application/json'
                               },
                             );
                             if(response.statusCode >= 200 && response.statusCode < 300){
-                              Navigator.of(context).popAndPushNamed(SuccessScreen.routeName);
+                              Navigator.of(context).popAndPushNamed(Congratulation.routeName);
                             }else{
                               PaymentAlertDialogMessage().showInMessageWidget(
                                   context,
@@ -145,7 +153,15 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                               "من فضلك قم بتسجيل الدخول لاتمام العملية");
                         } else {
                           if(cardValue == "mastercard" || cardValue == "mada" || cardValue == "visa"){
-                            String url = 'https://hoteliercard.com/Checkout.html?id=${userDataProvider.userData["userId"]}&firstTime=false';
+                            var response  = await http.post(
+                              '$serverURL/Order/AddOrder?isMinorRenewal=true&IsOnlinePayment=true',
+                              headers: <String, String>{
+                                'Authorization': 'Bearer ${userDataProvider.userData["access_token"]}',
+                                'Content-Type': 'application/json'
+                              },
+                            );
+                            print(response.statusCode);
+                            String url = 'https://hoteliercard.com/Checkout.html?id=${userDataProvider.userData["userId"]}&firstTime=false?&IsOnlinePayment=true';
                             if (await canLaunch(url)) {
                               await launch(url);
                             }else{
@@ -154,14 +170,14 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                             }
                           }else{
                             var response  = await http.post(
-                              '$serverURL/Order/AddOrder?isMinorRenewal=true',
+                              '$serverURL/Order/AddOrder?isMinorRenewal=true&IsOnlinePayment=false',
                               headers: <String, String>{
                                 'Authorization': 'Bearer ${userDataProvider.userData["access_token"]}',
                                 'Content-Type': 'application/json'
                               },
                             );
                             if(response.statusCode >= 200 && response.statusCode < 300){
-                              Navigator.of(context).popAndPushNamed(SuccessScreen.routeName);
+                              Navigator.of(context).popAndPushNamed(Congratulation.routeName);
                             }else{
                               PaymentAlertDialogMessage().showInMessageWidget(
                                   context,

@@ -44,16 +44,16 @@ class _ComplainingState extends State<Complaining> {
           shadowColor: Colors.transparent,
           flexibleSpace:
               AppBarWidget("assets/complainAppBarImage.jpg", "شكاوى و مقترحات"),
-          actions: [
-            IconButton(
-              icon: Icon(Icons.arrow_forward_rounded, color: Colors.white),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ],
+          // actions: [
+          //   IconButton(
+          //     icon: Icon(Icons.arrow_forward_rounded, color: Colors.white),
+          //     onPressed: () => Navigator.of(context).pop(),
+          //   ),
+          // ],
         ),
       ),
       drawerEdgeDragWidth: 200,
-      drawer: AppDrawerWidget(),
+      endDrawer: AppDrawerWidget(),
       body: SingleChildScrollView(
         child: Container(
           color: Colors.white,

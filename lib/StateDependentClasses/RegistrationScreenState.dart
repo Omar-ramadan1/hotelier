@@ -75,7 +75,7 @@ class RegistrationScreenState {
                                   });
                                   print(this.state.data["imageURL"]);
                                   var response = await http.post(
-                                    '$serverURL/User/RegisterHotel',
+                                    '$serverURL/User/V2/RegisterHotel',
                                     headers: <String, String>{
                                       'Content-Type': 'application/json',
                                     },
@@ -167,7 +167,7 @@ class RegistrationScreenState {
                     });
                     print(this.state.data["imageURL"]);
                     var response = await http.post(
-                      '$serverURL/User/RegisterHotel',
+                      '$serverURL/User/V2/RegisterHotel',
                       headers: <String, String>{
                         'Content-Type': 'application/json',
                       },

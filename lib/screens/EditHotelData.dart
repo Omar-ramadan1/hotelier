@@ -40,11 +40,17 @@ class EditHotelData extends StatefulWidget {
 
 class _EditHotelDataState extends State<EditHotelData> {
   TextEditingController _controller = new TextEditingController();
-  String Discount = '10', cityId = 'الرياض', typeId , imageName ,  IsReservationsAvailable = 'متاح';
+  String Discount = '10',
+      cityId = 'الرياض',
+      typeId,
+      imageName,
+      IsReservationsAvailable = 'متاح';
   int allowedImageNumberToBeUploaded = 10;
-  List<String> availableList = ['متاح' , 'غير متاح'];
+  List<String> availableList = ['متاح', 'غير متاح'];
   Key keyValue = ValueKey(new Random().nextInt(100));
-  bool checkBoxValue = false, isVideoLoading = false , isSubmittingRegistration = false;
+  bool checkBoxValue = false,
+      isVideoLoading = false,
+      isSubmittingRegistration = false;
   Map data, dataClone = {}, dataErrorMessage = {};
   onChangeFunction(value, String variableName) {
     setState(() {
@@ -59,40 +65,41 @@ class _EditHotelDataState extends State<EditHotelData> {
     super.initState();
     UserData userDataProvider = Provider.of<UserData>(context, listen: false);
     DataList dataListProvider = Provider.of<DataList>(context, listen: false);
-      setState(() {
-        data = widget.data;
-        // print(ModalRoute.of(context).settings.arguments);
-        dataListProvider.citiesList.forEach((element) {
-          // print(element);
-          if (data["cityName"] == element["id"]) {
-            cityId = element["Name"];
-          }
-        });
-        dataListProvider.categoryList.forEach((element) {
-          print(element);
-          if (data["typeId"] == element["id"]) {
-            typeId = element["Name"];
-          }
-        });
-        dataClone['Discount'] = data['Discount'];
-        dataClone['starRating'] = data['starRating'];
-        dataClone['address'] = data['address'];
-        imageName = data['userImg'];
-        allowedImageNumberToBeUploaded =
-            allowedImageNumberToBeUploaded - data['img'].length;
+    setState(() {
+      data = widget.data;
+      // print(ModalRoute.of(context).settings.arguments);
+      dataListProvider.citiesList.forEach((element) {
+        // print(element);
+        if (data["cityName"] == element["id"]) {
+          cityId = element["Name"];
+        }
       });
+      dataListProvider.categoryList.forEach((element) {
+        print(element);
+        if (data["typeId"] == element["id"]) {
+          typeId = element["Name"];
+        }
+      });
+      dataClone['Discount'] = data['Discount'];
+      dataClone['starRating'] = data['starRating'];
+      dataClone['Address'] = data['Address'];
+      dataClone['HotelId'] = data['id'];
+      imageName = data['userImg'];
+      allowedImageNumberToBeUploaded =
+          allowedImageNumberToBeUploaded - data['img'].length;
+    });
 
     print(data['IsReservationsAvailable']);
-    if(data['IsReservationsAvailable']  == true){
+    if (data['IsReservationsAvailable'] == true) {
       IsReservationsAvailable = 'متاح';
-    }else{
+    } else {
       IsReservationsAvailable = 'غير متاح';
     }
   }
 
   @override
   Widget build(BuildContext context) {
-  print(ModalRoute.of(context).settings.arguments);
+    print(ModalRoute.of(context).settings.arguments);
     UserData userDataProvider = Provider.of<UserData>(context);
     DataList dataListProvider = Provider.of<DataList>(context);
     Size size = MediaQuery.of(context).size;
@@ -103,12 +110,12 @@ class _EditHotelDataState extends State<EditHotelData> {
         preferredSize: Size.fromHeight(125.0),
         child: AppBar(
           automaticallyImplyLeading: true,
-          actions: [
-            IconButton(
-              icon: Icon(Icons.arrow_forward_rounded, color: Colors.white),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ],
+          // actions: [
+          //   IconButton(
+          //     icon: Icon(Icons.arrow_forward_rounded, color: Colors.white),
+          //     onPressed: () => Navigator.of(context).pop(),
+          //   ),
+          // ],
           backgroundColor: Colors.white,
           shadowColor: Colors.transparent,
           flexibleSpace:
@@ -116,7 +123,7 @@ class _EditHotelDataState extends State<EditHotelData> {
         ),
       ),
       drawerEdgeDragWidth: 200,
-      drawer: AppDrawerWidget(),
+      endDrawer: AppDrawerWidget(),
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(15),
@@ -156,7 +163,7 @@ class _EditHotelDataState extends State<EditHotelData> {
                         PaintingBinding.instance.imageCache.clearLiveImages();
                         PaintingBinding.instance.imageCache.clear();
                         dataClone["userImg"] = imgNameArray[0];
-                        imageName =  imgNameArray[0];
+                        imageName = imgNameArray[0];
                         keyValue = ValueKey(new Random().nextInt(100));
                       });
                     });
@@ -169,43 +176,52 @@ class _EditHotelDataState extends State<EditHotelData> {
                         children: [
                           CircleAvatar(
                             backgroundImage: Image.network(
-                                    '${anotherServerURL}Content/Images/$imageName' , key: keyValue,)
-                                .image,
+                              '${anotherServerURL}Content/Images/$imageName',
+                              key: keyValue,
+                            ).image,
                             radius: 50,
                           ),
                           Text(data['name']),
                         ],
                       ),
               ),
-              EditTextFieldWidget("اسم الفندق", (value) {
+              EditTextFieldWidget("اسم الفندق", data["Name"], (value) {
                 onChangeFunction(value, "name");
               }),
-              EditTextFieldWidget("سعر الغرفة".toString(), (value) {
-                onChangeFunction(value, "RoomPrice");
-              } , textInputType: TextInputType.number,),
-              SizedBox(height: 30,),
+              EditTextFieldWidget(
+                "سعر الغرفة".toString(),
+                data["RoomPrice"].toString(),
+                (value) {
+                  onChangeFunction(value, "RoomPrice");
+                },
+                textInputType: TextInputType.number,
+              ),
+              SizedBox(
+                height: 30,
+              ),
               TextField(
                 controller: _controller,
                 maxLengthEnforced: true,
-
                 maxLines: 4,
                 maxLength: 2000,
                 keyboardType: TextInputType.text,
                 textAlign: TextAlign.right,
                 onChanged: (value) {
-                  if(value.length <= 2000){
+                  if (value.length <= 2000) {
                     onChangeFunction(value, 'Notes');
-                  }else{
+                  } else {
                     // _controller.text = data['Notes'];
                     _controller.value = TextEditingValue(
-                        text: data['Notes'],
-                        selection: TextSelection(isDirectional: false , baseOffset: 4 , extentOffset: 4)
-                    );
+                        text: dataClone['Notes'],
+                        selection: TextSelection(
+                            isDirectional: false,
+                            baseOffset: 4,
+                            extentOffset: 4));
                   }
                   print(value.length);
                 },
                 decoration: InputDecoration(
-                  hintText: "الوصف او الباكدج",
+                  hintText: data['Notes'],
                   errorText: dataErrorMessage['Notes'],
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
@@ -231,18 +247,22 @@ class _EditHotelDataState extends State<EditHotelData> {
                           children: [
                             Container(
                               padding: EdgeInsets.only(top: 20),
-                              child: Text("المدينة" , style: TextStyle(fontWeight: FontWeight.w800),),
+                              child: Text(
+                                "المدينة",
+                                style: TextStyle(fontWeight: FontWeight.w800),
+                              ),
                             ),
                             Container(
                               width: 100,
                               height: 75,
                               padding: EdgeInsets.only(top: 20),
-                              child: DropdownWidget(cityId, dataListProvider.citiesNames, 80, 30,
-                                      (value) {
-                                    setState(() {
-                                      cityId = value;
-                                    });
-                                  }),
+                              child: DropdownWidget(
+                                  cityId, dataListProvider.citiesNames, 80, 30,
+                                  (value) {
+                                setState(() {
+                                  cityId = value;
+                                });
+                              }),
                             ),
                           ],
                         ),
@@ -285,6 +305,7 @@ class _EditHotelDataState extends State<EditHotelData> {
                   setState(() {
                     dataClone['latitude'] = position.latitude;
                     dataClone['longitude'] = position.longitude;
+                    dataClone['Address'] = address.first.addressLine;
                     dataClone['address'] = address.first.addressLine;
                   });
                 },
@@ -314,6 +335,8 @@ class _EditHotelDataState extends State<EditHotelData> {
                 'phone',
                 phone1: "رقم الجوال",
                 phone2: "رقم الهاتف",
+                phone1Text: data['PhoneNumber'],
+                phone2Text: data['PhoneNumber2'],
                 isEditWidget: true,
               ),
               Container(
@@ -342,7 +365,7 @@ class _EditHotelDataState extends State<EditHotelData> {
                           '90',
                           '100'
                         ],
-                       55,
+                        55,
                         25, (value) {
                       setState(() {
                         dataClone['Discount'] = int.parse(value);
@@ -416,16 +439,14 @@ class _EditHotelDataState extends State<EditHotelData> {
                       style: TextStyle(fontWeight: FontWeight.w900),
                     ),
                     DropdownWidget(
-                        IsReservationsAvailable,
-                        availableList,
-                        80,
-                        25, (value) {
+                        IsReservationsAvailable, availableList, 80, 25,
+                        (value) {
                       setState(() {
                         IsReservationsAvailable = value;
-                        if( IsReservationsAvailable == 'متاح'){
+                        if (IsReservationsAvailable == 'متاح') {
                           dataClone["IsReservationsAvailable"] = true;
                           print(dataClone["IsReservationsAvailable"]);
-                        }else{
+                        } else {
                           dataClone["IsReservationsAvailable"] = false;
                           print(dataClone["IsReservationsAvailable"]);
                         }
@@ -492,45 +513,53 @@ class _EditHotelDataState extends State<EditHotelData> {
                 textDirection: TextDirection.rtl,
                 children: [
                   InkWell(
-                      onTap: () async {
-                        var citiesListClone = dataListProvider.citiesList;
-                        var categoryListClone = dataListProvider.categoryList;
-                        citiesListClone.forEach((e) => {
-                              if (e["Name"] == cityId)
-                                {
-                                  dataClone["CityId"] = e["id"],
-                                }
-                            });
-                        categoryListClone.forEach((e) => {
-                              if (e["Name"] == typeId)
-                                {
-                                  dataClone["TypeId"] = e["id"],
-                                }
-                            });
-                        data.forEach((key, value) {
-                          if (key == 'access_token') {
-                          } else if (dataClone[key] == null) {
-                            setState(() {
-                              dataClone[key] = value;
-                            });
-                          }
-                        });
-                        print(dataClone);
-                        if(isCommercialRegistrationIs10Digits(dataClone['commercialRegistrationNo'])){
-                          setState(() {
-                            isSubmittingRegistration = true;
+                    onTap: () async {
+                      var citiesListClone = dataListProvider.citiesList;
+                      var categoryListClone = dataListProvider.categoryList;
+                      citiesListClone.forEach((e) => {
+                            if (e["Name"] == cityId)
+                              {
+                                dataClone["CityId"] = e["id"],
+                              }
                           });
-                          var response = await http.post(
-                            '$serverURL/User/EditHotel',
-                            headers: <String, String>{
-                              'Authorization': 'Bearer ${userDataProvider.userData["access_token"]}',
-                              'Content-Type': 'application/json'
-                            },
-                            body: jsonEncode(dataClone),
-                          );
-                          print(response.statusCode);
-                          print(response.body);
+                      categoryListClone.forEach((e) => {
+                            if (e["Name"] == typeId)
+                              {
+                                dataClone["TypeId"] = e["id"],
+                              }
+                          });
+                      data.forEach((key, value) {
+                        if (key == 'access_token') {
+                        } else if (dataClone[key] == null) {
+                          setState(() {
+                            dataClone[key] = value;
+                          });
+                        }
+                      });
+                      print(dataClone);
 
+                      // isCommercialRegistrationIs10Digits is always true as it's cancelled for now
+
+                      if (isCommercialRegistrationIs10Digits(
+                          dataClone['commercialRegistrationNo'])) {
+                        setState(() {
+                          isSubmittingRegistration = true;
+                        });
+                        var response = await http.post(
+                          '$serverURL/User/EditHotelV2',
+                          headers: <String, String>{
+                            'Authorization':
+                                'Bearer ${userDataProvider.userData["access_token"]}',
+                            'Content-Type': 'application/json'
+                          },
+                          body: jsonEncode(dataClone),
+                        );
+                        print(response.statusCode);
+                        print(response.body);
+                        if (response.statusCode == 200) {
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pop();
+                        } else {
                           var body = jsonDecode(response.body);
                           setState(() {
                             isSubmittingRegistration = false;
@@ -539,28 +568,32 @@ class _EditHotelDataState extends State<EditHotelData> {
                             dataClone["access_token"] = data['access_token'];
                             userDataProvider.userData = dataClone;
                             Navigator.of(context).pop();
-                            }else{
-                            PaymentAlertDialogMessage().showInMessageWidget(context,
-                                "من فضلك قم بتسجيل الدخول مرة اخرى");
+                          } else {
+                            PaymentAlertDialogMessage().showInMessageWidget(
+                                context, "من فضلك قم بتسجيل الدخول مرة اخرى");
                             userDataProvider.userData = null;
                             Navigator.of(context).pop();
                           }
-
-                        }else{
-                          setState(() {
-                            dataErrorMessage['commercialRegistrationNo'] = 'من فضلك  لابد من ادخال عشر ارقام';
-                          });
                         }
-                      },
-                      child: ButtonChildWidget(
-                          "تعديل حساب", Color(0xFFF7BB85), 18, 150),),
-                  isSubmittingRegistration ? Container(
-                    margin: EdgeInsets.only(top: 20),
-                    child: SpinKitFadingCircle(
-                      color: Colors.lightBlueAccent,
-                      size: 20.0,
-                    ),
-                  ) : Container(),
+                      } else {
+                        setState(() {
+                          dataErrorMessage['commercialRegistrationNo'] =
+                              'من فضلك  لابد من ادخال عشر ارقام';
+                        });
+                      }
+                    },
+                    child: ButtonChildWidget(
+                        "تعديل حساب", Color(0xFFF7BB85), 18, 150),
+                  ),
+                  isSubmittingRegistration
+                      ? Container(
+                          margin: EdgeInsets.only(top: 20),
+                          child: SpinKitFadingCircle(
+                            color: Colors.lightBlueAccent,
+                            size: 20.0,
+                          ),
+                        )
+                      : Container(),
                 ],
               ),
               SizedBox(
@@ -574,17 +607,17 @@ class _EditHotelDataState extends State<EditHotelData> {
   }
 
   locationTextHandler() {
-    if (dataClone['address'] != null) {
+    if (dataClone['Address'] != null) {
       return Container(
           width: 150,
           margin: EdgeInsets.only(right: 5),
           padding: EdgeInsets.all(5),
           decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
           child: Text(
-            dataClone['address'],
+            dataClone['Address'],
             style: TextStyle(fontSize: 13, color: mainAppColor),
           ));
-    } else if (dataErrorMessage['address'] != null) {
+    } else if (dataErrorMessage['Address'] != null) {
       return Container(
         width: 150,
         margin: EdgeInsets.only(right: 5),
@@ -596,7 +629,6 @@ class _EditHotelDataState extends State<EditHotelData> {
       return Container();
     }
   }
-
 
   uploadVideo() async {
     String name;
@@ -621,7 +653,7 @@ class _EditHotelDataState extends State<EditHotelData> {
         if (mounted) {
           setState(() {
             dataClone["videoURL"] = videoNameArray[0];
-              isVideoLoading = false;
+            isVideoLoading = false;
             // Scaffold.of(context).showSnackBar(snackBar1);
           });
         }
@@ -631,7 +663,7 @@ class _EditHotelDataState extends State<EditHotelData> {
     }
   }
 
-  isCommercialRegistrationIs10Digits (String data){
+  isCommercialRegistrationIs10Digits(String data) {
     // RegExp regExp = new RegExp(
     //   r"^[0-9]{10}$",
     //   caseSensitive: false,
@@ -663,7 +695,7 @@ class _EditHotelDataState extends State<EditHotelData> {
     resultList.forEach((element) async {
       var response = await uploadAssetImages(
           element, "image${ObjectId().toHexString()}.jpg");
-      UserData userDataProvider = Provider.of<UserData>(context , listen: false);
+      UserData userDataProvider = Provider.of<UserData>(context, listen: false);
       response.stream.transform(utf8.decoder).listen((value) async {
         Map respondedData = jsonDecode(value);
         print(jsonDecode(value));
@@ -673,7 +705,8 @@ class _EditHotelDataState extends State<EditHotelData> {
         var response = await http.post(
           '$serverURL/Media/AddImg?imgName=${imgNameArray[0]}',
           headers: <String, String>{
-            'Authorization': 'Bearer ${userDataProvider.userData["access_token"]}',
+            'Authorization':
+                'Bearer ${userDataProvider.userData["access_token"]}',
             'Content-Type': 'application/json'
           },
         );
@@ -695,7 +728,7 @@ class _EditHotelDataState extends State<EditHotelData> {
   }
 
   void deleteImageFunction(pkMediaId) async {
-    UserData userDataProvider = Provider.of<UserData>(context , listen: false);
+    UserData userDataProvider = Provider.of<UserData>(context, listen: false);
     List filter = [];
     print(pkMediaId);
     data['img'].forEach((element) {
@@ -720,4 +753,3 @@ class _EditHotelDataState extends State<EditHotelData> {
     print(response.body);
   }
 }
-

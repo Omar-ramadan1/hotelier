@@ -41,6 +41,19 @@ class _ControllingNumberOfHotelSSettingScreenState
       });
     }
   }
+  filterDataList(int id){
+    List dataClone = [];
+    data.forEach((element) {
+      if(element["id"] == id){
+
+      }else{
+        dataClone.add(element);
+      }
+      setState(() {
+        data = dataClone;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,12 +65,12 @@ class _ControllingNumberOfHotelSSettingScreenState
         preferredSize: Size.fromHeight(125.0),
         child: AppBar(
           automaticallyImplyLeading: true,
-          actions: [
-            IconButton(
-              icon: Icon(Icons.arrow_forward_rounded, color: Colors.white),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ],
+          // actions: [
+          //   IconButton(
+          //     icon: Icon(Icons.arrow_forward_rounded, color: Colors.white),
+          //     onPressed: () => Navigator.of(context).pop(),
+          //   ),
+          // ],
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
           flexibleSpace:
@@ -65,14 +78,14 @@ class _ControllingNumberOfHotelSSettingScreenState
         ),
       ),
       drawerEdgeDragWidth: 200,
-      drawer: AppDrawerWidget(),
+      endDrawer: AppDrawerWidget(),
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         padding: EdgeInsets.only(top: 150),
         child: Column(
           children: [
             for(int i = 0 ; i < data.length ; i++)
-            CNOHSSHIW(data[i]),
+            CNOHSSHIW(data[i] , filterDataList),
           ],
         ),
       ),

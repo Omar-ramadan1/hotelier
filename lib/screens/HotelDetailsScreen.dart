@@ -44,12 +44,12 @@ print(data["video"]);
         child: AppBar(
           excludeHeaderSemantics: false,
           automaticallyImplyLeading: true,
-          actions: [
-            IconButton(
-              icon: Icon(Icons.arrow_forward_rounded, color: Colors.white),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ],
+          // actions: [
+          //   IconButton(
+          //     icon: Icon(Icons.arrow_forward_rounded, color: Colors.white),
+          //     onPressed: () => Navigator.of(context).pop(),
+          //   ),
+          // ],
           backgroundColor: Colors.white,
           shadowColor: Colors.transparent,
           flexibleSpace:
@@ -59,7 +59,7 @@ print(data["video"]);
       drawerEnableOpenDragGesture: false,
       endDrawerEnableOpenDragGesture: false,
       drawerEdgeDragWidth: 200,
-      drawer: AppDrawerWidget(),
+      endDrawer: AppDrawerWidget(),
       body: SingleChildScrollView(
         child: Container(
           color: Color(0xFFFFFFFF),

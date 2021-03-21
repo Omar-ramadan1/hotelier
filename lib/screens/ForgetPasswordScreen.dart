@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:hotelier/Constant/Constant.dart';
 import 'package:hotelier/widgets/PaymentAlertDialogMessage.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -43,19 +44,19 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
         preferredSize: Size.fromHeight(125.0),
         child: AppBar(
           automaticallyImplyLeading: true,
-          actions: [
-            IconButton(
-              icon: Icon(Icons.arrow_forward_rounded, color: Colors.white),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ],
+          // actions: [
+          //   IconButton(
+          //     icon: Icon(Icons.arrow_forward_rounded, color: Colors.white),
+          //     onPressed: () => Navigator.of(context).pop(),
+          //   ),
+          // ],
           backgroundColor: Colors.white,
           shadowColor: Colors.transparent,
           flexibleSpace: AppBarWidget("assets/hotel-bell.jpg", ""),
         ),
       ),
       drawerEdgeDragWidth: 200,
-      drawer: AppDrawerWidget(),
+      endDrawer: AppDrawerWidget(),
       body: SingleChildScrollView(
         padding: EdgeInsets.only(top: 20),
         child: Center(
@@ -101,9 +102,8 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                               isSubmittingRegistration = true;
                             });
                             var response = await http.post(
-                              'http://api.hoteliercard.com/api/Account/PasswordResetByEmail?Email=${data["email"]}',
+                              '$serverURL/Account/PasswordResetByEmail?Email=${data["email"]}',
                               headers: <String, String>{
-                                "Accept": "application/json",
                                 "Content-Type": "application/json",
                               },
                             );

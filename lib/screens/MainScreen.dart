@@ -28,7 +28,7 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
       drawerEdgeDragWidth: 200,
-      drawer: AppDrawerWidget(),
+      endDrawer: AppDrawerWidget(),
       body: Container(
         padding: EdgeInsets.only(top: 30),
         color: Colors.white,

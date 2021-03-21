@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hotelier/Constant/Constant.dart';
 import 'package:hotelier/widgets/AppBarWidget.dart';
@@ -15,6 +16,7 @@ class SponsorsScreen extends StatefulWidget {
 
 class _SponsorsScreenState extends State<SponsorsScreen> {
   List data = [];
+  final key = new GlobalKey<FormState>();
   @override
   void initState() {
     // TODO: implement initState
@@ -47,12 +49,12 @@ class _SponsorsScreenState extends State<SponsorsScreen> {
         preferredSize: Size.fromHeight(125.0),
         child: AppBar(
           automaticallyImplyLeading: true,
-          actions: [
-            IconButton(
-              icon: Icon(Icons.arrow_forward_rounded, color: Colors.white),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ],
+          // actions: [
+          //   IconButton(
+          //     icon: Icon(Icons.arrow_forward_rounded, color: Colors.white),
+          //     onPressed: () => Navigator.of(context).pop(),
+          //   ),
+          // ],
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
           flexibleSpace:
@@ -60,7 +62,7 @@ class _SponsorsScreenState extends State<SponsorsScreen> {
         ),
       ),
       drawerEdgeDragWidth: 200,
-      drawer: AppDrawerWidget(),
+      endDrawer: AppDrawerWidget(),
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         padding: EdgeInsets.only(top: 150),

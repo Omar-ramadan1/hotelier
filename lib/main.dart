@@ -21,7 +21,6 @@ import 'package:hotelier/screens/HotelDetailsScreen.dart';
 import 'package:hotelier/screens/SplashScreenWidget.dart';
 import 'package:hotelier/screens/BuyCardScreen.dart';
 import 'package:hotelier/screens/EditUserData.dart';
-import 'package:hotelier/screens/EditHotelData.dart';
 import 'package:hotelier/screens/SpecialOfferScreen.dart';
 import 'package:hotelier/screens/Congratulation.dart';
 import 'package:hotelier/screens/SponsorsScreen.dart';
@@ -30,6 +29,8 @@ import 'package:hotelier/screens/termsOfservice.dart';
 import 'package:hotelier/Model/ImportantInformationModel.dart';
 import 'package:provider/provider.dart';
 
+
+// River' covered by ITZY YEJI
 void main() {
   runApp(
     /// Providers are above [MyApp] instead of inside it, so that tests
