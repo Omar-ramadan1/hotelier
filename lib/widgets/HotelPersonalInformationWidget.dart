@@ -190,7 +190,7 @@ class _HotelPersonalInformationWidgetState
                     )
                   : Container(),
               SizedBox(
-                height: 40,
+                height: 80,
               ),
             ],
           ),

@@ -84,6 +84,7 @@ class _ControllingNumberOfHotelSSettingScreenState
         padding: EdgeInsets.only(top: 150),
         child: Column(
           children: [
+            Text("يوجد اضافة فندق اسفل صفحة حسابى" , style: TextStyle(fontWeight: FontWeight.w700),),
             for(int i = 0 ; i < data.length ; i++)
             CNOHSSHIW(data[i] , filterDataList),
           ],

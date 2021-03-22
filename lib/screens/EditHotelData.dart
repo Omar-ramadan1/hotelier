@@ -186,10 +186,10 @@ class _EditHotelDataState extends State<EditHotelData> {
                       ),
               ),
               EditTextFieldWidget("اسم الفندق", data["Name"], (value) {
-                onChangeFunction(value, "name");
+                onChangeFunction(value, "Name");
               }),
               EditTextFieldWidget(
-                "سعر الغرفة".toString(),
+                "السعر الاساسى".toString(),
                 data["RoomPrice"].toString(),
                 (value) {
                   onChangeFunction(value, "RoomPrice");

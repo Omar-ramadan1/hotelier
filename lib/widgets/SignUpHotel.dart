@@ -110,7 +110,7 @@ class _SignUpHotelState extends State<SignUpHotel> {
                   (value) {
                 onChangeFunction(value, "Name");
               }),
-          SingleTextFieldWidget('سعر الغرفة', dataErrorMessage['RoomPrice'],
+          SingleTextFieldWidget('السعر الاساسى', dataErrorMessage['RoomPrice'],
                 (value) {
               onChangeFunction(value, "RoomPrice");
             }, textInputType: TextInputType.number,),
