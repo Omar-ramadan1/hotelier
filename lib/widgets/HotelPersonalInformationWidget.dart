@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class HotelPersonalInformationWidget extends StatefulWidget {
 
 class _HotelPersonalInformationWidgetState
     extends State<HotelPersonalInformationWidget> {
-  int i = 0;
+  int i = 0 ;
   @override
   void initState() {
     EnableAddingNewHotel enableAddingNewHotel =
@@ -33,7 +34,6 @@ class _HotelPersonalInformationWidgetState
     super.initState();
     getIsUserActive();
   }
-
   getIsUserActive() async {
     UserData userDataProvider = Provider.of<UserData>(context, listen: false);
     Map data = userDataProvider.userData;
@@ -86,7 +86,7 @@ class _HotelPersonalInformationWidgetState
       endDrawer: AppDrawerWidget(),
       body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.only(top: 160),
+          margin: EdgeInsets.only(top: 120),
 
           child: Column(
             children: [
@@ -126,9 +126,6 @@ class _HotelPersonalInformationWidgetState
                   radius: 10,
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
               Container(
                   padding: EdgeInsets.all(5),
                   width: size.width - 20,
@@ -148,7 +145,7 @@ class _HotelPersonalInformationWidgetState
                       ),
                     ],
                   ),
-                  margin: EdgeInsets.only(top: 20, bottom: 10),
+                  margin: EdgeInsets.only(top: 10, bottom: 10),
                   child: Column(
                     children: [
                       InformationTextWidget(
@@ -169,10 +166,8 @@ class _HotelPersonalInformationWidgetState
                 child: GoogleMapWidget(userDataProvider.userData['latitude'],
                     userDataProvider.userData['longitude']),
               ),
-              SizedBox(
-                height: 30,
-              ),
-              InformationImageViewer(userDataProvider.userData['img']),
+
+              // InformationImageViewer(userDataProvider.userData['img']),
               SizedBox(
                 height: 30,
               ),

@@ -56,6 +56,7 @@ class _ControllingNumberOfHotelSSettingScreenState
   }
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
       drawerScrimColor: Colors.transparent,
@@ -80,14 +81,19 @@ class _ControllingNumberOfHotelSSettingScreenState
       drawerEdgeDragWidth: 200,
       endDrawer: AppDrawerWidget(),
       resizeToAvoidBottomInset: true,
-      body: SingleChildScrollView(
-        padding: EdgeInsets.only(top: 150),
-        child: Column(
-          children: [
-            Text("يوجد اضافة فندق اسفل صفحة حسابى" , style: TextStyle(fontWeight: FontWeight.w700),),
-            for(int i = 0 ; i < data.length ; i++)
-            CNOHSSHIW(data[i] , filterDataList),
-          ],
+      body: Container(
+        width: size.width,
+        child: SingleChildScrollView(
+          padding: EdgeInsets.only(top: 150),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text("قم باختيار الفندق المراد تعديل بياناته" , style: TextStyle(fontWeight: FontWeight.w700),),
+              for(int i = 0 ; i < data.length ; i++)
+              CNOHSSHIW(data[i] , filterDataList),
+            ],
+          ),
         ),
       ),
     );
