@@ -40,6 +40,7 @@ class EditHotelData extends StatefulWidget {
 
 class _EditHotelDataState extends State<EditHotelData> {
   TextEditingController _controller = new TextEditingController();
+
   String Discount = '10',
       cityId = 'الرياض',
       typeId,
@@ -188,13 +189,58 @@ class _EditHotelDataState extends State<EditHotelData> {
               EditTextFieldWidget("اسم الفندق", data["Name"], (value) {
                 onChangeFunction(value, "Name");
               }),
-              EditTextFieldWidget(
-                "السعر الاساسى".toString(),
-                data["RoomPrice"].toString(),
-                (value) {
-                  onChangeFunction(value, "RoomPrice");
-                },
-                textInputType: TextInputType.number,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Container(
+                    width: size.width,
+                    child: EditTextFieldWidget(
+                      "السعر الاساسى".toString(),
+                      data["RoomPrice"].toString(),
+                          (value) {
+                        onChangeFunction(value, "RoomPrice");
+                      },
+                      textInputType: TextInputType.number,
+                    ),
+                  ),
+                  Container(
+                      width:200,child: Text(dataClone['RoomPrice'] == "" || dataClone['RoomPrice'] == null? "" : "${(int.parse(dataClone['RoomPrice']) - (int.parse(dataClone['RoomPrice']) * dataClone['Discount']) / 100).toStringAsFixed(2)}")),
+                ],
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 25),
+                child: Row(
+                  textDirection: TextDirection.rtl,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(left: 00),
+                      child: Text(
+                        "نسبة الخصم المقدمة",
+                        style: TextStyle(fontWeight: FontWeight.w900),
+                      ),
+                    ),
+                    DropdownWidget(
+                        dataClone['Discount'].toString(),
+                        [
+                          '10',
+                          '20',
+                          '30',
+                          '40',
+                          '50',
+                          '60',
+                          '70',
+                          '80',
+                          '90',
+                          '100'
+                        ],
+                        55,
+                        25, (value) {
+                      setState(() {
+                        dataClone['Discount'] = int.parse(value);
+                      });
+                    }),
+                  ],
+                ),
               ),
               SizedBox(
                 height: 30,
@@ -339,41 +385,7 @@ class _EditHotelDataState extends State<EditHotelData> {
                 phone2Text: data['PhoneNumber2'],
                 isEditWidget: true,
               ),
-              Container(
-                margin: EdgeInsets.only(top: 25),
-                child: Row(
-                  textDirection: TextDirection.rtl,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(left: 00),
-                      child: Text(
-                        "نسبة الخصم المقدمة",
-                        style: TextStyle(fontWeight: FontWeight.w900),
-                      ),
-                    ),
-                    DropdownWidget(
-                        dataClone['Discount'].toString(),
-                        [
-                          '10',
-                          '20',
-                          '30',
-                          '40',
-                          '50',
-                          '60',
-                          '70',
-                          '80',
-                          '90',
-                          '100'
-                        ],
-                        55,
-                        25, (value) {
-                      setState(() {
-                        dataClone['Discount'] = int.parse(value);
-                      });
-                    }),
-                  ],
-                ),
-              ),
+
               SizedBox(
                 height: 25,
               ),
@@ -497,6 +509,7 @@ class _EditHotelDataState extends State<EditHotelData> {
                   addAutomaticKeepAlives: true,
                   scrollDirection: Axis.vertical,
                   crossAxisCount: 3,
+                  physics: ScrollPhysics(),
                   children: [
                     for (var imageBody in widget.data['img'])
                       Container(
@@ -731,25 +744,30 @@ class _EditHotelDataState extends State<EditHotelData> {
     UserData userDataProvider = Provider.of<UserData>(context, listen: false);
     List filter = [];
     print(pkMediaId);
-    data['img'].forEach((element) {
-      if (element['PK_MediId'] == pkMediaId) {
-        print(element['PK_MediId']);
-      } else {
-        filter.add(element);
-      }
-    });
-    setState(() {
-      data['img'] = filter;
-      allowedImageNumberToBeUploaded = 10 - data['img'].length;
-    });
-    var response = await http.post(
-      '$serverURL/Media/DeleatImg?id=$pkMediaId',
-      headers: <String, String>{
-        'Authorization': 'Bearer ${userDataProvider.userData["access_token"]}',
-        'Content-Type': 'application/json'
-      },
-    );
-    print(response.statusCode);
-    print(response.body);
-  }
+    if(data['img'].length > 1){
+      data['img'].forEach((element) {
+        if (element['PK_MediId'] == pkMediaId) {
+          print(element['PK_MediId']);
+        } else {
+          filter.add(element);
+        }
+      });
+      setState(() {
+        data['img'] = filter;
+        allowedImageNumberToBeUploaded = 10 - data['img'].length;
+      });
+      var response = await http.post(
+        '$serverURL/Media/DeleatImg?id=$pkMediaId',
+        headers: <String, String>{
+          'Authorization': 'Bearer ${userDataProvider.userData["access_token"]}',
+          'Content-Type': 'application/json'
+        },
+      );
+      print(response.statusCode);
+      print(response.body);
+    }else{
+      PaymentAlertDialogMessage().showWarningMessageWidget(context, "يجب ان يكون هناك صورتين لحذف الصورة");
+    }
+    }
+
 }

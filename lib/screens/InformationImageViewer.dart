@@ -13,10 +13,10 @@ class InformationImageViewer extends StatelessWidget {
       width: size.width - 20,
       child: Column(
         children: [
-          for (int i = 0 ; i < imagesList.length ; i++)
+          for (int i = 0 ; i < imagesList.length / 3 ; i++)
             Row(
               children: List.generate(3, (k) {
-                  return imagesList[0] == null ? Container(
+                  return i + k <  imagesList.length ? Container(
                     child: Container(
                       width: 100,
                       height: 80,
@@ -31,7 +31,7 @@ class InformationImageViewer extends StatelessWidget {
                         ],
                       ),
                       margin: EdgeInsets.only(top: 5 , left: 10 ),
-                      child: Image.network('${anotherServerURL}Content/Images/${imagesList[0]['FileName']}' , fit: BoxFit.fill, errorBuilder: (
+                      child: Image.network('${anotherServerURL}Content/Images/${imagesList[i + k]['FileName']}' , fit: BoxFit.fill, errorBuilder: (
                           context,
                           error,
                           stackTrace,

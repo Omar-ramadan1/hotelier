@@ -110,10 +110,49 @@ class _SignUpHotelState extends State<SignUpHotel> {
                   (value) {
                 onChangeFunction(value, "Name");
               }),
-          SingleTextFieldWidget('السعر الاساسى', dataErrorMessage['RoomPrice'],
-                (value) {
-              onChangeFunction(value, "RoomPrice");
-            }, textInputType: TextInputType.number,),
+          Row(
+            textDirection: TextDirection.rtl,
+            children: [
+              Container(
+                width: 180,
+                child: SingleTextFieldWidget('السعر الاساسى', dataErrorMessage['RoomPrice'],
+                      (value) {
+                    onChangeFunction(value, "RoomPrice");
+                  }, textInputType: TextInputType.number,),
+              ),
+              Column(
+                children: [
+                  Text("السعر بعد الخصم"),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Container(
+                      width:50,child: Text(data['RoomPrice'] == null || data['RoomPrice'] == "" ? "" : "${(int.parse(data['RoomPrice']) - (int.parse(data['RoomPrice']) * int.parse(data['discountValue'])) / 100).toStringAsFixed(2)}")),
+                ],
+              ),
+            ],
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 25),
+            child: Row(
+              textDirection: TextDirection.rtl,
+              children: [
+                Text(
+                  "نسبة الخصم المقدمة",
+                  style: TextStyle(fontWeight: FontWeight.w900),
+                ),
+                DropdownWidget(
+                    data['discountValue'],
+                    discountList,
+                    60,
+                    25, (value) {
+                  setState(() {
+                    data['discountValue'] = value;
+                  });
+                }),
+              ],
+            ),
+          ),
           // SingleTextFieldWidget(
           //     'رقم السجل التجارى', dataErrorMessage['commercialRegistrationNo'],
           //     (value) {
@@ -244,27 +283,6 @@ class _SignUpHotelState extends State<SignUpHotel> {
               textDirection: TextDirection.rtl,
               children: [
                 Text(
-                  "نسبة الخصم المقدمة",
-                  style: TextStyle(fontWeight: FontWeight.w900),
-                ),
-                DropdownWidget(
-                    data['discountValue'],
-                    discountList,
-                    45,
-                    25, (value) {
-                  setState(() {
-                    data['discountValue'] = value;
-                  });
-                }),
-              ],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 25),
-            child: Row(
-              textDirection: TextDirection.rtl,
-              children: [
-                Text(
                   "التصنيف",
                   style: TextStyle(fontWeight: FontWeight.w900),
                 ),
@@ -354,7 +372,7 @@ class _SignUpHotelState extends State<SignUpHotel> {
               ),
               InkWell(
                 onTap: registrationScreenState.uploadImages,
-                child: ButtonChildWidget("رفع صورة", mainAppColor, 15, 100),
+                child: ButtonChildWidget("رفع الصور", mainAppColor, 15, 100),
               ),
               InkWell(
                 onTap: () async {

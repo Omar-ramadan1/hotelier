@@ -117,7 +117,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                               },
                             );
                             print(response.statusCode);
-                            String url = 'https://hoteliercard.com/Checkout.html?id=${userDataProvider.userData["userId"]}&firstTime=true&IsOnlinePayment=true';
+                            String url = 'https://hoteliercard.com/Checkout.html?id=${userDataProvider.userData["userId"]}&firstTime=true';
                             if (await canLaunch(url)) {
                               await launch(url);
                             }else{
@@ -161,7 +161,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                               },
                             );
                             print(response.statusCode);
-                            String url = 'https://hoteliercard.com/Checkout.html?id=${userDataProvider.userData["userId"]}&firstTime=false?&IsOnlinePayment=true';
+                            String url = 'https://hoteliercard.com/Checkout.html?id=${userDataProvider.userData["userId"]}&firstTime=false';
                             if (await canLaunch(url)) {
                               await launch(url);
                             }else{

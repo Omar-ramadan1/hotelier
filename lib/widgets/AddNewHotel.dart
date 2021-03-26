@@ -123,10 +123,49 @@ class _AddNewHotelState extends State<AddNewHotel> {
                     (value) {
                   onChangeFunction(value, "Name");
                 }),
-            SingleTextFieldWidget('سعر الغرفة', dataErrorMessage['RoomPrice'],
-                  (value) {
-                onChangeFunction(value, "RoomPrice");
-              }, textInputType: TextInputType.number,),
+            Row(
+              textDirection: TextDirection.rtl,
+              children: [
+                Container(
+                  width: 200,
+                  child: SingleTextFieldWidget('السعر الاساسى', dataErrorMessage['RoomPrice'],
+                        (value) {
+                      onChangeFunction(value, "RoomPrice");
+                    }, textInputType: TextInputType.number,),
+                ),
+                Column(
+                  children: [
+                    Text("السعر بعد الخصم"),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Container(
+                        width:50,child: Text(data['RoomPrice'] == null || data['RoomPrice'] == "" ? "" : "${(int.parse(data['RoomPrice']) - (int.parse(data['RoomPrice']) * int.parse(data['discountValue'])) / 100).toStringAsFixed(2)}")),
+                  ],
+                ),
+              ],
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 25),
+              child: Row(
+                textDirection: TextDirection.rtl,
+                children: [
+                  Text(
+                    "نسبة الخصم المقدمة",
+                    style: TextStyle(fontWeight: FontWeight.w900),
+                  ),
+                  DropdownWidget(
+                      data['discountValue'],
+                      discountList,
+                      45,
+                      25, (value) {
+                    setState(() {
+                      data['discountValue'] = value;
+                    });
+                  }),
+                ],
+              ),
+            ),
             Container(
               width: size.width,
               child: Row(
@@ -242,27 +281,7 @@ class _AddNewHotelState extends State<AddNewHotel> {
                 ),
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(top: 25),
-              child: Row(
-                textDirection: TextDirection.rtl,
-                children: [
-                  Text(
-                    "نسبة الخصم المقدمة",
-                    style: TextStyle(fontWeight: FontWeight.w900),
-                  ),
-                  DropdownWidget(
-                      data['discountValue'],
-                      discountList,
-                      45,
-                      25, (value) {
-                    setState(() {
-                      data['discountValue'] = value;
-                    });
-                  }),
-                ],
-              ),
-            ),
+
             Container(
               margin: EdgeInsets.only(top: 25),
               child: Row(
@@ -358,7 +377,7 @@ class _AddNewHotelState extends State<AddNewHotel> {
                 ),
                 InkWell(
                   onTap: addNewHotelState.uploadImages,
-                  child: ButtonChildWidget("رفع صورة", mainAppColor, 15, 100),
+                  child: ButtonChildWidget("رفع الصور", mainAppColor, 15, 100),
                 ),
                 InkWell(
                   onTap: () async {
