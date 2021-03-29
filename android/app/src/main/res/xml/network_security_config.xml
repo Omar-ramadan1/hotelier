@@ -2,6 +2,7 @@
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">www.sample-videos.com</domain>
-        <domain includeSubdomains="true">dashboard.hoteliercard.com</domain>
+        <domain includeSubdomains="true">jafarx123-001-site2.itempurl.com</domain>
+        <domain includeSubdomains="true">db.hotelier-card.com</domain>
     </domain-config>
 </network-security-config>
