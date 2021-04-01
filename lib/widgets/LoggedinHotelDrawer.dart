@@ -8,6 +8,7 @@ import 'package:hotelier/screens/CartDetailsScreen.dart';
 import 'package:hotelier/screens/Complaining.dart';
 import 'package:hotelier/screens/Contact.dart';
 import 'package:hotelier/screens/ControllingNumberOfHotelSSettingScreen.dart';
+import 'package:hotelier/screens/MainScreen.dart';
 import 'package:hotelier/screens/PersonalInformationScreen.dart';
 import 'package:hotelier/screens/RenewRegistrationScreen.dart';
 import 'package:hotelier/screens/SponsorsScreen.dart';
@@ -95,13 +96,14 @@ class LoggedInHotelDrawer extends StatelessWidget {
                 Navigator.of(context)
                     .popUntil((route) {
                   print(route.settings.name);
-                  if(route.settings.name == "null" || route.settings.name == null){
+                  if(route.settings.name == "/MainScreen"){
                     return true;
                   }else{
                     return false;
                   }
 
                 });
+                Navigator.of(context).pushNamed(MainScreen.routeName);
               }),
               SizedBox(
                 height: 10,
@@ -185,11 +187,10 @@ class LoggedInHotelDrawer extends StatelessWidget {
               ),
               DrawerTabsWidget(Icons.logout, "تسجيل الخروج", () {
                 userDataProvider.updateUserInfo(null);
-                Navigator.of(context).pop();
                 Navigator.of(context)
                     .popUntil((route) {
                   print(route.settings.name);
-                  if(route.settings.name == "null" || route.settings.name == null){
+                  if(route.settings.name == "/MainScreen"){
                     return true;
                   }else{
                     return false;

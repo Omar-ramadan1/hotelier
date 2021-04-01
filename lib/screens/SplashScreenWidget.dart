@@ -20,7 +20,7 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
     ImportantInformationModel contactUsModel =
         Provider.of<ImportantInformationModel>(context, listen: false);
     UserData userData = Provider.of<UserData>(context, listen: false);
-
+    dataList.checkCache();
     dataList.getCitiesListFunction();
     userData.checkIfUserDataOnMobileStorage();
     dataList.getTypesListFunction();
@@ -33,7 +33,7 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
       seconds: 3,
       imageBackground: Image.asset("./assets/SplashScreenImage.jpg").image,
       loaderColor: Colors.transparent,
-      navigateAfterSeconds: MainScreen(),
+      navigateAfterSeconds: MainScreen.routeName,
     );
   }
 }

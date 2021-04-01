@@ -2,13 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DataList extends ChangeNotifier{
 
   // first of all i want to apologies for this that may seem like mess
   // but i need MainList from server which is composed of Maps
   // and need seperated String List that Contain only Names from this Map
-
+  Future<SharedPreferences> _prefs =  SharedPreferences.getInstance();
   List _citiesList;
   List get citiesList => _citiesList;
   set citiesList(List citiesListParameter) {
@@ -26,7 +27,6 @@ class DataList extends ChangeNotifier{
     List<String> citiesNamesClone = [];
     var response  = await http.get('http://api.hoteliercard.com/api/City/List');
     citiesList = jsonDecode(response.body);
-    print(citiesList);
     _citiesList.forEach((e) => {
       if(e["Name"] == "الكل"){
 
@@ -35,8 +35,11 @@ class DataList extends ChangeNotifier{
       }
 
     });
-    print(citiesNamesClone);
+
     citiesNames = citiesNamesClone;
+    _prefs.then((SharedPreferences prefs) {
+      prefs.setString("citiesNames" , jsonEncode(_citiesNames));
+    });
     notifyListeners();
   }
 
@@ -58,7 +61,6 @@ class DataList extends ChangeNotifier{
     List<String> categoryNamesClone = [];
     var response  = await http.get('http://api.hoteliercard.com/api/Types/List');
     categoryList = jsonDecode(response.body);
-    print(_categoryList);
 
     _categoryList.forEach((e) => {
       if(e["Name"] == "الكل"){
@@ -67,10 +69,27 @@ class DataList extends ChangeNotifier{
         categoryNamesClone.add(e["Name"]),
       }
     });
-    print(categoryNamesClone);
     categoryNames = categoryNamesClone;
-
+    _prefs.then((SharedPreferences prefs) {
+      prefs.setString("categoryNames" , jsonEncode(_categoryNames));
+    });
     notifyListeners();
+  }
+
+
+  checkCache(){
+    _prefs.then((SharedPreferences prefs) {
+      if( prefs.get("categoryNames") == null ){
+      } else{
+        categoryNames = jsonDecode(prefs.get("categoryNames")).cast<String>();
+      }
+
+      if( prefs.get("citiesNames") == null ){
+      } else{
+        categoryNames = jsonDecode(prefs.get("citiesNames")).cast<String>();
+      }
+
+    });
   }
 
 

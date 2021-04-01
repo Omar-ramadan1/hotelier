@@ -66,12 +66,11 @@ class _ControllingNumberOfHotelSSettingScreenState
         preferredSize: Size.fromHeight(125.0),
         child: AppBar(
           automaticallyImplyLeading: true,
-          // actions: [
-          //   IconButton(
-          //     icon: Icon(Icons.arrow_forward_rounded, color: Colors.white),
-          //     onPressed: () => Navigator.of(context).pop(),
-          //   ),
-          // ],
+          leading:
+          IconButton(
+            icon: Icon(Icons.arrow_back_sharp, color: Colors.white),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
           flexibleSpace:

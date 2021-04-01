@@ -59,6 +59,11 @@ class _FullScreenPhotoViewerState extends State<FullScreenPhotoViewer> {
         child: AppBar(
           shadowColor: Colors.transparent,
           backgroundColor: Colors.black,
+          leading:
+          IconButton(
+            icon: Icon(Icons.arrow_back_sharp, color: Colors.white),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
           flexibleSpace: PageView(
             scrollDirection: Axis.horizontal,
             children: [

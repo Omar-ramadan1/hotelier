@@ -125,11 +125,12 @@ class RegistrationScreenState {
                                     Navigator.of(context)
                                         .popUntil((route) {
                                       print(route.settings.name);
-                                      if(route.settings.name == "null" || route.settings.name == null){
+                                      if(route.settings.name == "/MainScreen"){
                                         return true;
                                       }else{
                                         return false;
                                       }
+
                                     });
                                     Navigator.of(context).pushNamed(PersonalInformationScreen.routeName);
                                   } else if (response.statusCode == 400) {
@@ -139,7 +140,8 @@ class RegistrationScreenState {
                                         content: Text(body["Phone"] , style: TextStyle(fontSize: 22 ,),),),);
                                     }else{
                                       Scaffold.of(context).showSnackBar(SnackBar(
-                                          content: Text('هذا الايميل مستخدم من قبل' , style: TextStyle(fontSize: 22 ,))));
+                                        //Message
+                                          content: Text(body["Message"] , style: TextStyle(fontSize: 22 ,))));
                                     }
                                   }
                                 },

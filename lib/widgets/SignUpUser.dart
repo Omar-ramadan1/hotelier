@@ -261,17 +261,16 @@ class _SignUpUserState extends State<SignUpUser> {
 
                                 userData.updateUserInfo(body);
                               }
+                                Navigator.of(context)
+                                    .popUntil((route) {
+                                  print(route.settings.name);
+                                  if(route.settings.name == "/MainScreen"){
+                                    return true;
+                                  }else{
+                                    return false;
+                                  }
 
-                              Navigator.of(context)
-                                  .popUntil((route) {
-                                print(route.settings.name);
-                                if(route.settings.name == "null" || route.settings.name == null){
-                                  return true;
-                                }else{
-                                  return false;
-                                }
-
-                              } );
+                                });
                               Navigator.of(context).pushNamed(PersonalInformationScreen.routeName);
                             } else if (response.statusCode == 400) {
                               print(response.body);

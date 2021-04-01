@@ -96,7 +96,7 @@ class LoggedInUserDrawer extends StatelessWidget {
                 Navigator.of(context)
                     .popUntil((route) {
                   print(route.settings.name);
-                  if(route.settings.name == "null" || route.settings.name == null){
+                  if(route.settings.name == "/MainScreen"){
                     return true;
                   }else{
                     return false;
@@ -184,16 +184,14 @@ class LoggedInUserDrawer extends StatelessWidget {
               ),
               DrawerTabsWidget(Icons.logout, "تسجيل الخروج", () {
                 userDataProvider.updateUserInfo(null);
-                Navigator.of(context).pop();
                 Navigator.of(context)
                     .popUntil((route) {
                   print(route.settings.name);
-                  if(route.settings.name == "null" || route.settings.name == null){
+                  if(route.settings.name == "/MainScreen"){
                     return true;
                   }else{
                     return false;
                   }
-
                 });
               }),
               SizedBox(

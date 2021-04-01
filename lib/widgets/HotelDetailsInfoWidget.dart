@@ -94,24 +94,24 @@ class HotelDetailsInfoWidget extends StatelessWidget {
               // Text("088564749")
             ],
           ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.start,
-            textDirection: TextDirection.rtl,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 15 , bottom: 12),
-                child: Image.asset("assets/Riyal-512.png" , width: 30,),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  data['RoomPrice'].toString(),
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          Container(
+            width: size.width / 1.35,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  "${data["netPrice"]}",
+                  style: TextStyle(fontSize: 18 , fontWeight: FontWeight.w600),
                 ),
-              ),
-              // Text("088564749")
-            ],
+                SizedBox(width: 15,),
+                Text(
+                  "${data["RoomPrice"].toString()}",
+                  style: TextStyle(fontSize: 17  , color: Colors.red , fontWeight: FontWeight.w600 ,decoration: TextDecoration.lineThrough),
+                ),
+                SizedBox(width: 15,),
+                Image.asset("assets/Riyal-512.png" , width: 30,)
+              ],
+            ),
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,

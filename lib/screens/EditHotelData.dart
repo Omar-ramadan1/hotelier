@@ -71,7 +71,9 @@ class _EditHotelDataState extends State<EditHotelData> {
       // print(ModalRoute.of(context).settings.arguments);
       dataListProvider.citiesList.forEach((element) {
         // print(element);
-        if (data["cityName"] == element["id"]) {
+        print(data);
+        if (data["cityId"] == element["id"]) {
+          print(data["cityId"]);
           cityId = element["Name"];
         }
       });
@@ -111,12 +113,11 @@ class _EditHotelDataState extends State<EditHotelData> {
         preferredSize: Size.fromHeight(125.0),
         child: AppBar(
           automaticallyImplyLeading: true,
-          // actions: [
-          //   IconButton(
-          //     icon: Icon(Icons.arrow_forward_rounded, color: Colors.white),
-          //     onPressed: () => Navigator.of(context).pop(),
-          //   ),
-          // ],
+          leading:
+          IconButton(
+            icon: Icon(Icons.arrow_back_sharp, color: Colors.white),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
           backgroundColor: Colors.white,
           shadowColor: Colors.transparent,
           flexibleSpace:
@@ -198,13 +199,16 @@ class _EditHotelDataState extends State<EditHotelData> {
                       "السعر الاساسى".toString(),
                       data["RoomPrice"].toString(),
                           (value) {
-                        onChangeFunction(value, "RoomPrice");
+                            setState(() {
+                              dataClone["RoomPrice"] = int.parse(value);
+                              print(dataClone["RoomPrice"]);
+                            });
                       },
                       textInputType: TextInputType.number,
                     ),
                   ),
                   Container(
-                      width:200,child: Text(dataClone['RoomPrice'] == "" || dataClone['RoomPrice'] == null? "" : "${(int.parse(dataClone['RoomPrice']) - (int.parse(dataClone['RoomPrice']) * dataClone['Discount']) / 100).toStringAsFixed(2)}")),
+                      width:200,child: Text(dataClone['RoomPrice'] == "" || dataClone['RoomPrice'] == null? "" : "${(dataClone['RoomPrice'] - (dataClone['RoomPrice'] * dataClone['Discount']) / 100).toStringAsFixed(2)}")),
                 ],
               ),
               Container(
@@ -327,7 +331,7 @@ class _EditHotelDataState extends State<EditHotelData> {
                                 onChangeFunction(value, "district");
                               },
                               decoration: InputDecoration(
-                                labelText: "الحى",
+                                labelText: data["district"],
                               ),
                             ),
                           ),
@@ -533,6 +537,7 @@ class _EditHotelDataState extends State<EditHotelData> {
                             if (e["Name"] == cityId)
                               {
                                 dataClone["CityId"] = e["id"],
+                                dataClone["cityId"] = e["id"],
                               }
                           });
                       categoryListClone.forEach((e) => {
@@ -715,11 +720,11 @@ class _EditHotelDataState extends State<EditHotelData> {
         List imgNameArray = respondedData['imgName'];
 
         images.add(imgNameArray[0]);
+        print('$serverURL/Media/AddImg?imgName=${imgNameArray[0]}&hotelsId=${dataClone['HotelId']}');
         var response = await http.post(
-          '$serverURL/Media/AddImg?imgName=${imgNameArray[0]}',
+          '$serverURL/Media/AddImg?imgName=${imgNameArray[0]}&hotelsId=${dataClone['HotelId']}',
           headers: <String, String>{
-            'Authorization':
-                'Bearer ${userDataProvider.userData["access_token"]}',
+            'Authorization': 'Bearer ${userDataProvider.userData["access_token"]}',
             'Content-Type': 'application/json'
           },
         );
