@@ -26,12 +26,12 @@ class _HotelPersonalInformationWidgetState
     extends State<HotelPersonalInformationWidget> {
   int i = 0 ;
   @override
-  void initState() {
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
     EnableAddingNewHotel enableAddingNewHotel =
-        Provider.of<EnableAddingNewHotel>(context, listen: false);
+    Provider.of<EnableAddingNewHotel>(context, listen: false);
     enableAddingNewHotel.isEnabled = true;
-    // TODO: implement initState
-    super.initState();
     getIsUserActive();
   }
   getIsUserActive() async {
@@ -44,6 +44,9 @@ class _HotelPersonalInformationWidgetState
         'Content-Type': 'application/json'
       },
     );
+    print("request.body");
+    print("request.body");
+    print("request.body----------------------------->>>>>>>>>>>>>>");
     print(request.body);
     if (request.statusCode < 300) {
       print("request.body");
