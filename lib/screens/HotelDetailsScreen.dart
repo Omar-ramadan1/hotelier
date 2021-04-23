@@ -9,8 +9,8 @@ import '../widgets/bottomBarWidget.dart';
 
 class HotelDetailsScreen extends StatefulWidget {
     static const routeName = '/OfferDetails';
-
-  HotelDetailsScreen() : super();
+    final Map data;
+  HotelDetailsScreen(this.data) : super();
 
   final String title = "Carousel Demo";
 
@@ -21,22 +21,36 @@ class HotelDetailsScreen extends StatefulWidget {
 class HotelDetailsScreenState extends State<HotelDetailsScreen> {
   //
   CarouselSlider carouselSlider;
+  ScrollController _controller;
   int _current = 0;
   Map data;
 @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
-
+    _controller = ScrollController();
+    _controller.addListener(_scrollListener);
+    data = widget.data;
+  }
+  _scrollListener() {
+    if (_controller.offset >= _controller.position.maxScrollExtent &&
+        !_controller.position.outOfRange) {
+      setState(() {//you can do anything here
+      });
+    }
+    if (_controller.offset <= _controller.position.minScrollExtent &&
+        !_controller.position.outOfRange) {
+      setState(() {//you can do anything here
+      });
+    }
   }
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      data = ModalRoute.of(context).settings.arguments;
-    });
-print("data[video]");
-print(data["video"]);
+    // setState(() {
+    //   data = ModalRoute.of(context).settings.arguments;
+    // });
+// print("data[video]");
+// print(data["video"]);
     return Scaffold(
       drawerScrimColor: Colors.transparent,
       appBar: PreferredSize(
@@ -71,7 +85,7 @@ print(data["video"]);
                 //SizedBox(height:),
                 HotelDetailsSliderWidget(
                   text: data['Name'],
-                  imgList: data['img'],
+                  imgList: widget.data['img'],
                   currentIndex: _current,
                   onChange: (index) {
                     setState(() {

@@ -78,7 +78,7 @@ class HotelDetailsWidget extends StatelessWidget {
                 spacing:0.0
             ),
             InkWell(
-              onTap: (){Navigator.of(context).pushNamed(HotelDetailsScreen.routeName ,arguments: data );},
+              onTap: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (context) => HotelDetailsScreen(data))),
               child: ButtonChildWidget(
                   "المزيد من التفاصيل", Colors.transparent, 15, 120),
             ),

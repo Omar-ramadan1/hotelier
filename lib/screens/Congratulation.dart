@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hotelier/widgets/AppBarWidget.dart';
 import 'package:hotelier/widgets/AppDrawerWidget.dart';
 import 'package:hotelier/widgets/ButtonWidget.dart';
-import 'package:hotelier/widgets/TextFieldWidget.dart';
 import 'package:hotelier/widgets/bottomBarWidget.dart';
 
 class Congratulation extends StatelessWidget {

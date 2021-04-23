@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:hotelier/Constant/Constant.dart';
 import 'package:hotelier/screens/FullScreenPhotoViewer.dart';
+import 'package:hotelier/screens/HotelImageViewer.dart';
 
 class HotelDetailsSliderWidget extends StatelessWidget {
   final List imgList;
@@ -20,6 +21,7 @@ List<T> map<T>(List list, Function handler) {
 
   @override
   Widget build(BuildContext context) {
+  print(imgList);
     return Container(
       child: Column(children: [
         Text(
@@ -28,27 +30,26 @@ List<T> map<T>(List list, Function handler) {
         ),
         SizedBox(height: 10),
         CarouselSlider(
+          options: CarouselOptions(
+            height: 200.0,
+// aspectRatio: 1 / 0.2,
+            initialPage: 0,
+            enlargeCenterPage: true,
+            autoPlay: true,
+            reverse: false,
+            enableInfiniteScroll: true,
+            autoPlayInterval: Duration(seconds: 4),
+            autoPlayAnimationDuration: Duration(milliseconds: 2000),
+            scrollDirection: Axis.horizontal,
+            // onPageChanged: (index) => onChange(index)
+          ),
 
-          height: 200.0,
-          // aspectRatio: 1 / 0.2,
-          initialPage: 0,
-          enlargeCenterPage: true,
-          autoPlay: true,
-          pauseAutoPlayOnTouch: Duration(milliseconds: 1000),
-          reverse: false,
-          enableInfiniteScroll: true,
-          autoPlayInterval: Duration(seconds: 4),
-          autoPlayAnimationDuration: Duration(milliseconds: 2000),
-          scrollDirection: Axis.horizontal,
-          onPageChanged: (index) {
-            onChange(index);
-          },
           items: imgList.map((imgUrl) {
             return Builder(
               builder: (BuildContext context) {
                 return InkWell(
                   onTap: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => FullScreenPhotoViewer(imgList , imgUrl)));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => HotelImageViewer(imgList)));
                   },
                   child: Container(
                     width: 300,
@@ -98,3 +99,5 @@ List<T> map<T>(List list, Function handler) {
     );
   }
 }
+
+

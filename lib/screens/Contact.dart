@@ -69,7 +69,7 @@ class _ContactState extends State<Contact> {
                   onTap: () {
                     Clipboard.setData(
                         ClipboardData(text: data["Email"].toString()));
-                    Scaffold.of(_formKey.currentContext).showSnackBar(SnackBar(
+                    ScaffoldMessenger.of(_formKey.currentContext).showSnackBar(SnackBar(
                       content: Text("تم نسخ ${data["Email"].toString()}"),
                     ));
                   },
@@ -86,7 +86,7 @@ class _ContactState extends State<Contact> {
                   onTap: () {
                     Clipboard.setData(
                         ClipboardData(text: data["phone1"].toString()));
-                    Scaffold.of(_formKey.currentContext).showSnackBar(SnackBar(
+                    ScaffoldMessenger.of(_formKey.currentContext).showSnackBar(SnackBar(
                       content: Text("تم نسخ ${data["phone1"].toString()}"),
                     ));
                   },
@@ -103,7 +103,7 @@ class _ContactState extends State<Contact> {
                     onTap: () {
                       Clipboard.setData(
                           ClipboardData(text: data["phone2"].toString()));
-                      Scaffold.of(_formKey2.currentContext)
+                      ScaffoldMessenger.of(_formKey2.currentContext)
                           .showSnackBar(SnackBar(
                         content: Text("تم نسخ ${data["phone2"].toString()}"),
                       ));
@@ -123,7 +123,7 @@ class _ContactState extends State<Contact> {
                 InkWell(
                   onTap: () async{
                     Clipboard.setData(new ClipboardData(text: "${data["snapChat"].toString()}"));
-                    Scaffold.of(_formKey3.currentContext).showSnackBar(SnackBar(
+                    ScaffoldMessenger.of(_formKey3.currentContext).showSnackBar(SnackBar(
                         content: Text('${data["snapChat"].toString()}تم نسخ ')));
                   },
                   child: IconButton(
@@ -144,7 +144,7 @@ class _ContactState extends State<Contact> {
                     if (await canLaunch(url)) {
                       await launch(url);
                     }else{
-                      Scaffold.of(context).showSnackBar(SnackBar(
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text('من فضلك تاكد من وجود متصفح على الهاتف')));
                     }
                   },
@@ -163,7 +163,7 @@ class _ContactState extends State<Contact> {
                     if (await canLaunch(url)) {
                     await launch(url);
                     }else{
-                    Scaffold.of(context).showSnackBar(SnackBar(
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: Text('من فضلك تاكد من وجود جوجل مابس على الهاتف')));
                     }
                   },
@@ -187,7 +187,7 @@ class _ContactState extends State<Contact> {
                     if (await canLaunch(url)) {
                     await launch(url);
                     }else{
-                    Scaffold.of(context).showSnackBar(SnackBar(
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: Text('من فضلك تاكد من وجود جوجل مابس على الهاتف')));
                     }
                   },
@@ -211,7 +211,7 @@ class _ContactState extends State<Contact> {
                     if (await canLaunch(url)) {
                       await launch(url);
                     }else{
-                      Scaffold.of(context).showSnackBar(SnackBar(
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text('من فضلك تاكد من وجود متصفح على الهاتف')));
                     }
                   },

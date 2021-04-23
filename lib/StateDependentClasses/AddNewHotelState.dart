@@ -31,7 +31,7 @@ class AddNewHotelState {
     });
     if(check()){
       if (this.state.data["imageURL"].length == 0) {
-        Scaffold.of(this.state.context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(this.state.context).showSnackBar(SnackBar(
           content: Text(
               'من فضلك قم بارفاق على الاقل صورة واحدة'),),);
       }else{
@@ -77,10 +77,10 @@ class AddNewHotelState {
                         } else if (response.statusCode == 400) {
                           Map body = jsonDecode(response.body);
                           if(body["Phone"] != null){
-                            Scaffold.of(context).showSnackBar(SnackBar(
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text(body["Phone"] , style: TextStyle(fontSize: 22 ,),),),);
                           }else{
-                            Scaffold.of(context).showSnackBar(SnackBar(
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 content: Text('هذا الايميل مستخدم من قبل' , style: TextStyle(fontSize: 22 ,))));
                           }
                         }
@@ -126,7 +126,7 @@ class AddNewHotelState {
               enableAddingNewHotel.isEnabled = true;
             });
           }else if(response.statusCode < 400 && response.statusCode > 300){
-            Scaffold.of(context).showSnackBar(SnackBar(
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text('لقد حدث خطاما و محتاج تسجل مرة اخرى حهندلها بعدين حاضر' , style: TextStyle(fontSize: 22 ,))));
           }
         }
@@ -176,7 +176,7 @@ class AddNewHotelState {
         selectCircleStrokeColor: "#000000",
       ),
     );
-    Scaffold.of(context).showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
     length = resultList.length;
     resultList.forEach((element) async {
       var response = await uploadAssetImages(element , "image${ObjectId().toHexString()}.jpg");
@@ -188,7 +188,7 @@ class AddNewHotelState {
         images.add(imgNameArray[0]);
 
         if (images.length == length) {
-          Scaffold.of(context).showSnackBar(snackBar1);
+          ScaffoldMessenger.of(context).showSnackBar(snackBar1);
           this.state.setState(() {
             this.state.data["imageURL"] = images;
           });

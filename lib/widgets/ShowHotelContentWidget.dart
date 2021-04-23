@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/rendering.dart';
 import 'package:hotelier/Constant/Constant.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -296,6 +297,19 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
                   margin: EdgeInsets.only(top: 10),
                   child: HotelContainerWidget(data),
                 ),
+
+              // Container(
+              //   width: MediaQuery.of(context).size.width - 20,
+              //   height: 300,
+              //   child: ListView.builder(
+              //     physics: NeverScrollableScrollPhysics(),
+              //     itemCount: hotelDataList.length,
+              //     itemBuilder: (context, i) => Container(
+              //       margin: EdgeInsets.only(top: 10),
+              //       child: HotelContainerWidget(hotelDataList[i]),
+              //     ),
+              //   ),
+              // ),
               // normal Hotels
               for (var data in hotelDataList)
                 Container(

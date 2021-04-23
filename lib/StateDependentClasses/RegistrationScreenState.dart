@@ -18,7 +18,7 @@ class RegistrationScreenState {
     var citiesListClone = dataList.citiesList;
     var categoryListClone = dataList.categoryList;
     if (this.state.data["videoURL"] == null) {
-      Scaffold.of(this.state.context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(this.state.context).showSnackBar(SnackBar(
           content: Text('من فضلك قم بارفاق فديو لاكمال التسجيل')));
     }
     citiesListClone.forEach((e) => {
@@ -38,7 +38,7 @@ class RegistrationScreenState {
       if (regularExpressionCheck(this.state.data["password"])) {
         if (this.state.data["password"] == this.state.data["confirmPassword"]) {
           if (this.state.data["imageURL"].length == 0) {
-            Scaffold.of(this.state.context).showSnackBar(SnackBar(
+            ScaffoldMessenger.of(this.state.context).showSnackBar(SnackBar(
               content: Text(
                   'من فضلك قم بارفاق على الاقل صورة واحدة'),),);
           } else {
@@ -115,11 +115,11 @@ class RegistrationScreenState {
                                           newImageList.add(element);
                                         }
                                       });
-                                      Scaffold.of(context).showSnackBar(
+                                      ScaffoldMessenger.of(context).showSnackBar(
                                           SnackBar(content: Text('لقد تم التسجيل بنجاح')));
                                       body["img"] = newImageList;
                                     }
-                                    Scaffold.of(context).showSnackBar(
+                                    ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(content: Text('لقد تم التسجيل بنجاح')));
                                   userData.updateUserInfo(body);
                                     Navigator.of(context)
@@ -136,10 +136,10 @@ class RegistrationScreenState {
                                   } else if (response.statusCode == 400) {
                                     Map body = jsonDecode(response.body);
                                     if(body["Phone"] != null){
-                                      Scaffold.of(context).showSnackBar(SnackBar(
+                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                         content: Text(body["Phone"] , style: TextStyle(fontSize: 22 ,),),),);
                                     }else{
-                                      Scaffold.of(context).showSnackBar(SnackBar(
+                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                         //Message
                                           content: Text(body["Message"] , style: TextStyle(fontSize: 22 ,))));
                                     }
@@ -206,7 +206,7 @@ class RegistrationScreenState {
                             newImageList.add(element);
                           }
                         });
-                        Scaffold.of(context).showSnackBar(
+                        ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text('لقد تم التسجيل بنجاح')));
                         body["img"] = newImageList;
                       }
@@ -228,10 +228,10 @@ class RegistrationScreenState {
                       });
                       Map body = jsonDecode(response.body);
                       if(body["Phone"] != null){
-                        Scaffold.of(context).showSnackBar(SnackBar(
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text(body["Phone"] , style: TextStyle(fontSize: 22 ,),),),);
                       }else{
-                        Scaffold.of(this.state.context).showSnackBar(SnackBar(
+                        ScaffoldMessenger.of(this.state.context).showSnackBar(SnackBar(
                             content: Text('هذا الايميل مستخدم من قبل' , style: TextStyle(fontSize: 22 ,))));
                       }
                     }
@@ -341,7 +341,7 @@ class RegistrationScreenState {
         selectCircleStrokeColor: "#000000",
       ),
     );
-    Scaffold.of(context).showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
     length = resultList.length;
     resultList.forEach((element) async {
       var response = await uploadAssetImages(element , "image${ObjectId().toHexString()}.jpg");
@@ -353,7 +353,7 @@ class RegistrationScreenState {
         images.add(imgNameArray[0]);
 
         if (images.length == length) {
-          Scaffold.of(context).showSnackBar(snackBar1);
+          ScaffoldMessenger.of(context).showSnackBar(snackBar1);
           this.state.setState(() {
             this.state.data["imageURL"] = images;
           });

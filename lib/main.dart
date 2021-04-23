@@ -17,7 +17,6 @@ import 'package:hotelier/screens/PersonalInformationScreen.dart';
 import 'package:hotelier/screens/RegistrationScreen.dart';
 import 'package:hotelier/screens/RenewRegistrationScreen.dart';
 import 'package:hotelier/screens/SendSuccessfully.dart';
-import 'package:hotelier/screens/HotelDetailsScreen.dart';
 import 'package:hotelier/screens/SplashScreenWidget.dart';
 import 'package:hotelier/screens/BuyCardScreen.dart';
 import 'package:hotelier/screens/EditUserData.dart';
@@ -79,7 +78,7 @@ class Hotelier extends StatelessWidget {
         RenewRegistrationScreen.routeName: (ctx) => RenewRegistrationScreen(),
         Congratulation.routeName: (ctx) => Congratulation(),
         SendSuccessfully.routeName: (ctx) => SendSuccessfully(),
-        HotelDetailsScreen.routeName: (ctx) => HotelDetailsScreen(),
+        // HotelDetailsScreen.routeName: (ctx) => HotelDetailsScreen(),
         Error_404.routeName: (ctx) => Error_404(),
         EditUserData.routeName: (ctx) => EditUserData(),
         SpecialOfferScreen.routeName: (ctx) => SpecialOfferScreen(),
