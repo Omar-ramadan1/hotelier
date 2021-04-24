@@ -85,11 +85,10 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
       body: jsonEncode(data),
     );
 
-    print(response.statusCode);
     List body = jsonDecode(response.body);
-    Map data1 = body[0];
+    // Map data1 = body[0];
     setState(() {
-      print(data1["Address"]);
+      // print(data1["Address"]);
       hotelAd = body;
     });
   }
@@ -97,7 +96,6 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
   refreshIndicatorFunction(bool isTrue) async {
     DataList dataList = Provider.of<DataList>(context, listen: false);
     refreshKey.currentState?.show(atTop: isTrue);
-    print(data);
     if (cityId == "الكل") {
       data["cityId"] = null;
     } else {
@@ -118,8 +116,6 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
               }
           });
     }
-
-    print(data);
     var response = await http.post(
       '$serverURL/Hotels/HotelsList',
       headers: <String, String>{
@@ -127,9 +123,6 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
       },
       body: jsonEncode(data),
     );
-
-    print(response.statusCode);
-    print(response.body);
     setState(() {
       hotelDataList.addAll(jsonDecode(response.body));
       if (jsonDecode(response.body).length == 0) {

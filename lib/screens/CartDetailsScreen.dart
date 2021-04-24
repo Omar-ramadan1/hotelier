@@ -21,7 +21,6 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
   List data = [];
   @override
   initState() {
-    // TODO: implement initState
     super.initState();
     UserData userDataProvider = Provider.of<UserData>(context, listen: false);
     if(userDataProvider.userData == null){

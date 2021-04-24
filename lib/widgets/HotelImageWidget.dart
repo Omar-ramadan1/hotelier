@@ -20,7 +20,10 @@ class HotelImageWidget extends StatelessWidget {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(topRight: Radius.circular(17) , bottomRight: Radius.circular(17)),
                  image: DecorationImage(image:NetworkImage("${anotherServerURL}Content/Images/${images[0]}"),
-                 fit: BoxFit.cover),
+                 fit: BoxFit.cover ,
+                 onError:(error , stackTrace){
+                  print(error);
+                 } ),
                 color: Colors.transparent
             ),
           ),
