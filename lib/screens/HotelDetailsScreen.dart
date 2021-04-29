@@ -87,11 +87,9 @@ class HotelDetailsScreenState extends State<HotelDetailsScreen> {
                   text: data['Name'],
                   imgList: widget.data['img'],
                   currentIndex: _current,
-                  onChange: (index) {
+                  onChange: (index , reason) {
                     setState(() {
-                      setState(() {
                         _current = index;
-                      });
                     });
                   },
                 ),

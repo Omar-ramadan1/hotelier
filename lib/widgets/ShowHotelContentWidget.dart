@@ -27,7 +27,7 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
   List<String> categoryListClone = ["الكل"];
   var refreshKey = GlobalKey<RefreshIndicatorState>();
   double lastOffset;
-  List hotelDataList = [] , hotelAd = [];
+  List hotelDataList = [] , hotelAd = [] , allHotels = [] ;
   List<String> discountList = [
     'الكل',
     '10',
@@ -77,6 +77,8 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
     // });
   }
   adsHotels()async{
+    print('$serverURL/Hotels/V2/HotelsAd');
+    print('$serverURL/Hotels/V2/HotelsAd');
     var response = await http.post(
       '$serverURL/Hotels/V2/HotelsAd',
       headers: <String, String>{
@@ -90,6 +92,9 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
     setState(() {
       // print(data1["Address"]);
       hotelAd = body;
+      print(body);
+      allHotels.insertAll(0, body);
+      print(hotelDataList);
     });
   }
 
@@ -125,6 +130,8 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
     );
     setState(() {
       hotelDataList.addAll(jsonDecode(response.body));
+      allHotels.addAll(jsonDecode(response.body));
+      print(allHotels);
       if (jsonDecode(response.body).length == 0) {
       } else {
         // setState(() {
@@ -285,30 +292,31 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
               // the body part --------------------------->>>>>
 
               // VIP ad Hotels
-              for (var data in hotelAd)
-                Container(
-                  margin: EdgeInsets.only(top: 10),
-                  child: HotelContainerWidget(data),
-                ),
-
-              // Container(
-              //   width: MediaQuery.of(context).size.width - 20,
-              //   height: 300,
-              //   child: ListView.builder(
-              //     physics: NeverScrollableScrollPhysics(),
-              //     itemCount: hotelDataList.length,
-              //     itemBuilder: (context, i) => Container(
-              //       margin: EdgeInsets.only(top: 10),
-              //       child: HotelContainerWidget(hotelDataList[i]),
-              //     ),
+              // for (var data in hotelAd)
+              //   Container(
+              //     margin: EdgeInsets.only(top: 10),
+              //     child: HotelContainerWidget(data),
               //   ),
-              // ),
-              // normal Hotels
-              for (var data in hotelDataList)
-                Container(
-                  margin: EdgeInsets.only(top: 10),
-                  child: HotelContainerWidget(data),
+
+              Container(
+                width: MediaQuery.of(context).size.width - 20,
+                height:  MediaQuery.of(context).size.height - 30,
+                child: ListView.builder(
+                  primary: false,
+                  physics: ScrollPhysics(),
+                  itemCount: allHotels.length,
+                  itemBuilder: (context, i) => Container(
+                    margin: EdgeInsets.only(top: 10),
+                    child: HotelContainerWidget(allHotels[i]),
+                  ),
                 ),
+              ),
+              // normal Hotels
+              // for (var data in hotelDataList)
+              //   Container(
+              //     margin: EdgeInsets.only(top: 10),
+              //     child: HotelContainerWidget(data),
+              //   ),
               SizedBox(
                 height: 30,
               )

@@ -16,7 +16,6 @@ class UserInformationScreen extends StatelessWidget {
     UserData userDataProvider = Provider.of<UserData>(context);
     DataList dataListProvider = Provider.of<DataList>(context);
     dataListProvider.citiesList.forEach((element) {
-      print(element);
       if (userDataProvider.userData["cityName"] == element["id"]) {
         cityName = element["Name"];
       }
@@ -83,7 +82,7 @@ class UserInformationScreen extends StatelessWidget {
                   margin: EdgeInsets.only(top: 20 , bottom: 10),
                   child: Column(
                     children: [
-                      InformationTextWidget('اسم المستخدم:  ' , userDataProvider.userData['name']),
+                      InformationTextWidget('الحساب :  ' , userDataProvider.userData['email']),
                       InformationTextWidget('رقم الهاتف:  ' , userDataProvider.userData['phone']),
                       // InformationTextWidget('رقم القومى:  ' , userDataProvider.userData['idNumber'].toString()),
                       InformationTextWidget('المدينة:  ' , cityName),

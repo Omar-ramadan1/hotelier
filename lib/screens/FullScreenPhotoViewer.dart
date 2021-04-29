@@ -4,11 +4,11 @@ import 'package:hotelier/Constant/Constant.dart';
 import 'package:photo_view/photo_view.dart';
 
 class FullScreenPhotoViewer extends StatefulWidget {
-  final List imgList;
+  // final List imgList;
   final String imageURL;
   static const routeName = '/FullScreenPhotoViewer';
 
-  const FullScreenPhotoViewer(this.imgList, this.imageURL);
+  const FullScreenPhotoViewer(this.imageURL);
   @override
   _FullScreenPhotoViewerState createState() => _FullScreenPhotoViewerState();
 }
@@ -22,15 +22,15 @@ class _FullScreenPhotoViewerState extends State<FullScreenPhotoViewer> {
     // TODO: implement initState
     super.initState();
     controller = PhotoViewController()..outputStateStream.listen(listener);
-    int i = 0;
-    widget.imgList.forEach((element) {
-      if (element == widget.imageURL) {
-        setState(() {
-          currentImagePage = i;
-        });
-      }
-      i++;
-    });
+    // int i = 0;
+    // widget.imgList.forEach((element) {
+    //   if (element == widget.imageURL) {
+    //     setState(() {
+    //       currentImagePage = i;
+    //     });
+    //   }
+    //   i++;
+    // });
   }
 
   void listener(PhotoViewControllerValue value) {
@@ -67,7 +67,7 @@ class _FullScreenPhotoViewerState extends State<FullScreenPhotoViewer> {
           flexibleSpace: PageView(
             scrollDirection: Axis.horizontal,
             children: [
-              for (int i = 0; i < widget.imgList.length; i++)
+              // for (int i = 0; i < widget.imgList.length; i++)
                 Container(
                   color: Colors.black,
                   height: sizes.height,
@@ -80,7 +80,7 @@ class _FullScreenPhotoViewerState extends State<FullScreenPhotoViewer> {
                     maxScale: sizes.height,
                     basePosition: Alignment.center,
                     imageProvider: Image.network(
-                      "${anotherServerURL}Content/Images/${widget.imgList[i]}",
+                      "${anotherServerURL}Content/Images/${widget.imageURL}",
                       fit: BoxFit.fill,
                       height: sizes.height,
                     ).image,

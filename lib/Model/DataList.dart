@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:hotelier/Constant/Constant.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,7 +26,7 @@ class DataList extends ChangeNotifier{
   }
   Future<void> getCitiesListFunction() async {
     List<String> citiesNamesClone = [];
-    var response  = await http.get('http://api.hoteliercard.com/api/City/List');
+    var response  = await http.get('$serverURL/City/List');
     citiesList = jsonDecode(response.body);
     _citiesList.forEach((e) => {
       if(e["Name"] == "الكل"){
@@ -59,7 +60,9 @@ class DataList extends ChangeNotifier{
   }
   Future<void> getTypesListFunction() async {
     List<String> categoryNamesClone = [];
-    var response  = await http.get('http://api.hoteliercard.com/api/Types/List');
+    var response  = await http.get('$serverURL/Types/List');
+    print('$serverURL/Types/List');
+    print(response.body);
     categoryList = jsonDecode(response.body);
 
     _categoryList.forEach((e) => {

@@ -26,18 +26,15 @@ class _HotelPersonalInformationWidgetState
     extends State<HotelPersonalInformationWidget> {
   int i = 0 ;
   @override
-  void didChangeDependencies() {
+  void initState() {
     // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-    EnableAddingNewHotel enableAddingNewHotel =
-    Provider.of<EnableAddingNewHotel>(context, listen: false);
-    enableAddingNewHotel.isEnabled = true;
+    super.initState();
     getIsUserActive();
   }
   getIsUserActive() async {
     UserData userDataProvider = Provider.of<UserData>(context, listen: false);
     Map data = userDataProvider.userData;
-    var request = await http.get(
+    var request = await http.post(
       '$serverURL/User/IsActive',
       headers: <String, String>{
         'Authorization': 'Bearer ${userDataProvider.userData["access_token"]}',
@@ -51,12 +48,14 @@ class _HotelPersonalInformationWidgetState
     if (request.statusCode < 300) {
       print("request.body");
       print(request.body);
-      Map body = jsonDecode(request.body);
-      data["IsActive"] = body["IsActive"];
+      data["IsActive"] = jsonDecode(request.body);
       userDataProvider.userData = data;
       print("userDataProvider.userData[IsActive]");
       print(userDataProvider.userData["IsActive"]);
     }
+    EnableAddingNewHotel enableAddingNewHotel =
+    Provider.of<EnableAddingNewHotel>(context, listen: false);
+    enableAddingNewHotel.isEnabled = true;
   }
 
   @override

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hotelier/Constant/Constant.dart';
+import 'package:hotelier/screens/FullScreenPhotoViewer.dart';
 import 'package:hotelier/widgets/AppDrawerWidget.dart';
 
 class HotelImageViewer extends StatelessWidget {
@@ -37,7 +38,13 @@ class HotelImageViewer extends StatelessWidget {
             return Container(
                 margin:EdgeInsets.only(left: 3 , right:3 , top: 3),
                 height: 200,
-                child: Image.network("${anotherServerURL}Content/Images/${imgList[index]}" , fit: BoxFit.fill,));
+                child: InkWell(
+                  onTap: (){
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => FullScreenPhotoViewer(imgList[index])));
+                  },
+                    child: Image.network("${anotherServerURL}Content/Images/${imgList[index]}" , fit: BoxFit.fill,))
+              ,);
           }),
     );
   }

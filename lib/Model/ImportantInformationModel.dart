@@ -16,6 +16,7 @@ class ImportantInformationModel extends ChangeNotifier {
 
   set importantInformationMap(Map contactUsDataParameter) {
     _importantInformationModelMap = contactUsDataParameter;
+    _importantInformationModelMap = contactUsDataParameter;
     notifyListeners();
   }
 

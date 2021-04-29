@@ -98,6 +98,14 @@ class _EditHotelDataState extends State<EditHotelData> {
     } else {
       IsReservationsAvailable = 'غير متاح';
     }
+
+    _controller.value = TextEditingValue(
+        text: data['Notes'],
+        selection: TextSelection(
+            isDirectional: false,
+            baseOffset: 4,
+            extentOffset: 4));
+
   }
 
   @override
@@ -251,7 +259,6 @@ class _EditHotelDataState extends State<EditHotelData> {
               ),
               TextField(
                 controller: _controller,
-                maxLengthEnforced: true,
                 maxLines: 4,
                 maxLength: 2000,
                 keyboardType: TextInputType.text,
@@ -514,6 +521,7 @@ class _EditHotelDataState extends State<EditHotelData> {
                   scrollDirection: Axis.vertical,
                   crossAxisCount: 3,
                   physics: ScrollPhysics(),
+                  primary: false,
                   children: [
                     for (var imageBody in widget.data['img'])
                       Container(

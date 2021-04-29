@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hotelier/Constant/Constant.dart';
-import 'package:hotelier/main.dart';
 import 'package:hotelier/screens/GoogleMapInfoScreen.dart';
 import 'package:hotelier/widgets/GoogleMapWidget.dart';
 import 'package:hotelier/widgets/VideoPlayerWidget.dart';

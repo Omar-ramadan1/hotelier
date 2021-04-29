@@ -9,7 +9,7 @@ uploadAssetImages(Asset image , String name) async {
       Uri.parse("${anotherServerURL}api/Upload/Post");
   http.MultipartRequest request = http.MultipartRequest("POST", uri);
   ByteData byteData = await image.getByteData();
-  final result = await FlutterImageCompress.compressWithList(byteData.buffer.asUint8List() , quality: 30);
+  final result = await FlutterImageCompress.compressWithList(byteData.buffer.asUint8List() , quality: 15);
   print(result.length);
 
   print(byteData.buffer.asUint8List().length);

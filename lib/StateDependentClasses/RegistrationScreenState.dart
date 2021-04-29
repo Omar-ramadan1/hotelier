@@ -187,6 +187,7 @@ class RegistrationScreenState {
                         body: jsonEncode({'email' : this.state.data['email'] , 'password' : this.state.data['password']}),
                       );
                       Map body = jsonDecode(response.body);
+                      print(body);
                       if(body['IsHotel']){
                         // this handle a server error which may add photo to the hotel with no name
                         print(body["img"]);

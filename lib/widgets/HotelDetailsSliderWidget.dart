@@ -9,7 +9,7 @@ class HotelDetailsSliderWidget extends StatelessWidget {
   final Function onChange;
   final int currentIndex;
   final String text;
-  const HotelDetailsSliderWidget({Key key, this.text ,this.imgList , this.currentIndex ,this.onChange(index)}) : super(key: key);
+  const HotelDetailsSliderWidget({Key key, this.text ,this.imgList , this.currentIndex ,this.onChange}) : super(key: key);
 
 List<T> map<T>(List list, Function handler) {
   List<T> result = [];
@@ -21,7 +21,6 @@ List<T> map<T>(List list, Function handler) {
 
   @override
   Widget build(BuildContext context) {
-  print(imgList);
     return Container(
       child: Column(children: [
         Text(
@@ -41,7 +40,7 @@ List<T> map<T>(List list, Function handler) {
             autoPlayInterval: Duration(seconds: 4),
             autoPlayAnimationDuration: Duration(milliseconds: 2000),
             scrollDirection: Axis.horizontal,
-            // onPageChanged: (index) => onChange(index)
+             onPageChanged: (index , reason) => onChange(index , reason),
           ),
 
           items: imgList.map((imgUrl) {
