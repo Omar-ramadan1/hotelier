@@ -12,6 +12,7 @@ final Function func;
   const CNOHSSHIW(this.data , this.func);
   @override
   Widget build(BuildContext context) {
+    print(data);
     List imageUrl = data["img"];
     Map imageMap = imageUrl[0];
     Size size = MediaQuery.of(context).size;

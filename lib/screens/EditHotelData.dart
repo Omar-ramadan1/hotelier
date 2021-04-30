@@ -195,12 +195,17 @@ class _EditHotelDataState extends State<EditHotelData> {
                         ],
                       ),
               ),
+              Text(
+                " الفندق ${data["isActive"]}",
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.w800  , color: data["isActive"] == "غير فعال" ? Colors.red : Colors.green),
+              ),
               EditTextFieldWidget("اسم الفندق", data["Name"], (value) {
                 onChangeFunction(value, "Name");
               }),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
+
                   Container(
                     width: size.width,
                     child: EditTextFieldWidget(
