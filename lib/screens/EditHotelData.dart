@@ -567,7 +567,18 @@ class _EditHotelDataState extends State<EditHotelData> {
                           });
                         }
                       });
-                      print(dataClone);
+                      // print(jsonEncode(dataClone));
+                      Map dataFilter = {};
+
+                      dataClone.forEach((key, value) {
+                        if(key == "isActive"){
+
+                        }else{
+                          dataFilter[key] = value;
+                        }
+                      });
+                      print(jsonEncode(dataFilter));
+                      print("===========================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
                       // isCommercialRegistrationIs10Digits is always true as it's cancelled for now
 
@@ -583,7 +594,7 @@ class _EditHotelDataState extends State<EditHotelData> {
                                 'Bearer ${userDataProvider.userData["access_token"]}',
                             'Content-Type': 'application/json'
                           },
-                          body: jsonEncode(dataClone),
+                          body: jsonEncode(dataFilter),
                         );
                         print(response.statusCode);
                         print(response.body);
