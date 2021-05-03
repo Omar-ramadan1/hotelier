@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hotelier/Constant/Constant.dart';
 import 'package:hotelier/Model/UserData.dart';
+import 'package:hotelier/widgets/AddNewHotel.dart';
 import 'package:hotelier/widgets/AppBarWidget.dart';
 import 'package:hotelier/widgets/AppDrawerWidget.dart';
+import 'package:hotelier/widgets/ButtonWidget.dart';
 import 'package:hotelier/widgets/ControllingNumberOfHotelSSettingScreenHotelInfoWidget.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -82,6 +84,7 @@ class _ControllingNumberOfHotelSSettingScreenState
       resizeToAvoidBottomInset: true,
       body: Container(
         width: size.width,
+        height: size.height,
         child: SingleChildScrollView(
           padding: EdgeInsets.only(top: 150),
           child: Column(
@@ -89,8 +92,18 @@ class _ControllingNumberOfHotelSSettingScreenState
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text("قم باختيار الفندق المراد تعديل بياناته" , style: TextStyle(fontWeight: FontWeight.w700),),
+              InkWell(
+                onTap: (){
+                  Navigator.of(context).pop();
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => AddNewHotel()));
+                },
+                child: ButtonChildWidget(
+                    "اضافة فرع جديد", mainAppColor, 20, 200),
+              ),
               for(int i = 0 ; i < data.length ; i++)
               CNOHSSHIW(data[i] , filterDataList),
+
             ],
           ),
         ),

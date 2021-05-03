@@ -77,8 +77,8 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
     // });
   }
   adsHotels()async{
-    print('$serverURL/Hotels/V2/HotelsAd');
-    print('$serverURL/Hotels/V2/HotelsAd');
+    // print('$serverURL/Hotels/V2/HotelsAd');
+
     var response = await http.post(
       '$serverURL/Hotels/V2/HotelsAd',
       headers: <String, String>{
@@ -121,6 +121,9 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
               }
           });
     }
+    setState(() {
+      allHotels = [];
+    });
     var response = await http.post(
       '$serverURL/Hotels/HotelsList',
       headers: <String, String>{
@@ -129,9 +132,10 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
       body: jsonEncode(data),
     );
     setState(() {
-      hotelDataList.addAll(jsonDecode(response.body));
+      // hotelDataList.addAll(jsonDecode(response.body));
+      allHotels.addAll(hotelAd);
       allHotels.addAll(jsonDecode(response.body));
-      print(allHotels);
+      print("=======>>>>>>>>>>>>>>>");
       if (jsonDecode(response.body).length == 0) {
       } else {
         // setState(() {
@@ -300,11 +304,11 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
 
               Container(
                 width: MediaQuery.of(context).size.width - 20,
-                height:  MediaQuery.of(context).size.height - 30,
+                height:  MediaQuery.of(context).size.height - 320,
                 child: ListView.builder(
                   primary: false,
                   physics: ScrollPhysics(),
-                  itemCount: allHotels.length,
+                  itemCount: allHotels.length == 0? 0 :allHotels.length  ,
                   itemBuilder: (context, i) => Container(
                     margin: EdgeInsets.only(top: 10),
                     child: HotelContainerWidget(allHotels[i]),
@@ -325,6 +329,7 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
         ),
       ),
       bottomNavigationBar: BottomBarWidget(),
+      extendBody: true,
     );
   }
 }

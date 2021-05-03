@@ -70,10 +70,11 @@ class AddNewHotelState {
                           this.state.isSubmittingRegistration = false;
                         });
                         if (response.statusCode == 200) {
-                          this.state.setState(() {
-                            this.state.finishedAdding = true;
-                            enableAddingNewHotel.isEnabled = true;
-                          });
+                          Navigator.of(this.state.context).pop();
+                          // this.state.setState(() {
+                          //   this.state.finishedAdding = true;
+                          //   enableAddingNewHotel.isEnabled = true;
+                          // });
                         } else if (response.statusCode == 400) {
                           Map body = jsonDecode(response.body);
                           if(body["Phone"] != null){

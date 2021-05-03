@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:hotelier/Constant/Constant.dart';
 import 'package:hotelier/Model/EnableAddingNewHotel.dart';
 import 'package:hotelier/Model/UserData.dart';
-import 'package:hotelier/screens/InformationImageViewer.dart';
 import 'package:hotelier/widgets/AddNewHotel.dart';
 import 'package:hotelier/widgets/AppBarWidget.dart';
 import 'package:hotelier/widgets/AppDrawerWidget.dart';
