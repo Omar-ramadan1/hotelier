@@ -58,7 +58,7 @@ class AddNewHotelState {
                         });
                         print(this.state.data["imageURL"]);
                         var response = await http.post(
-                          'http://jafarx123-001-site2.itempurl.com/api/User/V2/RegisterSubHotel',
+                          '$serverURL/User/V2/RegisterSubHotel',
                           headers: <String, String>{
                             'Content-Type': 'application/json',
                           },
@@ -111,7 +111,7 @@ class AddNewHotelState {
 
           print(userData.userData["access_token"]);
           var response = await http.post(
-            'http://jafarx123-001-site2.itempurl.com/api/User/V2/RegisterSubHotel',
+            '$serverURL/User/V2/RegisterSubHotel',
             headers: <String, String>{
               'Content-Type': 'application/json',
               'Authorization':'Bearer ${userData.userData["access_token"]}'
@@ -122,10 +122,11 @@ class AddNewHotelState {
           print(response.body);
           if(response.statusCode < 300){
             print("entered");
-            this.state.setState(() {
-              this.state.finishedAdding = true;
-              enableAddingNewHotel.isEnabled = true;
-            });
+            Navigator.of(this.state.context).pop();
+            // this.state.setState(() {
+            //   this.state.finishedAdding = true;
+            //   enableAddingNewHotel.isEnabled = true;
+            // });
           }else if(response.statusCode < 400 && response.statusCode > 300){
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text('لقد حدث خطاما و محتاج تسجل مرة اخرى حهندلها بعدين حاضر' , style: TextStyle(fontSize: 22 ,))));

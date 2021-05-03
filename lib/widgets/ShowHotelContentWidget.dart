@@ -62,7 +62,7 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
       };
     });
 
-    refreshIndicatorFunction(true);
+    refreshIndicatorFunction(false);
 
     // _scrollController.addListener(() {
     //   if (_scrollController.position.atEdge) {
@@ -100,7 +100,7 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
 
   refreshIndicatorFunction(bool isTrue) async {
     DataList dataList = Provider.of<DataList>(context, listen: false);
-    refreshKey.currentState?.show(atTop: isTrue);
+    refreshKey.currentState?.show(atTop: true);
     if (cityId == "الكل") {
       data["cityId"] = null;
     } else {
@@ -133,7 +133,9 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
     );
     setState(() {
       // hotelDataList.addAll(jsonDecode(response.body));
-      allHotels.addAll(hotelAd);
+      if(isTrue){
+        allHotels.addAll(hotelAd);
+      }
       allHotels.addAll(jsonDecode(response.body));
       print("=======>>>>>>>>>>>>>>>");
       if (jsonDecode(response.body).length == 0) {
