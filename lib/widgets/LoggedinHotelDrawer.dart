@@ -109,20 +109,20 @@ class LoggedInHotelDrawer extends StatelessWidget {
                 height: 10,
               ),
               DrawerTabsWidget(Icons.person, "حسابى", () {
-                Navigator.of(context).pushNamed(PersonalInformationScreen.routeName);
+                Navigator.of(context).pushNamed(ControllingNumberOfHotelSSettingScreen.routeName);
               }),
               SizedBox(
                 height: 5,
               ),
-              InkWell(
-                child: DrawerTabsWidget(Icons.settings, "الاعدادات", () {
-                  Navigator.of(context)
-                      .popAndPushNamed(ControllingNumberOfHotelSSettingScreen.routeName);
-                }),
-              ),
-              SizedBox(
-                height: 5,
-              ),
+              // InkWell(
+              //   child: DrawerTabsWidget(Icons.settings, "الاعدادات", () {
+              //     Navigator.of(context)
+              //         .popAndPushNamed(ControllingNumberOfHotelSSettingScreen.routeName);
+              //   }),
+              // ),
+              // SizedBox(
+              //   height: 5,
+              // ),
               DrawerTabsWidget(Icons.home_work, "شركاء النجاح", () {
                 Navigator.of(context).popAndPushNamed(SponsorsScreen.routeName);
               }),
