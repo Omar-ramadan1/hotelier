@@ -6,7 +6,8 @@ import 'package:hotelier/Constant/Constant.dart';
 import 'package:hotelier/Functions/UploadAssetImages.dart';
 import 'package:hotelier/screens/PersonalInformationScreen.dart';
 import 'package:http/http.dart' as http;
-import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:multi_image_picker2/multi_image_picker2.dart';
+
 class RegistrationScreenState {
   final state , dataList , userData , context;
 
@@ -333,7 +334,7 @@ class RegistrationScreenState {
     int length;
     final snackBar = SnackBar(content: Text('please wait till image uploads'));
     final snackBar1 = SnackBar(content: Text('images uploaded'));
-    List<Asset> resultList = List<Asset>();
+    List<Asset> resultList;
 
     resultList = await MultiImagePicker.pickImages(
       maxImages: 10,

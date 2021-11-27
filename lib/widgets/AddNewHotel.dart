@@ -28,7 +28,7 @@ class AddNewHotel extends StatefulWidget {
 
 class _AddNewHotelState extends State<AddNewHotel> {
   TextEditingController _controller = new TextEditingController();
-  String cityId,
+  late String cityId,
       typeId,
       errorString = '',
       IsReservationsAvailable = "متاح";
@@ -458,13 +458,13 @@ class _AddNewHotelState extends State<AddNewHotel> {
     final snackBar1 = SnackBar(content: Text('video uploaded'));
     final snackBar2 = SnackBar(content: Text('your video size is too large'));
     final picker = ImagePicker();
-    PickedFile pickedFile = await picker.getVideo(source: ImageSource.gallery);
+    XFile? pickedFile = await picker.pickVideo(source: ImageSource.gallery);
     Scaffold.of(context).showSnackBar(snackBar);
     setState(() {
       isVideoLoading = true;
     });
     var response = await saveVideoFunction(
-        pickedFile, "video${ObjectId().toHexString()}.mp4");
+        pickedFile!, "video${ObjectId().toHexString()}.mp4");
     if (response.statusCode == 200) {
       response.stream.transform(utf8.decoder).listen((value) {
         Map respondedData = jsonDecode(value);

@@ -14,9 +14,9 @@ class FullScreenPhotoViewer extends StatefulWidget {
 }
 
 class _FullScreenPhotoViewerState extends State<FullScreenPhotoViewer> {
-  int currentImagePage;
-  PhotoViewController controller;
-  double scaleCopy;
+  late int currentImagePage;
+  late PhotoViewController controller;
+  late double scaleCopy;
   @override
   void initState() {
     // TODO: implement initState
@@ -37,10 +37,10 @@ class _FullScreenPhotoViewerState extends State<FullScreenPhotoViewer> {
 
       print(controller.prevValue.position);
       if(controller.prevValue.scale != null){
-        if (controller.position == controller.initial.position && controller.prevValue.scale > controller.scale && controller.prevValue.position == controller.initial.position) {
+        if (controller.position == controller.initial.position && controller.prevValue.scale! > int.parse(controller.scale.toString())  && controller.prevValue.position == controller.initial.position) {
           print("1111111111111");
           controller.value = controller.initial;
-        }else if (controller.position == controller.initial.position && controller.prevValue.scale < controller.scale){
+        }else if (controller.position == controller.initial.position && controller.prevValue.scale! < int.parse(controller.scale.toString())){
           controller.value = controller.initial;
           print("22222222222222222");
         }
@@ -73,9 +73,6 @@ class _FullScreenPhotoViewerState extends State<FullScreenPhotoViewer> {
                   height: sizes.height,
                   child: PhotoView(
                     controller: controller,
-                    loadFailedChild: Container(
-                      color: Colors.black,
-                    ),
                     customSize: sizes,
                     maxScale: sizes.height,
                     basePosition: Alignment.center,

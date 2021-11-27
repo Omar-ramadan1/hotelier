@@ -7,7 +7,7 @@ class HotelData extends ChangeNotifier{
   // but i need MainList from server which is composed of Maps
   // and need seperated String List that Contain only Names from this Map
 
-  List _hotelChosen;
+  late List _hotelChosen;
   List get hotelChosen => _hotelChosen;
   set hotelChosen(List hotelChosenParameter) {
     _hotelChosen = hotelChosenParameter;

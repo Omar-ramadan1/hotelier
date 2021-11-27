@@ -4,10 +4,9 @@ import '../Clippers/AppBarClipper.dart';
 class AppBarWidget extends StatelessWidget {
 final String imageName;
 final String text;
-final bool isSearchAvailable;
   static const routeName = '/MainScreen';
 
-  const AppBarWidget(this.imageName,this.text , {this.isSearchAvailable});
+  const AppBarWidget(this.imageName,this.text);
   @override
   Widget build(BuildContext context) {
     return  ClipPath(

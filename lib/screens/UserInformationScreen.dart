@@ -12,7 +12,7 @@ class UserInformationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    String cityName;
+    String cityName = "";
     UserData userDataProvider = Provider.of<UserData>(context);
     DataList dataListProvider = Provider.of<DataList>(context);
     dataListProvider.citiesList.forEach((element) {

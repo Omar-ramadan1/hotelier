@@ -14,7 +14,7 @@ class About extends StatefulWidget {
 
 class _AboutState extends State<About> {
 
-  Map info;
+  late Map info;
   @override
   void initState(){
     // TODO: implement initState

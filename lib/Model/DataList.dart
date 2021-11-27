@@ -46,14 +46,14 @@ class DataList extends ChangeNotifier{
   }
 
 
-  List _categoryList;
+  late List _categoryList;
   List get categoryList => _categoryList;
   set categoryList(List citiesListParameter) {
     _categoryList = citiesListParameter;
     notifyListeners();
   }
 
-  List<String> _categoryNames;
+  late List<String> _categoryNames;
   List<String> get categoryNames => _categoryNames;
   set categoryNames(List<String> citiesNamesParameter) {
     _categoryNames = citiesNamesParameter;
@@ -86,12 +86,12 @@ class DataList extends ChangeNotifier{
     _prefs.then((SharedPreferences prefs) {
       if( prefs.get("categoryNames") == null ){
       } else{
-        categoryNames = jsonDecode(prefs.get("categoryNames")).cast<String>();
+        categoryNames = jsonDecode(prefs.getString("categoryNames")!).cast<String>();
       }
 
       if( prefs.get("citiesNames") == null ){
       } else{
-        categoryNames = jsonDecode(prefs.get("citiesNames")).cast<String>();
+        categoryNames = jsonDecode(prefs.getString("citiesNames")!).cast<String>();
       }
 
     });

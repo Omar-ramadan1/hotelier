@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 class UserData  extends ChangeNotifier{
-   Map _userData;
+   late Map _userData;
    Map get userData => _userData;
    bool _isUserDataLoaded = false;
    bool get isUserDataLoaded => _isUserDataLoaded;
@@ -27,7 +27,7 @@ class UserData  extends ChangeNotifier{
      _prefs.then((SharedPreferences prefs) {
        if( prefs.get("userData") == null ){
        } else{
-         userData = jsonDecode(prefs.get("userData"));
+         userData = jsonDecode(prefs.getString("userData")!);
        }
 
      });

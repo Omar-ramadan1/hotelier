@@ -18,7 +18,7 @@ class ForgetPasswordScreen extends StatefulWidget {
 
 class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   String cardValue = "payAtArrive";
-  int x;
+  late int x;
   Map data = {
     "email" : null
   };

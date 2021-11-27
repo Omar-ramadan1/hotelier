@@ -20,10 +20,10 @@ class HotelDetailsScreen extends StatefulWidget {
 
 class HotelDetailsScreenState extends State<HotelDetailsScreen> {
   //
-  CarouselSlider carouselSlider;
-  ScrollController _controller;
+  late CarouselSlider carouselSlider;
+  late ScrollController _controller;
   int _current = 0;
-  Map data;
+  late Map data;
 @override
   void initState() {
     // TODO: implement initState

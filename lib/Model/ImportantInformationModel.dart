@@ -10,7 +10,7 @@ class ImportantInformationModel extends ChangeNotifier {
   // the time difference between the openning screen
   // and the appearance of information
 
-  Map _importantInformationModelMap;
+  late Map _importantInformationModelMap;
 
   Map get importantInformationMap => _importantInformationModelMap;
 
@@ -73,8 +73,9 @@ class ImportantInformationModel extends ChangeNotifier {
 
   Future<String> httpContactDataRequest(int idNumber) async {
     Map data;
+    Uri url = Uri.parse('$serverURL/Pages/?id=$idNumber');
     var response = await http.get(
-      '$serverURL/Pages/?id=$idNumber',
+      url,
       headers: <String, String>{
         'Content-Type': 'application/x-www-form-urlencoded'
       },

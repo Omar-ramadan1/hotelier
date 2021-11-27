@@ -24,7 +24,6 @@ import 'package:hotelier/widgets/EditTextFieldWidget.dart';
 import 'package:hotelier/widgets/HotelImageEditWidget.dart';
 import 'package:hotelier/widgets/SignUpButtonWidget.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:multi_image_picker2/multi_image_picker2.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
@@ -111,7 +110,7 @@ class _EditHotelDataState extends State<EditHotelData> {
 
   @override
   Widget build(BuildContext context) {
-    print(ModalRoute.of(context).settings.arguments);
+    print(ModalRoute.of(context)!.settings.arguments);
     UserData userDataProvider = Provider.of<UserData>(context);
     DataList dataListProvider = Provider.of<DataList>(context);
     Size size = MediaQuery.of(context).size;
@@ -171,8 +170,8 @@ class _EditHotelDataState extends State<EditHotelData> {
                       print(jsonDecode(value));
                       List imgNameArray = respondedData['imgName'];
                       setState(() {
-                        PaintingBinding.instance.imageCache.clearLiveImages();
-                        PaintingBinding.instance.imageCache.clear();
+                        PaintingBinding.instance!.imageCache!.clearLiveImages();
+                        PaintingBinding.instance!.imageCache!.clear();
                         dataClone["userImg"] = imgNameArray[0];
                         imageName = imgNameArray[0];
                         keyValue = ValueKey(new Random().nextInt(100));
@@ -677,7 +676,7 @@ class _EditHotelDataState extends State<EditHotelData> {
   uploadVideo() async {
     String name;
     final picker = ImagePicker();
-    PickedFile pickedFile = await picker.getVideo(source: ImageSource.gallery);
+    XFile? pickedFile = await picker.pickVideo(source: ImageSource.gallery);
     // Scaffold.of(context).showSnackBar(snackBar);
     setState(() {
       isVideoLoading = true;
@@ -687,7 +686,7 @@ class _EditHotelDataState extends State<EditHotelData> {
     } else {
       name = data["videoURL"];
     }
-    var response = await saveVideoFunction(pickedFile, name);
+    var response = await saveVideoFunction(pickedFile!, name);
     if (response.statusCode == 200) {
       response.stream.transform(utf8.decoder).listen((value) {
         Map respondedData = jsonDecode(value);
@@ -721,7 +720,7 @@ class _EditHotelDataState extends State<EditHotelData> {
   uploadImages() async {
     List images = [];
     // final snackBar1 = SnackBar(content: Text('images uploaded'));
-    List<Asset> resultList = List<Asset>();
+    List<Asset> resultList;
 
     resultList = await MultiImagePicker.pickImages(
       maxImages: allowedImageNumberToBeUploaded,
@@ -765,7 +764,7 @@ class _EditHotelDataState extends State<EditHotelData> {
         };
         setState(() {
           data["img"].add(imageData);
-          allowedImageNumberToBeUploaded = 10 - data['img'].length;
+          allowedImageNumberToBeUploaded = 10 - int.parse(data['img'].length.toString());
         });
       });
     });
@@ -785,7 +784,7 @@ class _EditHotelDataState extends State<EditHotelData> {
       });
       setState(() {
         data['img'] = filter;
-        allowedImageNumberToBeUploaded = 10 - data['img'].length;
+        allowedImageNumberToBeUploaded = 10 - int.parse(data['img'].length.toString());
       });
       Uri url = Uri.parse( '$serverURL/Media/DeleatImg?id=$pkMediaId');
       var response = await http.post(

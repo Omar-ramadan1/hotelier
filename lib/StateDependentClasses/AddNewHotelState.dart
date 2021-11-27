@@ -5,7 +5,7 @@ import 'package:crossplat_objectid/crossplat_objectid.dart';
 import 'package:flutter/material.dart';
 import 'package:hotelier/Constant/Constant.dart';
 import 'package:hotelier/Functions/UploadAssetImages.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:multi_image_picker2/multi_image_picker2.dart';
 import 'package:provider/provider.dart';
 class AddNewHotelState {
   final state , dataList , userData , context;
@@ -57,8 +57,9 @@ class AddNewHotelState {
                           this.state.isSubmittingRegistration = true;
                         });
                         print(this.state.data["imageURL"]);
+                        Uri url = Uri.parse('$serverURL/User/V2/RegisterSubHotel');
                         var response = await http.post(
-                          '$serverURL/User/V2/RegisterSubHotel',
+                          url,
                           headers: <String, String>{
                             'Content-Type': 'application/json',
                           },
@@ -110,8 +111,9 @@ class AddNewHotelState {
           });
 
           print(userData.userData["access_token"]);
+          Uri url = Uri.parse('$serverURL/User/V2/RegisterSubHotel');
           var response = await http.post(
-            '$serverURL/User/V2/RegisterSubHotel',
+            url,
             headers: <String, String>{
               'Content-Type': 'application/json',
               'Authorization':'Bearer ${userData.userData["access_token"]}'
@@ -165,7 +167,7 @@ class AddNewHotelState {
     int length;
     final snackBar = SnackBar(content: Text('please wait till image uploads'));
     final snackBar1 = SnackBar(content: Text('images uploaded'));
-    List<Asset> resultList = List<Asset>();
+    List<Asset> resultList;
 
     resultList = await MultiImagePicker.pickImages(
       maxImages: 10,

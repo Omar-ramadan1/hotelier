@@ -16,9 +16,9 @@ class SuccessScreen extends StatefulWidget {
 
 class _SuccessScreenState extends State<SuccessScreen> {
   String cardValue = "payAtArrive";
-  Map data ;
+  late Map data ;
 
-  Function changeCardValueFunction(String cardValueParamater) {
+  Function? changeCardValueFunction(String cardValueParamater) {
     setState(() {
       cardValue = cardValueParamater;
     });

@@ -24,8 +24,8 @@ class _GoogleMapInfoScreenState extends State<GoogleMapInfoScreen> {
   );// , MAP OF MARKS
   Completer<GoogleMapController> _controller = Completer();
   // GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: "AIzaSyCeaBTry2YnTPFGYdD6IJqtT4HjFtOr8As");
-  Position positions;
-  LatLng selectedPosition ;
+  late Position positions;
+  late LatLng selectedPosition ;
   @override
   void initState() {
     // TODO: implement initState

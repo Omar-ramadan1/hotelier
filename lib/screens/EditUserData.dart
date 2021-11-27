@@ -17,7 +17,7 @@ import 'package:hotelier/widgets/DropdownWidget.dart';
 import 'package:hotelier/widgets/EditTextFieldWidget.dart';
 import 'package:hotelier/widgets/SignUpButtonWidget.dart';
 import 'package:http/http.dart' as http;
-import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:multi_image_picker2/multi_image_picker2.dart';
 import 'package:provider/provider.dart';
 
 class EditUserData extends StatefulWidget {
@@ -28,10 +28,10 @@ class EditUserData extends StatefulWidget {
 }
 
 class _EditUserDataState extends State<EditUserData> {
-  String discountValue, cityName , imageName;
+  late String discountValue, cityName , imageName;
   double starRating = 0;
   bool checkBoxValue = false;
-  Map data, dataClone = {}, dataErrorMessage = {};
+  Map data ={}, dataClone = {}, dataErrorMessage = {};
 
   @override
   void initState() {
@@ -118,8 +118,8 @@ class _EditUserDataState extends State<EditUserData> {
                       Map respondedData = jsonDecode(value);
                       print(jsonDecode(value));
                       List imgNameArray = respondedData['imgName'];
-                      PaintingBinding.instance.imageCache.clearLiveImages();
-                      PaintingBinding.instance.imageCache.clear();
+                      PaintingBinding.instance!.imageCache!.clearLiveImages();
+                      PaintingBinding.instance!.imageCache!.clear();
                       setState(() {
                         dataClone["userImg"] = imgNameArray[0];
                       });
@@ -342,7 +342,7 @@ class _EditUserDataState extends State<EditUserData> {
     int length;
     final snackBar = SnackBar(content: Text('please wait till image uploads'));
     final snackBar1 = SnackBar(content: Text('images uploaded'));
-    List<Asset> resultList = List<Asset>();
+    List<Asset> resultList;
 
     resultList = await MultiImagePicker.pickImages(
       maxImages: 10,

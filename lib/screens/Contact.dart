@@ -15,7 +15,7 @@ class Contact extends StatefulWidget {
 }
 
 class _ContactState extends State<Contact> {
-  Map data;
+  late Map data;
   @override
   void initState() {
     // TODO: implement initState
@@ -69,7 +69,7 @@ class _ContactState extends State<Contact> {
                   onTap: () {
                     Clipboard.setData(
                         ClipboardData(text: data["Email"].toString()));
-                    ScaffoldMessenger.of(_formKey.currentContext).showSnackBar(SnackBar(
+                    ScaffoldMessenger.of(_formKey.currentContext!).showSnackBar(SnackBar(
                       content: Text("تم نسخ ${data["Email"].toString()}"),
                     ));
                   },
@@ -86,7 +86,7 @@ class _ContactState extends State<Contact> {
                   onTap: () {
                     Clipboard.setData(
                         ClipboardData(text: data["phone1"].toString()));
-                    ScaffoldMessenger.of(_formKey.currentContext).showSnackBar(SnackBar(
+                    ScaffoldMessenger.of(_formKey.currentContext!).showSnackBar(SnackBar(
                       content: Text("تم نسخ ${data["phone1"].toString()}"),
                     ));
                   },
@@ -103,7 +103,7 @@ class _ContactState extends State<Contact> {
                     onTap: () {
                       Clipboard.setData(
                           ClipboardData(text: data["phone2"].toString()));
-                      ScaffoldMessenger.of(_formKey2.currentContext)
+                      ScaffoldMessenger.of(_formKey2.currentContext!)
                           .showSnackBar(SnackBar(
                         content: Text("تم نسخ ${data["phone2"].toString()}"),
                       ));
@@ -123,7 +123,7 @@ class _ContactState extends State<Contact> {
                 InkWell(
                   onTap: () async{
                     Clipboard.setData(new ClipboardData(text: "${data["snapChat"].toString()}"));
-                    ScaffoldMessenger.of(_formKey3.currentContext).showSnackBar(SnackBar(
+                    ScaffoldMessenger.of(_formKey3.currentContext!).showSnackBar(SnackBar(
                         content: Text('${data["snapChat"].toString()}تم نسخ ')));
                   },
                   child: IconButton(
