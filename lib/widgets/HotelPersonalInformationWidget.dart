@@ -33,8 +33,9 @@ class _HotelPersonalInformationWidgetState
   getIsUserActive() async {
     UserData userDataProvider = Provider.of<UserData>(context, listen: false);
     Map data = userDataProvider.userData;
+    Uri url = Uri.parse(  '$serverURL/User/IsActive');
     var request = await http.post(
-      '$serverURL/User/IsActive',
+      url,
       headers: <String, String>{
         'Authorization': 'Bearer ${userDataProvider.userData["access_token"]}',
         'Content-Type': 'application/json'

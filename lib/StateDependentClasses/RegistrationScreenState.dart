@@ -74,8 +74,10 @@ class RegistrationScreenState {
                                     this.state.isSubmittingRegistration = true;
                                   });
                                   print(this.state.data["imageURL"]);
+                                  Uri url = Uri.parse('$serverURL/User/V2/RegisterHotel');
+
                                   var response = await http.post(
-                                    '$serverURL/User/V2/RegisterHotel',
+                                    url,
                                     headers: <String, String>{
                                       'Content-Type': 'application/json',
                                     },
@@ -87,8 +89,9 @@ class RegistrationScreenState {
                                     this.state.isSubmittingRegistration = false;
                                   });
                                   if (response.statusCode == 200) {
+                                    Uri url = Uri.parse('$serverURL/Account/CustomToken');
                                     var response = await http.post(
-                                      '$serverURL/Account/CustomToken',
+                                      url,
                                       headers: <String, String>{
                                         "Accept": "application/json",
                                         "Content-Type": "application/json"
@@ -98,14 +101,13 @@ class RegistrationScreenState {
                                     Map body = jsonDecode(response.body);
                                     if(body['IsHotel']){
                                       // this handle a server error which may add photo to the hotel with no name
-                                      print(body["img"]);
                                       List imageList = body["img"];
                                       List newImageList = [];
                                       imageList.forEach((element) {
                                         if(element['FileName'] == ''){
-                                          print('entered');
+                                          Uri url = Uri.parse('$serverURL/Media/DeleatImg?id=${element['PK_MediId']}');
                                           http.post(
-                                            '$serverURL/Media/DeleatImg?id=${element['PK_MediId']}',
+                                            url,
                                             headers: <String, String>{
                                               'Authorization': 'Bearer ${body["access_token"]}',
                                               'Content-Type': 'application/json'
@@ -167,9 +169,9 @@ class RegistrationScreenState {
                     this.state.setState(() {
                       this.state.isSubmittingRegistration = true;
                     });
-                    print(this.state.data["imageURL"]);
+                    Uri url = Uri.parse('$serverURL/User/V2/RegisterHotel');
                     var response = await http.post(
-                      '$serverURL/User/V2/RegisterHotel',
+                      url,
                       headers: <String, String>{
                         'Content-Type': 'application/json',
                       },
@@ -178,8 +180,9 @@ class RegistrationScreenState {
                     print(response.statusCode);
                     print(response.body);
                     if (response.statusCode == 200) {
+                      Uri url = Uri.parse('$serverURL/Account/CustomToken');
                       var response = await http.post(
-                        '$serverURL/Account/CustomToken',
+                        url,
                         headers: <String, String>{
                           "Accept": "application/json",
                           "Content-Type": "application/json"
@@ -195,9 +198,10 @@ class RegistrationScreenState {
                         List newImageList = [];
                         imageList.forEach((element) {
                           if(element['FileName'] == ''){
-                            print('entered');
+
+                            Uri url = Uri.parse('$serverURL/Media/DeleatImg?id=${element['PK_MediId']}');
                             http.post(
-                              '$serverURL/Media/DeleatImg?id=${element['PK_MediId']}',
+                              url,
                               headers: <String, String>{
                                 'Authorization': 'Bearer ${body["access_token"]}',
                                 'Content-Type': 'application/json'

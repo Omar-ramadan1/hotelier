@@ -24,8 +24,9 @@ class _SponsorsScreenState extends State<SponsorsScreen> {
     getHotelList();
   }
   getHotelList()async{
+    Uri url = Uri.parse( '$serverURL/SuccessPartners/List');
     var response = await http.get(
-      '$serverURL/SuccessPartners/List',
+      url,
       headers: <String, String>{
         'Content-Type': 'application/json',
       },

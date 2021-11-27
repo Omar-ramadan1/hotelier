@@ -23,8 +23,9 @@ class _AboutState extends State<About> {
   }
 
   getInfoFunction()async{
+    Uri url = Uri.parse('$serverURL/Pages/?id=1');
     var response = await http.get(
-      '$serverURL/Pages/?id=1',
+      url,
       headers: <String, String>{
         'Content-Type': 'application/x-www-form-urlencoded'
       },

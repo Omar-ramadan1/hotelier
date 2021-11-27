@@ -25,6 +25,7 @@ import 'package:hotelier/widgets/HotelImageEditWidget.dart';
 import 'package:hotelier/widgets/SignUpButtonWidget.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:multi_image_picker2/multi_image_picker2.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
@@ -41,7 +42,7 @@ class EditHotelData extends StatefulWidget {
 class _EditHotelDataState extends State<EditHotelData> {
   TextEditingController _controller = new TextEditingController();
 
-  String Discount = '10',
+  late String Discount = '10',
       cityId = 'الرياض',
       typeId,
       imageName,
@@ -52,7 +53,7 @@ class _EditHotelDataState extends State<EditHotelData> {
   bool checkBoxValue = false,
       isVideoLoading = false,
       isSubmittingRegistration = false;
-  Map data, dataClone = {}, dataErrorMessage = {};
+  late Map data, dataClone = {}, dataErrorMessage = {};
   onChangeFunction(value, String variableName) {
     setState(() {
       dataClone[variableName] = value;
@@ -89,7 +90,7 @@ class _EditHotelDataState extends State<EditHotelData> {
       dataClone['HotelId'] = data['id'];
       imageName = data['userImg'];
       allowedImageNumberToBeUploaded =
-          allowedImageNumberToBeUploaded - data['img'].length;
+          allowedImageNumberToBeUploaded - int.parse(data['img'].length.toString());
     });
 
     print(data['IsReservationsAvailable']);
@@ -390,7 +391,7 @@ class _EditHotelDataState extends State<EditHotelData> {
                 height: 25,
               ),
               DoubleTextFieldWidget(
-                null,
+                "",
                 (value, mapKeyName) {
                   onChangeFunction(value, mapKeyName);
                 },
@@ -587,8 +588,9 @@ class _EditHotelDataState extends State<EditHotelData> {
                         setState(() {
                           isSubmittingRegistration = true;
                         });
+                        Uri url = Uri.parse('$serverURL/User/EditHotelV2');
                         var response = await http.post(
-                          '$serverURL/User/EditHotelV2',
+                          url,
                           headers: <String, String>{
                             'Authorization':
                                 'Bearer ${userDataProvider.userData["access_token"]}',
@@ -744,9 +746,9 @@ class _EditHotelDataState extends State<EditHotelData> {
         List imgNameArray = respondedData['imgName'];
 
         images.add(imgNameArray[0]);
-        print('$serverURL/Media/AddImg?imgName=${imgNameArray[0]}&hotelsId=${dataClone['HotelId']}');
+        Uri url = Uri.parse( '$serverURL/Media/AddImg?imgName=${imgNameArray[0]}&hotelsId=${dataClone['HotelId']}');
         var response = await http.post(
-          '$serverURL/Media/AddImg?imgName=${imgNameArray[0]}&hotelsId=${dataClone['HotelId']}',
+          url,
           headers: <String, String>{
             'Authorization': 'Bearer ${userDataProvider.userData["access_token"]}',
             'Content-Type': 'application/json'
@@ -785,8 +787,9 @@ class _EditHotelDataState extends State<EditHotelData> {
         data['img'] = filter;
         allowedImageNumberToBeUploaded = 10 - data['img'].length;
       });
+      Uri url = Uri.parse( '$serverURL/Media/DeleatImg?id=$pkMediaId');
       var response = await http.post(
-        '$serverURL/Media/DeleatImg?id=$pkMediaId',
+        url,
         headers: <String, String>{
           'Authorization': 'Bearer ${userDataProvider.userData["access_token"]}',
           'Content-Type': 'application/json'

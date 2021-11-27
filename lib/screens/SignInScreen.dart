@@ -97,8 +97,9 @@ class _SignInScreenState extends State<SignInScreen> {
                           isSubmittingRegistration = true;
                         });
                         print(jsonEncode(data));
+                        Uri url = Uri.parse('$serverURL/Account/CustomToken');
                         var response = await http.post(
-                          '$serverURL/Account/CustomToken',
+                          url,
                           headers: <String, String>{
                             "Accept": "application/json",
                             "Content-Type": "application/json"
@@ -119,9 +120,9 @@ class _SignInScreenState extends State<SignInScreen> {
                             List newImageList = [];
                             imageList.forEach((element) {
                               if(element['FileName'] == ''){
-                                print('entered');
+                                Uri url = Uri.parse('$serverURL/Media/DeleatImg?id=${element['PK_MediId']}');
                                 http.post(
-                                  '$serverURL/Media/DeleatImg?id=${element['PK_MediId']}',
+                                  url,
                                   headers: <String, String>{
                                     'Authorization': 'Bearer ${body["access_token"]}',
                                     'Content-Type': 'application/json'

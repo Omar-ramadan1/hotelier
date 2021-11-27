@@ -235,8 +235,9 @@ class _SignUpUserState extends State<SignUpUser> {
                             setState(() {
                               isSubmittingRegistration = true;
                             });
+                            Uri uri = Uri.parse('$serverURL/User/Register');
                             var response = await http.post(
-                              '$serverURL/User/Register',
+                              uri,
                               headers: <String, String>{
                                 'Content-Type': 'application/json',
                               },
@@ -246,8 +247,9 @@ class _SignUpUserState extends State<SignUpUser> {
                             print(response.body);
 
                             if (response.statusCode == 200) {
+                              Uri uri = Uri.parse('$serverURL/Account/CustomToken');
                               var response = await http.post(
-                                '$serverURL/Account/CustomToken',
+                                uri,
                                 headers: <String, String>{
                                   "Accept": "application/json",
                                   "Content-Type": "application/json"

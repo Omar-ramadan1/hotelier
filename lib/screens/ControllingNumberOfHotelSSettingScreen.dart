@@ -29,8 +29,9 @@ class _ControllingNumberOfHotelSSettingScreenState
   }
   getHotelList()async{
     UserData userData = Provider.of<UserData>(context , listen: false);
+    Uri url = Uri.parse('$serverURL/Hotels/V2/HotelsUserList');
     var response = await http.post(
-      '$serverURL/Hotels/V2/HotelsUserList',
+      url,
       headers: <String, String>{
         'Content-Type': 'application/json',
         "Authorization" : "Bearer ${userData.userData["access_token"]}"

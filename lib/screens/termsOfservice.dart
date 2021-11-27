@@ -14,7 +14,7 @@ class TermsOfService extends StatefulWidget {
 }
 
 class _TermsOfServiceState extends State<TermsOfService> {
-  Map info;
+  late Map info;
   @override
   void initState(){
     // TODO: implement initState
@@ -23,8 +23,9 @@ class _TermsOfServiceState extends State<TermsOfService> {
   }
 
   getInfoFunction()async{
+    Uri url = Uri.parse('$serverURL/Pages/?id=2');
     var response = await http.get(
-      '$serverURL/Pages/?id=2',
+      url,
       headers: <String, String>{
         'Content-Type': 'application/x-www-form-urlencoded'
       },

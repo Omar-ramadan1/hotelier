@@ -173,9 +173,9 @@ class _ComplainingState extends State<Complaining> {
                 InkWell(
                   onTap: ()async{
                     if(check()){
-                      print(data);
+                      Uri url = Uri.parse( '$serverURL/Comlains');
                       var response = await http.post(
-                        '$serverURL/Comlains',
+                        url,
                         headers: <String, String>{
                           'Content-Type': 'application/json'
                         },

@@ -108,8 +108,9 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                               "من فضلك قم بتسجيل الدخول لاتمام العملية");
                         } else {
                           if(cardValue == "mastercard" || cardValue == "mada" || cardValue == "visa"){
+                            Uri uri = Uri.parse('$serverURL/Order/AddOrder?isMinorRenewal=false&IsOnlinePayment=true');
                             var response  = await http.post(
-                              '$serverURL/Order/AddOrder?isMinorRenewal=false&IsOnlinePayment=true',
+                              uri,
                               headers: <String, String>{
                                 'Authorization': 'Bearer ${userDataProvider.userData["access_token"]}',
                                 'Content-Type': 'application/json'
@@ -126,8 +127,9 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                                   'من فضلك تاكد من وجود جوجل كروم على الهاتف');
                             }
                           }else{
+                            Uri uri = Uri.parse('$serverURL/Order/AddOrder?isMinorRenewal=false&IsOnlinePayment=false');
                             var response  = await http.post(
-                              '$serverURL/Order/AddOrder?isMinorRenewal=false&IsOnlinePayment=false',
+                              uri,
                               headers: <String, String>{
                                 'Authorization': 'Bearer ${userDataProvider.userData["access_token"]}',
                                 'Content-Type': 'application/json'
@@ -153,8 +155,9 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                               "من فضلك قم بتسجيل الدخول لاتمام العملية");
                         } else {
                           if(cardValue == "mastercard" || cardValue == "mada" || cardValue == "visa"){
+                            Uri uri = Uri.parse('$serverURL/Order/AddOrder?isMinorRenewal=true&IsOnlinePayment=true');
                             var response  = await http.post(
-                              '$serverURL/Order/AddOrder?isMinorRenewal=true&IsOnlinePayment=true',
+                              uri ,
                               headers: <String, String>{
                                 'Authorization': 'Bearer ${userDataProvider.userData["access_token"]}',
                                 'Content-Type': 'application/json'
@@ -171,8 +174,9 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                                   content: Text('من فضلك تاكد من وجود جوجل كروم على الهاتف')));
                             }
                           }else{
+                            Uri uri = Uri.parse( '$serverURL/Order/AddOrder?isMinorRenewal=true&IsOnlinePayment=false');
                             var response  = await http.post(
-                              '$serverURL/Order/AddOrder?isMinorRenewal=true&IsOnlinePayment=false',
+                              uri,
                               headers: <String, String>{
                                 'Authorization': 'Bearer ${userDataProvider.userData["access_token"]}',
                                 'Content-Type': 'application/json'

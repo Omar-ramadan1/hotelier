@@ -11,14 +11,14 @@ class DataList extends ChangeNotifier{
   // but i need MainList from server which is composed of Maps
   // and need seperated String List that Contain only Names from this Map
   Future<SharedPreferences> _prefs =  SharedPreferences.getInstance();
-  List _citiesList;
+  late List _citiesList;
   List get citiesList => _citiesList;
   set citiesList(List citiesListParameter) {
     _citiesList = citiesListParameter;
     notifyListeners();
   }
 
-  List<String> _citiesNames;
+  late List<String> _citiesNames;
   List<String> get citiesNames => _citiesNames;
   set citiesNames(List<String> citiesNamesParameter) {
     _citiesNames = citiesNamesParameter;
@@ -26,7 +26,8 @@ class DataList extends ChangeNotifier{
   }
   Future<void> getCitiesListFunction() async {
     List<String> citiesNamesClone = [];
-    var response  = await http.get('$serverURL/City/List');
+    Uri url = Uri.parse('$serverURL/City/List');
+    var response  = await http.get(url);
     citiesList = jsonDecode(response.body);
     _citiesList.forEach((e) => {
       if(e["Name"] == "الكل"){
@@ -60,7 +61,8 @@ class DataList extends ChangeNotifier{
   }
   Future<void> getTypesListFunction() async {
     List<String> categoryNamesClone = [];
-    var response  = await http.get('$serverURL/Types/List');
+    Uri url = Uri.parse('$serverURL/Types/List');
+    var response  = await http.get(url);
     print('$serverURL/Types/List');
     print(response.body);
     categoryList = jsonDecode(response.body);

@@ -100,8 +100,9 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                             setState(() {
                               isSubmittingRegistration = true;
                             });
+                            Uri url = Uri.parse('$serverURL/Account/PasswordResetByEmail?Email=${data["email"]}');
                             var response = await http.post(
-                              '$serverURL/Account/PasswordResetByEmail?Email=${data["email"]}',
+                              url,
                               headers: <String, String>{
                                 "Content-Type": "application/json",
                               },

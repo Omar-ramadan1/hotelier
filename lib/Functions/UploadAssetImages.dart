@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:hotelier/Constant/Constant.dart';
+import 'package:multi_image_picker2/multi_image_picker2.dart';
 
 uploadAssetImages(Asset image , String name) async {
   Uri uri =

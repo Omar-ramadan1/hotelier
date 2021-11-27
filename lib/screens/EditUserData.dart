@@ -265,8 +265,9 @@ class _EditUserDataState extends State<EditUserData> {
                   });
 
                   print(dataClone);
+                  Uri url = Uri.parse('$serverURL/User/EditUser');
                   var response = await http.post(
-                    '$serverURL/User/EditUser',
+                    url,
                     headers: <String, String>{
                       'Authorization': 'Bearer ${data['access_token']}',
                       'Content-Type': 'application/json',

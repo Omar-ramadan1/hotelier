@@ -25,8 +25,9 @@ class _CartDetailsScreenState extends State<CartDetailsScreen> {
     UserData userDataProvider = Provider.of<UserData>(context, listen: false);
     if(userDataProvider.userData == null){
     }else{
+      Uri url = Uri.parse('$serverURL/Order/OrderList');
       http.get(
-        '$serverURL/Order/OrderList',
+        url,
         headers: <String, String>{
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ${userDataProvider.userData["access_token"]}'

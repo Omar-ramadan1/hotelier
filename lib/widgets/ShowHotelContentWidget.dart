@@ -78,9 +78,9 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
   }
   adsHotels()async{
     // print('$serverURL/Hotels/V2/HotelsAd');
-
+    Uri uri = Uri.parse('$serverURL/Hotels/V2/HotelsAd');
     var response = await http.post(
-      '$serverURL/Hotels/V2/HotelsAd',
+      uri,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -124,8 +124,9 @@ class _ShowHotelContentWidgetState extends State<ShowHotelContentWidget> {
     setState(() {
       allHotels = [];
     });
+    Uri uri = Uri.parse('$serverURL/Hotels/HotelsList');
     var response = await http.post(
-      '$serverURL/Hotels/HotelsList',
+      uri,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
